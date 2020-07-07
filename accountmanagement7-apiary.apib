@@ -1,10 +1,18 @@
 FORMAT: 1A
-HOST: https://api.test.paysafe.com/
+HOST: https://api.test.paysafe.com/merchant/
 
 # Account Management
 
 The Paysafe Account Management API allows our Platform Partners to create their own white-labelled merchant on-boarding experience, via a set of REST-based calls. With this API, Platform Partners will be able to tailor their user experience to their business, using client information that they have already collected and verified.
 Once a merchant application has been received, Paysafe will quickly enable the merchant to accept payments using the payment method selected. The result of improved merchant experiences will be higher on-boarding conversion and increased processing volumes.
+
+# Prerequisites
+
+Below are the Prerequisites steps for merchant onboarding:
+
+1. Partner has to get in touch with the account manager to setup his account.
+2. Once the account is setup, the Partenr will get the Onboarding Config ID.
+3. Paysafe will also provide Partner with the API keys.
 
 <a name="apikey" title="Authentication"></a>
 # Authentication 
@@ -34,8 +42,189 @@ Click [here](https://developer.paysafe.com/en/rest-apis/platforms/account-manage
 
 # Testing Instructions
 
-The Paysafe Test environment can be used to test applications without actually running requests through the live system. It is important to make sure that your systems are working correctly before going into a Live environment. Click [here](https://developer.paysafe.com/en/rest-apis/platforms/account-management/test-and-go-live/) for details of using the Test environment.
+Test accounts enable you to process API transactions that mirror the functionality of the Production environment. 
+It is important to make sure that your systems are working correctly before going into a Live environment. 
 
+With the Accounts API, you can:
+
+* Verify support for all the operation types that you require.
+* Review all common errors as well as errors that may occur for each operation.
+* Verify the lengths and format for all attributes you send.
+
+For access to Test accounts and credentials, please contact your account manager or reach out to <integrations@paysafe.com>. 
+
+###  Test URL
+To test your integration with Paysafe, use the following Test URL:
+
+`https://api.test.paysafe.com/merchant/v1/`
+
+For example:
+
+`https://api.test.paysafe.com/merchant/v1/applications`
+
+Click [here](https://developer.paysafe.com/en/rest-apis/platforms/account-management/test-and-go-live/) for details of using the Test environment.
+
+# Going Live
+ 
+Once you are satisfied with your integration to the Test environment, you must repeat the configuration changes made to your Test account on your Production account.
+
+> **Note:** You cannot use your Test credentials to process transaction requests in the Production environment.
+
+### Go Live Checklist
+1. You must have a production account and an Onboarding Config ID for your production account.
+2. You must have the API Keys for the production environment.
+3. You must have Webhooks configured for all the events.
+4. You must use the Production URL for your API calls.
+
+### Production URL
+To process live requests with Paysafe, use the following Production URL:
+
+`https://api.paysafe.com/merchant/v1/`
+
+For example:
+
+`https://api.paysafe.com/merchant/v1/applications`
+
+<a name="webhooks" title="Webhooks"></a>
+# Webhooks
+
+A Webhook is an HTTP callback that is triggered when an event takes place. 
+
+> **Note:** To receive webhooks from Paysafe, you must create a callback URL to receive the webhook that is triggered. 
+You are responsible for ensuring its continued availability.
+
+## Webhooks Signature
+
+The webhook notification contains a signature header calculated using the following algorithm:
+
+```
+digest = HMAC_SHA256 (hmacKey, UTF 8 string containing the JSON webhook request body)
+
+signature = base 64 (digest)
+```
+
+The code receiving the webhook needs to repeat this algorithm and compare the value generated with the value received in the header.
+
+Example Header:
+
+```
+Signature: UMaQ4h635wUc4hp60Z5ASBC/5UtqKybAldOkLv6ngc0=
+```
+
+## Webhook Events
+
+Webhooks can be triggered for the following events: 
+
+**Event Type**: MOBE_APPLICATION_RECEIVED
+**Application Status**: Received
+**Description**: Submitted application has passed all the data validation tests and has been picked up for processing.
+**Sample Payload**
+```
+  {
+  "applicationId": "100000016",
+  "merchantRefNum": "1582866940938",
+  "eventType": "MOBE_APPLICATION_RECEIVED",
+  "eventData": {
+    "status": "RECEIVED",
+    "subStatus": null
+  },
+  "addendum": {}
+}
+```
+<br/>
+**Event Type**: MOBE_APPLICATION_IN_PROGRESS
+**Application Status**: In-Review
+**Description**: Invoked once case has been raised successfully for the specific application.  List of sub-status: <ul><li>Vendor Checks In-Progress</li><li>Waiting for CU Manual check</li><li>Processing for CU Manual check</li><li>Waiting for Ops Setup Manual check</li><li>Processing for Ops Setup Manual check</li><li>Waiting for Ops QA Manual check</li><li>Processing for Ops QA Manual check</li><li>Waiting for Sales Manual check</li><li>Processing for Sales Manual check</li><li>Referred for Merchant Docs</li><li>Returned to Partner</li></ul>.
+**Sample Payload**
+```
+  {
+  "applicationId": "100000016",
+  "merchantRefNum": "1582866940938",
+  "eventType": "MOBE_APPLICATION_IN_PROGRESS",
+  "eventData": {
+    "status": "IN_REVIEW",
+    "subStatus": null
+  },
+  "addendum": {}
+}
+```
+<br/>
+
+**Event Type**: MOBE_APPLICATION_COMPLETED
+**Application Status**: Approved
+**Description**: Invoked when the approval work flow is completed for all accounts within the application. List of sub-status: <ul><li>Auto Approve</li><li>Manual Approve (Ops Approve)</li></ul>.
+**Sample Payload**
+```
+  {
+  "applicationId": "100000016",
+  "merchantRefNum": "1582866940938",
+  "eventType": "MOBE_APPLICATION_COMPLETED",
+  "eventData": {
+    "status": "APPROVED",
+    "subStatus": "AUTO_DECISION"
+  },
+  "addendum": {}
+}
+```
+
+<br/>
+
+**Event Type**: MOBE_APPLICATION_COMPLETED
+**Application Status**: Declined
+**Description**: Invoked when the approval work flow is completed for all accounts within the application. List of sub-status: <ul><li>Auto Decline</li><li>Manual Decline</li></ul>.
+**Sample Payload**
+```
+ {
+  "applicationId": "100000016",
+  "merchantRefNum": "1582866940938",
+  "eventType": "MOBE_APPLICATION_COMPLETED",
+  "eventData": {
+    "status": "DECLINE",
+    "subStatus": "MANUAL_DECISION"
+  },
+  "addendum": {}
+}
+```
+<br/>
+
+**Event Type**: MOBE_APPLICATION_COMPLETED
+**Application Status**: Withdraw
+**Description**: When Credit Underwriter takes withdraw action based on merchant request.
+**Sample Payload**
+```
+ {
+  "applicationId": "100000016",
+  "merchantRefNum": "1582866940938",
+  "eventType": "MOBE_APPLICATION_COMPLETED",
+  "eventData": {
+    "status": "WITHDRAW",
+    "subStatus": "MANUAL_DECISION"
+  },
+  "addendum": {}
+}
+```
+<br/>
+**Event Type**: MOBE_APPLICATION_ERROR
+**Application Status**: Error
+**Description**: Any error in the application process has occurred.
+**Sample Payload**
+```
+  {
+  "applicationId": "100000016",
+  "merchantRefNum": "1582866940938",
+  "eventType": "MOBE_APPLICATION_ERROR",
+  "addendum": {}
+}
+```
+
+## Some Notes on Webhooks
+
++ When the status of one of your application request changes, Paysafe immediately sends a callback to your webhook's endpoint URL to inform you of the status change. 
++ To acknowledge the receipt of the webhook, Paysafe expects an HTTP status of 200 OK or 202 ACCEPTED from your endpoint. In case we receive any other HTTP status code, we assume that you have not received the webhook, and we attempt to resend it.
++ If Paysafe does not get an acknowledgment of receipt with an HTTP Status Code of 200 or 202, it makes a maximum of 2 additional attempts (total 3 attempts) to send a callback to that URL.
++ As Paysafe does not have a notification method to alert you when callbacks are not reaching your endpoint URL, you should make sure that there is continued availability of your endpoint.
++ All endpoint URLs should use HTTPS/SSL to ensure security. Please note that only the default **HTTPS port 443** is supported.
++ In case you have received the same notification multiple times for an already processed event, we request you to ignore the duplicate notification. It is recommended to make the notification URL endpoints idempotent.
 
 
 # ISO Standards
