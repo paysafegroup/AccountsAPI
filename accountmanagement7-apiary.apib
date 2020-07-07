@@ -115,9 +115,9 @@ Signature: UMaQ4h635wUc4hp60Z5ASBC/5UtqKybAldOkLv6ngc0=
 
 Webhooks can be triggered for the following events: 
 
-**Event Type**: MOBE_APPLICATION_RECEIVED
-**Application Status**: Received
-**Description**: Submitted application has passed all the data validation tests and has been picked up for processing.
+**Event Type**: MOBE_APPLICATION_RECEIVED <br/>
+**Application Status**: Received <br/>
+**Description**: Submitted application has passed all the data validation tests and has been picked up for processing. <br/>
 **Sample Payload**
 ```
   {
@@ -132,9 +132,10 @@ Webhooks can be triggered for the following events:
 }
 ```
 <br/>
-**Event Type**: MOBE_APPLICATION_IN_PROGRESS
-**Application Status**: In-Review
-**Description**: Invoked once case has been raised successfully for the specific application.  List of sub-status: <ul><li>Vendor Checks In-Progress</li><li>Waiting for CU Manual check</li><li>Processing for CU Manual check</li><li>Waiting for Ops Setup Manual check</li><li>Processing for Ops Setup Manual check</li><li>Waiting for Ops QA Manual check</li><li>Processing for Ops QA Manual check</li><li>Waiting for Sales Manual check</li><li>Processing for Sales Manual check</li><li>Referred for Merchant Docs</li><li>Returned to Partner</li></ul>.
+
+**Event Type**: MOBE_APPLICATION_IN_PROGRESS <br/>
+**Application Status**: In-Review <br/>
+**Description**: Invoked once case has been raised successfully for the specific application.  List of sub-status: <ul><li>Vendor Checks In-Progress</li><li>Waiting for CU Manual check</li><li>Processing for CU Manual check</li><li>Waiting for Ops Setup Manual check</li><li>Processing for Ops Setup Manual check</li><li>Waiting for Ops QA Manual check</li><li>Processing for Ops QA Manual check</li><li>Waiting for Sales Manual check</li><li>Processing for Sales Manual check</li><li>Referred for Merchant Docs</li><li>Returned to Partner</li></ul><br/>
 **Sample Payload**
 ```
   {
@@ -150,9 +151,9 @@ Webhooks can be triggered for the following events:
 ```
 <br/>
 
-**Event Type**: MOBE_APPLICATION_COMPLETED
-**Application Status**: Approved
-**Description**: Invoked when the approval work flow is completed for all accounts within the application. List of sub-status: <ul><li>Auto Approve</li><li>Manual Approve (Ops Approve)</li></ul>.
+**Event Type**: MOBE_APPLICATION_COMPLETED <br/>
+**Application Status**: Approved <br/>
+**Description**: Invoked when the approval work flow is completed for all accounts within the application. List of sub-status: <ul><li>Auto Approve</li><li>Manual Approve (Ops Approve)</li></ul><br/>
 **Sample Payload**
 ```
   {
@@ -169,9 +170,9 @@ Webhooks can be triggered for the following events:
 
 <br/>
 
-**Event Type**: MOBE_APPLICATION_COMPLETED
-**Application Status**: Declined
-**Description**: Invoked when the approval work flow is completed for all accounts within the application. List of sub-status: <ul><li>Auto Decline</li><li>Manual Decline</li></ul>.
+**Event Type**: MOBE_APPLICATION_COMPLETED <br/>
+**Application Status**: Declined <br/>
+**Description**: Invoked when the approval work flow is completed for all accounts within the application. List of sub-status: <ul><li>Auto Decline</li><li>Manual Decline</li></ul> <br/>
 **Sample Payload**
 ```
  {
@@ -187,9 +188,9 @@ Webhooks can be triggered for the following events:
 ```
 <br/>
 
-**Event Type**: MOBE_APPLICATION_COMPLETED
-**Application Status**: Withdraw
-**Description**: When Credit Underwriter takes withdraw action based on merchant request.
+**Event Type**: MOBE_APPLICATION_COMPLETED <br/>
+**Application Status**: Withdraw <br/>
+**Description**: When Credit Underwriter takes withdraw action based on merchant request. <br/>
 **Sample Payload**
 ```
  {
@@ -204,9 +205,10 @@ Webhooks can be triggered for the following events:
 }
 ```
 <br/>
-**Event Type**: MOBE_APPLICATION_ERROR
-**Application Status**: Error
-**Description**: Any error in the application process has occurred.
+
+**Event Type**: MOBE_APPLICATION_ERROR <br/>
+**Application Status**: Error <br/>
+**Description**: Any error in the application process has occurred. <br/>
 **Sample Payload**
 ```
   {
