@@ -529,8 +529,8 @@ The Paysafe Test environment can be used to test applications without actually r
 |accountNumber                  |string<br/>`length=1-20`   |This is the merchant's bank account number.|
 |routingNumber                  |string<br/>`length=9`      |This is the 9-digit routing number of the merchant's bank account.|
 
-> **NOTE**: Access to bank accounts are assigned at different levels.  You control access to the bank accounts at various levels using hierarchy. If you create a user at the Business legal entity level, the user will have access to all the accounts and locations created for the BLE. 
-Similarly, a user created at the location level will have access to all accounts under it. And If users are created at account level, they will have access to only that account. 
+> **NOTE**: Access to bank accounts are assigned at different levels.  You can control access to the bank accounts at various levels using hierarchy. If you create a bank account at the Business legal entity level, the user will have access to all the bank accounts created for the BLE. 
+Similarly, a bank account created at the location level will have access to all accounts under it. And If a bank account is created at account level, it will have access to only that account. 
 
 
 ```apib
@@ -1046,7 +1046,7 @@ Similarly, a user created at the location level will have access to all accounts
 | HTTP Status Code  | Error Code    | Error Message |Description |
 |-------------------|---------------|-------------  |------------|
 |400                |5068           |No updates are allowed on submitted Applications| No updates are allowed on submitted applications.|
-|400                |5068           |Combination of processing currency, settlement currency and productType is not configured for onboarding config id:<onboardingConfigId>|Combination of processing currency, settlement currency and productType is not configured for onboarding config id:<onboardingConfigId>.|
+|400                |5068           |Combination of processing currency, settlement currency, productType  and terminalType is not configured for onboarding config id:<onboardingConfigId>|Combination of processing currency, settlement currency, productType and terminalType is not configured for onboarding config id:<onboardingConfigId>.|
 |400                |5068           |<bankAccountType>BankAccount should be given|Requird bank account details are not provided.|
 |400                |5068           |At least one bank account should be given|Application is submitted without providing bank account information at any level.|
 |400                |5068           |Only one bank account should be given| Multiple bank accounts are provided at any of BLE/BD/Account level.|
