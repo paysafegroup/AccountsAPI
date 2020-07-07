@@ -482,7 +482,7 @@ The Paysafe Test environment can be used to test applications without actually r
 |Element                        |Type                       |Description                        |
 |---                            |---                        |---       |
 |id                             |string<br/>`length<=36`    |This is the unique ID returned in the response. This ID can be used for future associated requests.|
-|paymentType                    |enum                       |This is the payment type associated with this request. Possible values are: <ul><li>CARD</li><li>DD</li><li>SKRILL</li></ul>|
+|paymentType                    |enum                       |This is the payment type associated with this request. Possible values are: <ul><li>CARD</li><li>DD</li></ul>|
 |currency                       |string                     |Supported currency for the account. You can use only those currencies for which you have been configured by Paysafe. See [Supported Currency Codes](#supportedcurrencycodes).|
 |settlementCurrency             |string                     |This is the currency selected by the merchant for payout. You can use only those currencies for which you have been configured by Paysafe. See [Supported Currency Codes](#supportedcurrencycodes).|
 |statementDescriptor            |object                     |Details of [Statement Descriptor](#statementdescriptorobject)|
@@ -529,6 +529,10 @@ The Paysafe Test environment can be used to test applications without actually r
 |accountNumber                  |string<br/>`length=1-20`   |This is the merchant's bank account number.|
 |routingNumber                  |string<br/>`length=9`      |This is the 9-digit routing number of the merchant's bank account.|
 
+> **NOTE**: Access to bank accounts are assigned at different levels.  You control access to the bank accounts at various levels using hierarchy. If you create a user at the Business legal entity level, the user will have access to all the accounts and locations created for the BLE. 
+Similarly, a user created at the location level will have access to all accounts under it. And If users are created at account level, they will have access to only that account. 
+
+
 ```apib
 {
   "id": "e84ea1",    
@@ -550,7 +554,6 @@ The Paysafe Test environment can be used to test applications without actually r
 |state          |string<br/>`length<=40`        |This is the state/province/region of the business owner address. Provide state if within U.S./Canada. For Canada see [Country Codes](#countrycodes). For U.S. see [State Codes](#statecodes). Provide region if outside of U.S./Canada.|
 |country        |string<br/>`length=2`          |This is the country of the business owner address. See [Supported Country Codes](#supportedcountrycodes).|
 |zip            |string<br/>`length<=10`        |This is the zip code or postal code of the business owner address. Cannot contain special characters.|
-|yearsAtAddress |number<br/>`length<=100`       |This is the number of years the business owner has been living at this address. <br/>**Note:** If *yearsAtAddress* in the [current address](#currentaddresses) is less than 3, then you must also include a [previous address](#previousaddresses).|
 
 ```apib
 {
@@ -559,7 +562,6 @@ The Paysafe Test environment can be used to test applications without actually r
   "state":"ON",
   "country":"CA",
   "zip":"M5H 2N2",
-  "yearsAtAddress": "6"
 }
 ```
 <a name="bacsbankaccountobject" title="BACS Bank Account Object"></a>
@@ -616,7 +618,7 @@ The Paysafe Test environment can be used to test applications without actually r
 |Element              |Type           |Description                        |
 |---                  |---            |---       |
 |id                             |string<br/>`length<=36`    |This is the ID returned in the response. It can be used later to look up or update a merchant.| 
-|type                           |enum                       |Type of business. Possible values are: LTD & LLC.|
+|type                           |enum                       |Type of business. For Possible values, please refer [Business Type Codes](#businesstypecodes).|
 |legalName                      |string<br/>`length<=240`   |Registered legal name.|
 |registrationNumber             |string                     |Company's registration number.|
 |taxIdentificationNumber        |string                     |Company's Tax Identification Number.|
@@ -979,8 +981,7 @@ The Paysafe Test environment can be used to test applications without actually r
 |password   |string<br/>`length<=17`    |This is the password that the user will use to access the merchant account in the Merchant Back Office.|
 
 > **NOTE**: Users are individuals that need access at different levels.  You control user access at various levels using hierarchy. If you create a user at the Business legal entity level, the user will have access to all the accounts and locations created for the BLE. 
-Similarly, a user created at the account level will have access to all the locations and accounts under it.
-You can modify the access permission for users at account and location levels.
+Similarly, a user created at the location level will have access to all accounts under it. And If users are created at account level, they will have access to only that account. 
 
 ```apib
 {
