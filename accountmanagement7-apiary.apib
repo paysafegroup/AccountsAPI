@@ -529,8 +529,8 @@ The Paysafe Test environment can be used to test applications without actually r
 |accountNumber                  |string<br/>`length=1-20`   |This is the merchant's bank account number.|
 |routingNumber                  |string<br/>`length=9`      |This is the 9-digit routing number of the merchant's bank account.|
 
-> **NOTE**: Access to bank accounts are assigned at different levels.  You can control access to the bank accounts at various levels using hierarchy. If you create a bank account at the Business legal entity level, the user will have access to all the bank accounts created for the BLE. 
-Similarly, a bank account created at the location level will have access to all accounts under it. And If a bank account is created at account level, it will have access to only that account. 
+> **NOTE**:  Access to bank accounts are assigned at different levels.  You can control access to the bank accounts at various levels using hierarchy. If you create a bank account at the Business legal entity level, the bank account can be accessed to the BLE. 
+Similarly, a bank account created at the location level will have access to that location and accounts under it. And If a bank account is created at the account level, it will have access to only that account. 
 
 
 ```apib
