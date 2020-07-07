@@ -486,8 +486,8 @@ The Paysafe Test environment can be used to test applications without actually r
 |currency                       |string                     |Supported currency for the account. You can use only those currencies for which you have been configured by Paysafe. See [Supported Currency Codes](#supportedcurrencycodes).|
 |settlementCurrency             |string                     |This is the currency selected by the merchant for payout. You can use only those currencies for which you have been configured by Paysafe. See [Supported Currency Codes](#supportedcurrencycodes).|
 |statementDescriptor            |object                     |Details of [Statement Descriptor](#statementdescriptorobject)|
-|terminalType                   |enum                       |ask dilip? Possible values are:<ul><li>MOTO</li><li>ECOM</li></ul>|
-|cardTypes                      |enum                       |ask dilip?|
+|terminalType                   |enum                       |Mode of transaction. Possible values are:<ul><li>MOTO: Telephonic authentication or IVRS support</li><li>ECOM: e-commerce transaction</li></ul>|
+|cardTypes                      |enum                       |This is the type of card used. Possible values are:<br/><ul><li>AM &ndash; American Express</li><li>DI &ndash; Discover</li><li>JC &ndash; JCB</li><li>MC &ndash; Mastercard</li><li>MD &ndash; Maestro</li><li>SO &ndash; Solo</li><li>VI &ndash; Visa</li><li>VD &ndash; Visa Debit</li><li>VE &ndash; Visa Electron</li></ul>|
 |processingOptions              |array                      |An array of [Processing Option](#processingoptionsobject)|
 |achBankAccount                 |object                     |Details of [ACH Bank Account](#achbankaccountobject)|
 |bacsBankAccount                |object                     |Details of [BACS Bank Account](#bacsbankaccountobject)|
@@ -590,9 +590,9 @@ The Paysafe Test environment can be used to test applications without actually r
 |Element              |Type           |Description                        |
 |---                  |---            |---       |
 |id                             |string<br/>`length<=36`    |This is the ID returned in the response. It can be used later to look up or update a merchant.| 
-|tradeName                      |string<br/>`length<=240`   |ask dilip |
+|tradeName                      |string<br/>`length<=240`   |DBA name of the business |
 |tradeAddress                   |object                     |Registered trade [address](#address)|
-|category                       |enum                       |ask dilip|
+|category                       |enum                       |This is the category code of the business. Please see [Merchant Category Codes](#merchantcategorycodes). |
 |mcc                            |string <br/>`length=4`     |This is the merchant category code. Required if category is not mentioned.|
 |website                        |string                     |This is the business website of the merchant.|
 |phoneNumber                    |object                     |Details of the [phone number](#phonenumberobject)|
@@ -917,7 +917,7 @@ The Paysafe Test environment can be used to test applications without actually r
 |Element                        |Type                       |Description                        |
 |---                            |---                        |---       |
 |id                             |string<br/>`length<=36`    |This is the unique ID returned in the response. This ID can be used for future associated requests.|
-|cardType                       |string                     |ask dilip|
+|cardType                       |string                     |This is the type of card used. Possible values are:<br/><ul><li>AM &ndash; American Express</li><li>DI &ndash; Discover</li><li>JC &ndash; JCB</li><li>MC &ndash; Mastercard</li><li>MD &ndash; Maestro</li><li>SO &ndash; Solo</li><li>VI &ndash; Visa</li><li>VD &ndash; Visa Debit</li><li>VE &ndash; Visa Electron</li></ul>||
 |mid                            |string                     |MID to be used for specific card types.|
 |tids                           |array                      |This is an array of string. TIDS to be used for specific card types.|
 
@@ -957,7 +957,7 @@ The Paysafe Test environment can be used to test applications without actually r
 ## statementDescriptor
 |Element                        |Type                       |Description                        |
 |---                            |---                        |---       |
-|descriptor                     |ask dilip                  |ask dilip|
+|descriptor                     |string<br/>`length=240`    |This is the descriptor of the DBA that appears on the card statement.|
 |phone                          |string<br/>`length=10`     |This is the phone number of the account. Cannot contain special characters.|
 
 ```apib
@@ -4351,17 +4351,37 @@ This is how you submit a merchant application request.
         + settlementCurrency: USD` (string) - This is the currency selected by the merchant for payout. You can use only those currencies for which you have been configured by Paysafe. See [Supported Currency Codes](#supportedcurrencycodes).
         + `statementDescriptor` (object) 
             + Properties
-                + descriptor : `` (string) - ? ask dilip
+                + descriptor : `WELLVERSED GOODS PVT` (string) - This is the descriptor of the DBA that appears on the card statement.
                 + phone: `555 888-9999` (string) - This is the phone number of the account. Cannot contain special characters.
-        + terminalType: `MOTO` (enum) - ? ask dilip
+        + terminalType: `MOTO` (enum) - Mode of transaction. 
             + Members
-                + MOTO -
-                + ECOM -
-        + cardTypes: `` () - ask dilip
+                + MOTO - Telephonic authentication or IVRS support
+                + ECOM - E-commerce transaction
+        + cardTypes: `AM` (enum) - This is the type of card used.
+            + Members
+                + AM -  American Express
+                + DI - Discover
+                + JC - JCB
+                + MC - Mastercard
+                + MD - Maestro
+                + SO - Solo
+                + VI - Visa
+                + VD - Visa Debit
+                + VE - Visa Electron
         + `processingOptions` (object)
             + Properties
                 + id: `po-1111` (string) - This is the unique ID returned in the response. This is Processing Object ID.    
-                + cardType: `` () - ask dilip?
+                + cardType: `AM` (enum) - This is the type of card used.
+                    + Members
+                        + AM -  American Express
+                        + DI - Discover
+                        + JC - JCB
+                        + MC - Mastercard
+                        + MD - Maestro
+                        + SO - Solo
+                        + VI - Visa
+                        + VD - Visa Debit
+                        + VE - Visa Electron
                 + mid: `454545` (string) - MID to use for specified card types.
                 + tids: `8989` (array) - TIDS to use for specified card types. This is an array of strings.
         + Include ACH Bank Account
@@ -4426,11 +4446,11 @@ This is how you submit a merchant application request.
     + Properties
         +  id: `bd-1111` (string) - This is the unique ID returned in the response. This ID can be used for future associated requests.
             _Read Only_
-        + tradeName: `Good Office Services USA` (string, required) - ? ask dilip
+        + tradeName: `Good Office Services USA` (string, required) - DBA name of the business
         + `tradeAddress` (object) - Trade address
             + Properties
                 + Include Address
-        + category: `offline` (enum) - ? ask dilip
+        + category: `offline` (enum) - This is the category code of the business. Please see [Merchant Category Codes](#merchantcategorycodes).
         + mcc: `4678` (string) - This is the merchant category code. Required if category is not mentioned.
         + website: `https://goodoffice.us` (string) - This is the business website of the merchant.
         + Include Phone Number
@@ -4450,11 +4470,11 @@ This is how you submit a merchant application request.
 + merchantRefNum: `merchantRefNum8` (string, required) - The merchant's unique identifier for this request.
 + onboardingConfigId: `224112` (string, required) - Merchant onboarding configuration ID that is configured in Paysafe.
 + locale: `en` (string, optional) - Preferred [language/locale](#locale) for this application. Default is "en".
-+ applicationType: `INITIAL_APPLICATION` (enum, optional) - Defaults is INITIAL_APPLICATION. ask dilip
++ applicationType: `INITIAL_APPLICATION` (enum, optional) - Describe the current status of the application. Defaults is INITIAL_APPLICATION. 
     + Members
-        + INITIAL_APPLICATION - ask dilip
-        + ADD_LOCATION - ask dilip
-        + ADD_ACCOUNT - ask dilip
+        + INITIAL_APPLICATION - This denotes a fresh new application
+        + ADD_LOCATION - Add a new location to an existing application
+        + ADD_ACCOUNT - Add a new account to an existing application
 + acceptTermsAndConditions: `true` (boolean, optional) - True- Indicates that the merchnat has accepted the terms and conditions. <br> False - Indicates that the merchant has not accepted the terms and conditions.
 + Include Business Legal Entity
 + addendum: `` (string, optional) - Additional key-values.
@@ -4465,7 +4485,7 @@ This is how you submit a merchant application request.
 + `contacts` (object) - Array of Contacts.
     + Properties
         + id:  `e84gc1` (string) - This is the unique ID returned in the response. This ID can be used for future associated requests.
-        + type: `SALES` (enum) - ? ask dilip.
+        + type: `SALES` (enum) - This indicated the Type of the contact.  
             + Members
                 + SALES
                 + BUSINESS
