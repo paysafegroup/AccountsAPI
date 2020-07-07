@@ -978,7 +978,9 @@ The Paysafe Test environment can be used to test applications without actually r
 |loginName  |string<br/>`length=2-31`   |This is the user name that will be configured to access the merchant account in the Merchant Back Office.|
 |password   |string<br/>`length<=17`    |This is the password that the user will use to access the merchant account in the Merchant Back Office.|
 
-
+> **NOTE**: Users are individuals that need access at different levels.  You control user access at various levels using hierarchy. If you create a user at the Business legal entity level, the user will have access to all the accounts and locations created for the BLE. 
+Similarly, a user created at the account level will have access to all the locations and accounts under it.
+You can modify the access permission for users at account and location levels.
 
 ```apib
 {
