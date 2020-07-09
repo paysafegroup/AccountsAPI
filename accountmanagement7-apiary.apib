@@ -1045,22 +1045,22 @@ Similarly, a bank account created at the location level is attached to all the a
 |Element                        |Type           |Description                        |
 |---                            |---            |---       |
 |id             |string<br/>`length<=36`        |This is the ID returned in the response. It can be used later to look up or update a merchant.| 
-|isDirector     |boolean                        |This indicates whether this person is the director for the the business entity.|
-|isApplicant    |boolean                        |This indicates whether this person is the applicant for the the merchant account.|
+|isDirector     |boolean                        |This indicates whether this person is the director of the business entity.|
+|isApplicant    |boolean                        |This indicates whether this person is the applicant of the merchant account.|
 |isControlProng |boolean                        |This indicates whether this person is the Control Prong. |
-|title          |string                         |This indicates profession or marital status. Possile values are: MR, MRS, MS, Jr, Dr.|
+|title          |string                         |This indicates the profession or marital status. Possible values are: MR, MRS, MS, Jr, Dr.|
 |firstName      |string<br/>`length<=50`        |This is the first name of the business owner.|
 |middleName     |string<br/>`length<=50`        |This is the middle name of the business owner.|
 |lastName      |string<br/>`length<=50`         |This is the last name of the business owner.|
 |previousLastName      |string<br/>`length<=50` |This is the previous last name of the business owner.<br/> **Note:** This is used for European business owners only.|
 |email          |string<br/>`length<=255`       |This is the email address of the business owner.|
-|dateOfBirth    |object                         |Deatils of the [Date of birth](#dateobject)|
+|dateOfBirth    |object                         |Details of the [Date of birth](#dateobject)|
 |nationality    |enum                           |This is the nationality code of the business owner.<br/>  **Note:** This is used for European business owners only.<br/> See [Nationality Codes](#nationalitycodes).|
 |type           |enum                           |Possible values are: <ul><li>OWNER</li><li>DIRECTOR</li><li>TRUSTEE</li><li>PARTNER</li><li>SENIOR_MANAGER</li><li>CONTROL_PRONG</li></ul>|
 |ssn            |string<br/>`length<=9`         |This is the Social Security Number of the person. |
-|sinLastFour    |string<br/>`length<=9`         |This is the last 4 digits of SSN sent in response.|
+|sinLastFour    |string<br/>`length<=9`         |This is the last 4-digits of SSN sent in response.|
 |sin            |string<br/>`length<=9`         |This is the Social Insurance Number of the person. |
-|sinLastFour    |string<br/>`length<=9`         |This is the last 4 digits of SIN sent in response.|
+|sinLastFour    |string<br/>`length<=9`         |This is the last 4-digits of SIN sent in response.|
 |positionInCompany|string<br/>`length<=50`        |This is the position of the person in the company. |
 |percentageShareholding    |number<br/>`max=100`   |This is the percentage of ownership by the business owner.|
 
@@ -1138,10 +1138,10 @@ Similarly, a bank account created at the location level is attached to all the a
 |Element                        |Type                       |Description                        |
 |---                            |---                        |---       |
 |id                             |string<br/>`length<=36`    |This is the merchant's SEPA bank account ID returned in the response.|
-|beneficiaryAccountName         |string<br/>`length<=250`   |This is the beneficiary account name.|
+|beneficiaryAccountName         |string<br/>`length<=250`   |This is the beneficiary's account name.|
 |swiftNumber                    |string<br/>`length=8 or 11`|This is the Swift code of the merchant's bank account. Alphanumeric characters only.|
-|ibanNumber                     |string<br/>`length=15-32`  |This is the IBAN number of the merchant's bank account. Alphanumeric characters only.|
-|lastDigits                     |string<br/>`length=4`      |This is the last 4 digits of account number sent in response.|
+|ibanNumber                     |string<br/>`length=15-32`  |This is the IBAN of the merchant's bank account. Alphanumeric characters only.|
+|lastDigits                     |string<br/>`length=4`      |This is the last 4-digits of account number sent in response.|
 |beneficiaryBankCountry         |string<br/>`length=2`      |This is the [country](#sepacountries) of the beneficiary bank's address.|
 
 > **NOTE**: Access to bank accounts is assigned at different levels. You can control access to the bank accounts at various levels using hierarchy. If you create a bank account at the Business legal entity level, the bank account is attached to all the accounts under the BLE.
@@ -1162,7 +1162,7 @@ Similarly, a bank account created at the location level is attached to all the a
 |Element                        |Type                       |Description                        |
 |---                            |---                        |---       |
 |descriptor                     |string<br/>`length=240`    |This is the descriptor of the DBA that appears on the card statement.|
-|phone                          |string<br/>`length=10`     |This is the phone number of the account. Cannot contain special characters.|
+|phone                          |string<br/>`length=10`     |This is the phone number of the account. This cannot contain special characters.|
 
 ```apib
  {
@@ -1201,23 +1201,23 @@ Similarly, a user created at the location level will have access to all accounts
 |---                |---                        |---    |
 |id                 |string<br/>`length<=36`    |This is the merchant's wire bank account ID returned in the response.|
 |accountNumber      |string<br/>`length=2-30`   |This is the merchant's bank account number.|
-|lastDigits         |string<br/>`length=4`      |This is the last 4 digits of account number sent in response.|
+|lastDigits         |string<br/>`length=4`      |This is the last 4-digits of the account number sent in response.|
 |routingNumber      |string<br/>`length=1-12`   |This is the routing number of the merchant's bank account.|
 |sortCode           |string<br/>`length=6`      |This is the 6-digit sort code of the merchant's bank account.|
 |swiftNumber        |string<br/>`length=8 or 11`|This is the Swift code of the merchant's bank account. Alphanumeric characters only.|
-|ibanNumber         |string<br/>`length=15-32`  |This is the IBAN number of the merchant's bank account. Alphanumeric characters only.|
+|ibanNumber         |string<br/>`length=15-32`  |This is the IBAN of the merchant's bank account. Alphanumeric characters only.|
 |beneficiaryCountry |string<br/>`length=2`      |This is the country of the beneficiary's address. See [Country Codes](#countrycodes).
-|beneficiaryAccountName |string<br/>`length<=250`    |This is the beneficiary account name.|
+|beneficiaryAccountName |string<br/>`length<=250`    |This is the beneficiary's account name.|
 |beneficiaryAddress |string<br/>`length<=100`   |This is the beneficiary's address.|
 |beneficiaryCity    |string<br/>`length<=40`    |This is the beneficiary's city.|
 |beneficiaryRegion  |string<br/>`length<=40`    |This is the beneficiary's region.|
-|beneficiaryPostCode    |string<br/>`length<=10`   |This is the beneficiary's post code.|
+|beneficiaryPostCode    |string<br/>`length<=10`   |This is the beneficiary's postcode.|
 |beneficiaryBankCountry |string<br/>`length=2`  |This is the [country](#countrycodes) of the beneficiary bank's address.|
 |beneficiaryBankName    |string<br/>`length<=100`   |This is the name of the beneficiary's bank.|
 |beneficiaryBankAddress |string<br/>`length<=100`   |This is the street of the beneficiary's bank address.|
 |beneficiaryBankCity    |string<br/>`length<=40` |This is the city of the beneficiary's bank.|
 |beneficiaryBankRegion  |string<br/>`length<=40` |This is the region of the beneficiary's bank. |
-|beneficiaryBankPostCode    |string<br/>`length<=10`   |This is the post code of the beneficiary's bank.|
+|beneficiaryBankPostCode    |string<br/>`length<=10`   |This is the postcode of the beneficiary's bank.|
 
 > **NOTE**: Access to bank accounts is assigned at different levels. You can control access to the bank accounts at various levels using hierarchy. If you create a bank account at the Business legal entity level, the bank account is attached to all the accounts under the BLE.
 Similarly, a bank account created at the location level is attached to all the accounts under that location. And If a bank account is created at the account level, it is attached to only that account.
