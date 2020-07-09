@@ -1873,10 +1873,13 @@ Create Application allows you to create a new Application request for merchant o
 Click **Create an Application** above to see the three examples of how to create a new Application for creating a merchant:
 
 * This is an INITIAL Merchant Account creation request.
-* This is how you add a new LOCATION to a merchant account creation request. To add a new LOCATION to a merchant account, *type* should be *ADDITIONAL_LOCATION*.
-* This is how you add a new ACCOUNT to a merchant account creation request. To add a new ACCOUNT to a merchant account, *type* should be *ADDITIONAL_ACCOUNT*.
+* This is how you add a new LOCATION to an already existing merchant account. To add a new LOCATION to a merchant account, *type* should be *ADDITIONAL_LOCATION*.
+* This is how you add a new ACCOUNT to an already existing merchant account. To add a new ACCOUNT to a merchant account, *type* should be *ADDITIONAL_ACCOUNT*.
 
- > **Note:** If *submit=true*, the request will be freezed and you will not be able to update it further.
+ > **Note:** If you set *submit=true*, then you will not be able to update the application further.
+ > **Note:** If you want to submit the Initial application at one go, set *submit=true* in the request.
+ > **Note:** If the merchant wants to save the application and provide further information later, set *submit=false* in the request.
+ > **Note:** Once you are ready to submit the application for further processing, set *submit=true* in the request.
 
 + Attributes 
     + Include ConslidatedApplicationObject
