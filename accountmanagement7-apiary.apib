@@ -3,16 +3,19 @@ HOST: https://api.test.paysafe.com/merchant/
 
 # Account Management
 
-The Paysafe Account Management API allows our Platform Partners to create their own white-labelled merchant on-boarding experience, via a set of REST-based calls. With this API, Platform Partners will be able to tailor their user experience to their business, using client information that they have already collected and verified.
-Once a merchant application has been received, Paysafe will quickly enable the merchant to accept payments using the payment method selected. The result of improved merchant experiences will be higher on-boarding conversion and increased processing volumes.
+The Paysafe Accounts API allows our Platform Partners to create their own white-labeled merchant onboarding experience, via a set of REST-based calls. 
+
+The new APIs simplifies the entire merchant onboarding process – evaluates your merchants, performs underwriting checks as needed, and minimizes your overhead costs. 
+
+Once a merchant application has been received, Paysafe will quickly enable the merchant to accept payments using the payment method selected.
 
 # Prerequisites
 
 Below are the Prerequisites steps for merchant onboarding:
 
-1. Partner has to get in touch with the account manager to setup his account.
-2. Once the account is setup, the Partenr will get the Onboarding Config ID.
-3. Paysafe will also provide Partner with the API keys.
+1. The partner has to get in touch with the account manager to set up his account.
+2. Once the account is set up, the partner will get the Onboarding Config ID.
+3. Paysafe will also provide partner with the API keys.
 
 <a name="apikey" title="Authentication"></a>
 # Authentication 
@@ -23,22 +26,22 @@ and provide you with an API key. Your API key looks something like this:
  * Key Password – B-tst1-0-51ed39e4-312d02345d3f123120881dff9bb4020a89e8ac44cdfdcecd702151182fdc952272661d290ab2e5849e31bb03deede7e
 
 The case-sensitive API key is sent using HTTP Basic Authentication. To use HTTP Basic Authentication, you must send the API key credentials using the Authorization header with every request. The Authorization header is constructed as follows:
- 1. The Key ID and Key Password are combined into a string separated by a colon, e.g.,“Key ID:Key Password”.
+ 1. Combine the Key ID and Key Password into a string separated by a colon, e.g., “Key ID:Key Password”.
  2. The resulting string literal is then encoded using Base64.
- 3. The authorization method and a space (i.e., “Basic”) are then put before the encoded string.
+ 3. The authorization method and a space (i.e., “Basic”) are added before the encoded string.
 
 For example, using the Key ID and Password examples above, the header is formed as follows:
 
 `Authorization: Basic
 UGFydG5lclhZWjpCLXRzdDEtMC01MWVkMzllNC0zMTJkMDIzNDVkM2YxMjMxMjA4ODFkZmY5YmI0MDIwYTg5ZThhYzQ0Y2RmZGNlY2Q3MDIxNTExODJmZGM5NTIyNzI2NjFkMjkwYWIyZTU4NDllMzFiYjAzZGVlZGU3ZQ==`
 
-For additional details, please refer to [http://en.wikipedia.org/wiki/Basic_access_authentication](http://en.wikipedia.org/wiki/Basic_access_authentication).
+For additional details, please refer to [Authentication](https://developer.paysafe.com/en/rest-apis/reference-information/important-integration-concepts/authentication/).
 
 **Note:** Your Production API key will be different from your Test API key. Contact your account manager for details. You must keep your API keys safe and ensure that they are used appropriately for your needs.
 
 # Getting Started
 
-Click [here](https://developer.paysafe.com/en/rest-apis/platforms/account-management/typical-api-calls/) for details of some common scenarios for on-boarding merchants with the Account Management API.
+Click [here](https://developer.paysafe.com/en/rest-apis/platforms/account-management/typical-api-calls/) for details of some common scenarios for on-boarding merchants with the Accounts API.
 
 # Testing Instructions
 
@@ -88,7 +91,7 @@ For example:
 <a name="webhooks" title="Webhooks"></a>
 # Webhooks
 
-A Webhook is an HTTP callback that is triggered when an event takes place. 
+A Webhook is an HTTP callback that is triggered when an event takes place. To configure your webhooks, get in touch with your account manager or reach us at <integrations@paysafe.com>.
 
 > **Note:** To receive webhooks from Paysafe, you must create a callback URL to receive the webhook that is triggered. 
 You are responsible for ensuring its continued availability.
@@ -117,7 +120,7 @@ Webhooks can be triggered for the following events:
 
 **Event Type**: MOBE_APPLICATION_RECEIVED <br/>
 **Application Status**: Received <br/>
-**Description**: Submitted application has passed all the data validation tests and has been picked up for processing. <br/>
+**Description**: Submitted application has passed all the data validation tests and is picked up for processing. <br/>
 **Sample Payload**
 ```
   {
@@ -135,7 +138,7 @@ Webhooks can be triggered for the following events:
 
 **Event Type**: MOBE_APPLICATION_IN_PROGRESS <br/>
 **Application Status**: In-Review <br/>
-**Description**: Invoked once case has been raised successfully for the specific application.  List of sub-status: <ul><li>Vendor Checks In-Progress</li><li>Waiting for CU Manual check</li><li>Processing for CU Manual check</li><li>Waiting for Ops Setup Manual check</li><li>Processing for Ops Setup Manual check</li><li>Waiting for Ops QA Manual check</li><li>Processing for Ops QA Manual check</li><li>Waiting for Sales Manual check</li><li>Processing for Sales Manual check</li><li>Referred for Merchant Docs</li><li>Returned to Partner</li></ul><br/>
+**Description**: Invoked once the case has been raised successfully for the specific application.  List of sub-status: <ul><li>Vendor Checks In-Progress</li><li>Waiting for CU Manual check</li><li>Processing for CU Manual check</li><li>Waiting for Ops Setup Manual check</li><li>Processing for Ops Setup Manual check</li><li>Waiting for Ops QA Manual check</li><li>Processing for Ops QA Manual check</li><li>Waiting for Sales Manual check</li><li>Processing for Sales Manual check</li><li>Referred for Merchant Docs</li><li>Returned to Partner</li></ul><br/>
 **Sample Payload**
 ```
   {
@@ -153,7 +156,7 @@ Webhooks can be triggered for the following events:
 
 **Event Type**: MOBE_APPLICATION_COMPLETED <br/>
 **Application Status**: Approved <br/>
-**Description**: Invoked when the approval work flow is completed for all accounts within the application. List of sub-status: <ul><li>Auto Approve</li><li>Manual Approve (Ops Approve)</li></ul><br/>
+**Description**: Invoked when the approval workflow is completed for all accounts within the application. List of sub-status: <ul><li>Auto Approve</li><li>Manual Approve (Ops Approve)</li></ul><br/>
 **Sample Payload**
 ```
   {
@@ -172,7 +175,7 @@ Webhooks can be triggered for the following events:
 
 **Event Type**: MOBE_APPLICATION_COMPLETED <br/>
 **Application Status**: Declined <br/>
-**Description**: Invoked when the approval work flow is completed for all accounts within the application. List of sub-status: <ul><li>Auto Decline</li><li>Manual Decline</li></ul> <br/>
+**Description**: Invoked when the approval workflow is completed for all accounts within the application. List of sub-status: <ul><li>Auto Decline</li><li>Manual Decline</li></ul> <br/>
 **Sample Payload**
 ```
  {
@@ -190,7 +193,7 @@ Webhooks can be triggered for the following events:
 
 **Event Type**: MOBE_APPLICATION_COMPLETED <br/>
 **Application Status**: Withdraw <br/>
-**Description**: When Credit Underwriter takes withdraw action based on merchant request. <br/>
+**Description**: When Credit Underwriter takes withdraw action based on the merchant's request. <br/>
 **Sample Payload**
 ```
  {
@@ -208,7 +211,7 @@ Webhooks can be triggered for the following events:
 
 **Event Type**: MOBE_APPLICATION_ERROR <br/>
 **Application Status**: Error <br/>
-**Description**: Any error in the application process has occurred. <br/>
+**Description**: An error in the application process has occurred. <br/>
 **Sample Payload**
 ```
   {
@@ -674,8 +677,8 @@ Webhooks can be triggered for the following events:
 |---                            |---                        |---       |
 |id                             |string<br/>`length<=36`    |This is the unique ID returned in the response. This ID can be used for future associated requests.|
 |paymentType                    |enum                       |This is the payment type associated with this request. Possible values are: <ul><li>CARD</li><li>DD</li></ul>|
-|currency                       |string                     |Supported currency for the account. You can use only those currencies for which you have been configured by Paysafe. See [Supported Currency Codes](#supportedcurrencycodes).|
-|settlementCurrency             |string                     |This is the currency selected by the merchant for payout. You can use only those currencies for which you have been configured by Paysafe. See [Supported Currency Codes](#supportedcurrencycodes).|
+|currency                       |string                     |Supported currency for the account. Supported currency for the account. You can use only Paysafe configured currencies. See [Supported Currency Codes](#supportedcurrencycodes).|
+|settlementCurrency             |string                     |This is the currency selected by the merchant for payout. You can use only Paysafe configured currencies. See [Supported Currency Codes](#supportedcurrencycodes).|
 |statementDescriptor            |object                     |Details of [Statement Descriptor](#statementdescriptorobject)|
 |terminalType                   |enum                       |Mode of transaction. Possible values are:<ul><li>MOTO: Telephonic authentication or IVRS support</li><li>ECOM: e-commerce transaction</li></ul>|
 |cardTypes                      |enum                       |This is the type of card used. Possible values are:<br/><ul><li>AM &ndash; American Express</li><li>DI &ndash; Discover</li><li>JC &ndash; JCB</li><li>MC &ndash; Mastercard</li><li>MD &ndash; Maestro</li><li>SO &ndash; Solo</li><li>VI &ndash; Visa</li><li>VD &ndash; Visa Debit</li><li>VE &ndash; Visa Electron</li></ul>|
@@ -716,7 +719,7 @@ Webhooks can be triggered for the following events:
 |Element                        |Type                       |Description                        |
 |---                            |---                        |---       |
 |id                             |string<br/>`length<=36`    |This is the merchant's ACH bank account ID returned in the response.|
-|lastDigits                     |string<br/>`length=4`      |This is the last 4 digits of account number sent in response.|
+|lastDigits                     |string<br/>`length=4`      |This is the last 4-digits of the account number sent in response.|
 |accountNumber                  |string<br/>`length=1-20`   |This is the merchant's bank account number.|
 |routingNumber                  |string<br/>`length=9`      |This is the 9-digit routing number of the merchant's bank account.|
 
@@ -740,10 +743,10 @@ Similarly, a bank account created at the location level is attached to all the a
 |id             |string<br/>`length<=36`        |This is the unique ID returned in the response. This ID can be used for future associated requests.| 
 |street         |string<br/>`length<=50`        |This is the first line of the street address.|
 |street2        |string<br/>`length<=50`        |This is the second line of the street address, if required (e.g., apartment number).|
-|city           |string<br/>`length<=40`        |This is the city where address is located.|
-|state          |string<br/>`length<=40`        |This is the state/province/region of the business owner address. Provide state if within U.S./Canada. For Canada see [Country Codes](#countrycodes). For U.S. see [State Codes](#statecodes). Provide region if outside of U.S./Canada.|
-|country        |string<br/>`length=2`          |This is the country of the business owner address. See [Supported Country Codes](#supportedcountrycodes).|
-|zip            |string<br/>`length<=10`        |This is the zip code or postal code of the business owner address. Cannot contain special characters.|
+|city           |string<br/>`length<=40`        |This is the city where the address is located.|
+|state          |string<br/>`length<=40`        |This is the state/province/region of the business owner's address. Provide state if within U.S./Canada. For Canada see [Country Codes](#countrycodes). For U.S. see [State Codes](#statecodes). Provide region if outside of U.S./Canada.|
+|country        |string<br/>`length=2`          |This is the country of the business owner's address. See [Supported Country Codes](#supportedcountrycodes).|
+|zip            |string<br/>`length<=10`        |This is the zip code or postal code of the business owner's address. This cannot contain special characters.|
 
 ```apib
 {
@@ -761,8 +764,8 @@ Similarly, a bank account created at the location level is attached to all the a
 |---                            |---                        |---       |
 |id                             |string<br/>`length<=36`    |This is the merchant's BACS bank account ID returned in the response.|
 |accountNumber                  |string<br/>`length=8`      |This is the merchant's 8-digit bank account number.|
-|lastDigits                     |string<br/>`length=4`      |This is the last 4 digits of account number sent in response.|
-|beneficiaryAccountName         |string<br/>`length<=250`   |This is the beneficiary account name.|
+|lastDigits                     |string<br/>`length=4`      |This is the last 4-digits of account number sent in response.|
+|beneficiaryAccountName         |string<br/>`length<=250`   |This is the beneficiary's account name.|
 |beneficiaryBankCountry         |string<br/>`length=2`      |This is the [country](#bacscountries) of the beneficiary bank's address.|
 |sortCode                       |string<br/>`length=6`      |This is the 6-digit sort code of the merchant's bank account.|
 
@@ -785,10 +788,10 @@ Similarly, a bank account created at the location level is attached to all the a
 |Element              |Type           |Description                        |
 |---                  |---            |---       |
 |id                             |string<br/>`length<=36`    |This is the ID returned in the response. It can be used later to look up or update a merchant.| 
-|tradeName                      |string<br/>`length<=240`   |DBA name of the business |
+|tradeName                      |string<br/>`length<=240`   |DBA name of the business. |
 |tradeAddress                   |object                     |Registered trade [address](#address)|
 |category                       |enum                       |This is the category code of the business. Please see [Merchant Category Codes](#merchantcategorycodes). |
-|mcc                            |string <br/>`length=4`     |This is the merchant category code. Required if category is not mentioned.|
+|mcc                            |string <br/>`length=4`     |This is the merchant category code. This is required if the category is not mentioned.|
 |website                        |string                     |This is the business website of the merchant.|
 |phoneNumber                    |object                     |Details of the [phone number](#phonenumberobject)|
 |email                          |string<br/>`length<=240`   |This is the customer support email.|
@@ -988,11 +991,11 @@ Similarly, a bank account created at the location level is attached to all the a
 |merchantRefNum                 |string<br/>`length<=255`       |The merchant's unique identifier for this request.|
 |onboardingConfigId             |string                         |Merchant onboarding configuration ID that is configured in Paysafe.|
 |locale                         |string                         |Preferred [language/locale](#locale) for this application. Default is "en".|
-|applicationType                |enum                           |Defaults is INITIAL_APPLICATION. Possile values are:<ul><li>INITIAL_APPLICATION</li><li>ADD_LOCATION</li><li>ADD_ACCOUNT</li></ul>|
-|acceptTermsAndConditions       |boolean                        |True- Indicates that the merchnat has accepted the terms and conditions. <br> False - Indicates that the merchant has not accepted the terms and conditions.|
+|applicationType                |enum                           |Default is INITIAL_APPLICATION. Possile values are:<ul><li>INITIAL_APPLICATION</li><li>ADD_LOCATION</li><li>ADD_ACCOUNT</li></ul>|
+|acceptTermsAndConditions       |boolean                        |True- This indicates that the merchant has accepted the terms and conditions. <br> False - Indicates that the merchant has not accepted the terms and conditions.|
 |businessLegalEntity            |object                         |Array of [Business legal entity](#businessLegalEntityobject).|
 |addendum                       |map                            |Additional key-values.|
-|submit                         |boolean                        |True - Indicates that the application is freezed and ready for processing. <br> False - Indicates that the appliaction is still in progress and not ready for processing.|
+|submit                         |boolean                        |True - This indicates that the application is submitted and ready for further processing. <br> False - This indicates that the application is still in progress and not ready for further processing.|
 
 <a name="dateobject" title="Date Object"></a>
 ## Date
@@ -1018,7 +1021,7 @@ Similarly, a bank account created at the location level is attached to all the a
 |---                            |---                        |---       |
 |id                             |string<br/>`length<=36`    |This is the merchant's EFT bank account ID returned in the response.|
 |accountNumber                  |string<br/>`length=1-20`   |This is the merchant's bank account number.|
-|lastDigits                     |string<br/>`length=4`      |This is the last 4 digits of account number sent in response.|
+|lastDigits                     |string<br/>`length=4`      |This is the last 4-digits of account number sent in response.|
 |transitNumber                  |string<br/>`length=5`      |This is the 5-digit transit number of the merchant's bank branch.|
 |institutionId                  |string<br/>`length=3`      |This is the 3-digit institution ID of the merchant's bank branch.|
 |paymentToken                   |string<br/>`length<=50`    |This is a token generated by Paysafe that represents the bank account. |
