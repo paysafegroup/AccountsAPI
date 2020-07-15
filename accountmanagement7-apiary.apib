@@ -846,7 +846,7 @@ Similarly, a bank account created at the location level is attached to all the a
 |sepaBankAccount                |object                     |Details of [SEPA Bank Account](#sepabankaccountobject)|
 |wireBankAccount                |object                     |Details of [Wire Bank Account](#wirebankaccountobject)|
 |principals                     |array                      |Array of [Principals](#principalobject)|
-|Business Details               |array                      |Array of [Business Details](#businessdetailsobject).|
+|businessDetails                |array                      |Array of [Business Details](#businessdetailsobject).|
 
 ```apib
 {
@@ -1915,10 +1915,10 @@ Click **Create an Application** above to see the three examples of how to create
 * This is how you add a new LOCATION to an already existing merchant account. To add a new LOCATION to a merchant account, *type* should be *ADDITIONAL_LOCATION*.
 * This is how you add a new ACCOUNT to an already existing merchant account. To add a new ACCOUNT to a merchant account, *type* should be *ADDITIONAL_ACCOUNT*.
 
- > **Note:** If you set *submit=true*, then you will not be able to update the application further.
- > **Note:** If you want to submit the Initial application at one go, set *submit=true* in the request.
- > **Note:** If the merchant wants to save the application and provide further information later, set *submit=false* in the request.
- > **Note:** Once you are ready to submit the application for further processing, set *submit=true* in the request.
+ > **Note:** If you set *submit=true*, then you will not be able to update the application further. <br>
+ > **Note:** If you want to submit the Initial application at one go, set *submit=true* in the request. <br>
+ > **Note:** If the merchant wants to save the application and provide further information later, set *submit=false* in the request.<br>
+ > **Note:** Once you are ready to submit the application for further processing, set *submit=true* in the request.<br>
 
 + Attributes 
     + Include ConslidatedApplicationObject
