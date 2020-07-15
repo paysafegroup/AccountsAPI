@@ -1157,7 +1157,7 @@ Similarly, a bank account created at the location level is attached to all the a
 |Element                        |Type                       |Description                        |
 |---                            |---                        |---       |
 |id                             |string<br/>`length<=36`    |This is the unique ID returned in the response. This ID can be used for future associated requests.|
-|cardType                       |string                     |This is the type of card used. Possible values are:<br/><ul><li>AM &ndash; American Express</li><li>DI &ndash; Discover</li><li>JC &ndash; JCB</li><li>MC &ndash; Mastercard</li><li>MD &ndash; Maestro</li><li>SO &ndash; Solo</li><li>VI &ndash; Visa</li><li>VD &ndash; Visa Debit</li><li>VE &ndash; Visa Electron</li></ul>||
+|cardType                       |string                     |This is the type of card used. Possible values are:<br/><ul><li>AM &ndash; American Express</li><li>DI &ndash; Discover</li><li>JC &ndash; JCB</li><li>MC &ndash; Mastercard</li><li>MD &ndash; Maestro</li><li>SO &ndash; Solo</li><li>VI &ndash; Visa</li><li>VD &ndash; Visa Debit</li><li>VE &ndash; Visa Electron</li></ul>|
 |mid                            |string                     |MID to be used for specific card types.|
 |tids                           |array                      |This is an array of string. TIDS to be used for specific card types.|
 
@@ -1917,8 +1917,7 @@ Click **Create an Application** above to see the three examples of how to create
 
  > **Note:** If you set *submit=true*, then you will not be able to update the application further. <br>
  > **Note:** If you want to submit the Initial application at one go, set *submit=true* in the request. <br>
- > **Note:** If the merchant wants to save the application and provide further information later, set *submit=false* in the request.<br>
- > **Note:** Once you are ready to submit the application for further processing, set *submit=true* in the request.<br>
+ > **Note:** If the merchant wants to save the application and provide further information later, set *submit=false* in the request.<br> Once you are ready to submit the application for further processing, set *submit=true* in a PATCH request.<br>
 
 + Attributes 
     + Include ConslidatedApplicationObject
