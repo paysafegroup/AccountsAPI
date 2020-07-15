@@ -757,6 +757,25 @@ Similarly, a bank account created at the location level is attached to all the a
   "zip":"M5H 2N2",
 }
 ```
+
+
+## Application
+
+|Element                        |Type                           |Description                        |
+|---                            |---                            |---       |
+|id                             |string<br/>`length<=36`        |This is the unique ID returned in the response. It can be used later to look up or update a merchant.| 
+|name                           |string                         |This is the suitable name given to the application.|
+|merchantRefNum                 |string<br/>`length<=255`       |The merchant's unique identifier for this request.|
+|onboardingConfigId             |string                         |Merchant onboarding configuration ID that is configured in Paysafe.|
+|locale                         |string                         |Preferred [language/locale](#locale) for this application. Default is "en".|
+|applicationType                |enum                           |Describes the current status of the application. Default is INITIAL_APPLICATION. Possile values are:<ul><li>INITIAL_APPLICATION</li><li>ADD_LOCATION</li><li>ADD_ACCOUNT</li></ul>|
+|acceptTermsAndConditions       |boolean                        |True- This indicates that the merchant has accepted the terms and conditions. <br> False - Indicates that the merchant has not accepted the terms and conditions.|
+|businessLegalEntity            |object                         |Array of [Business legal entity](#businessLegalEntityobject).|
+|addendum                       |map                            |Additional key-values.|
+|submit                         |boolean                        |True - This indicates that the application is submitted and ready for further processing. <br> False - This indicates that the application is still in progress and not ready for further processing. <br> **Note**: If you set **submit=true**, then you will not be able to further update the application.|
+
+
+
 <a name="bacsbankaccountobject" title="BACS Bank Account Object"></a>
 ## BACS Bank Account
 
@@ -982,20 +1001,40 @@ Similarly, a bank account created at the location level is attached to all the a
 
 ```
 
-## Application
 
-|Element                        |Type                           |Description                        |
-|---                            |---                            |---       |
-|id                             |string<br/>`length<=36`        |This is the unique ID returned in the response. It can be used later to look up or update a merchant.| 
-|name                           |string                         |This is the suitable name given to the application.|
-|merchantRefNum                 |string<br/>`length<=255`       |The merchant's unique identifier for this request.|
-|onboardingConfigId             |string                         |Merchant onboarding configuration ID that is configured in Paysafe.|
-|locale                         |string                         |Preferred [language/locale](#locale) for this application. Default is "en".|
-|applicationType                |enum                           |Describes the current status of the application. Default is INITIAL_APPLICATION. Possile values are:<ul><li>INITIAL_APPLICATION</li><li>ADD_LOCATION</li><li>ADD_ACCOUNT</li></ul>|
-|acceptTermsAndConditions       |boolean                        |True- This indicates that the merchant has accepted the terms and conditions. <br> False - Indicates that the merchant has not accepted the terms and conditions.|
-|businessLegalEntity            |object                         |Array of [Business legal entity](#businessLegalEntityobject).|
-|addendum                       |map                            |Additional key-values.|
-|submit                         |boolean                        |True - This indicates that the application is submitted and ready for further processing. <br> False - This indicates that the application is still in progress and not ready for further processing. <br> **Note**: If you set **submit=true**, then you will not be able to further update the application.|
+<a name= "contactobject" title="Contacts Object"></a>
+## Contact
+|Element    |Type                       |Description                        |
+|---        |---                        |---       |
+|id         |string<br/>`length<=36`    |This is the unique ID returned in the response. This ID can be used for future associated requests.|
+|type       |enum                       |This indicates the type of the contact. Possible values are: <ul><li>SALES</li><li>BUSINESS</li><li>PRIMARY</li><li>CUSTOMER_SERVICE</li><li>TECH  </li></ul>|
+|title      |string                     |This indicates gender or marital status. Possile values are: MR, MRS, MS.|
+|firstName  |string                     |This is the first name of the business owner.|
+|middleName |string                     |This is the middle name of the business owner.|
+|lastName   |string                     |This is the last name of the business owner.|
+|email      |string                     |This is the email address of the business owner.|
+|phoneNumber|object                     |Details of the [phone number](#phonenumberobject)|
+
+
+
+```apib
+{
+"contact": 
+          {
+            "type": "SALES",
+            "title": "Mr",
+            "firstName": "Good",
+            "lastName": "Human",
+            "middleName": "Ok",
+            "phoneNumber": {
+              "countryCode": "+1",
+              "number": "9090909090"
+            },
+            "email": "goodhuman@goodoffice.us"
+          }
+}        
+```
+
 
 <a name="dateobject" title="Date Object"></a>
 ## Date
@@ -4649,7 +4688,7 @@ This is how you submit a merchant application request.
         + Include EFT Bank Account
         + Include SEPA Bank Account
         + Include Wire Bank Account
-        + principals: `` (array) - Array of principal.
+        + Include Principals
         + Include Business Details
 
 ## Business Details
@@ -4710,6 +4749,13 @@ This is how you submit a merchant application request.
         + email: `jamesr@email.com` (string) - This is the email address of the business owner.
         + Include Phone Number
 
+## Date of Birth
++ `dateOfBirth` (object) : Details of the Date of birth.
+    + Properties
+        + day: `19` (string) - This is the day of the month.
+        + month: `12` (string) - This is the month of the year.
+        + year: `1990` (string) - This is the year.
+
 ## EFT Bank Account
 + `eftBankAccount` (object) : Details of the EFT Bank Account.
     + Properties
@@ -4726,6 +4772,37 @@ This is how you submit a merchant application request.
         + id: `ph-1111` (string) - This is the unique ID returned in the response. This ID can be used for future associated requests.
         + countryCode: `81` (string) - This is the country code of customer support phone number.
         + number: `466441111` (string) - This is the Customer support phone number.
+
+## Principals
++ `principals` (object) : Array of Principals.
+    + Properties
+        + id: `ph-1111` (string) - This is the unique ID returned in the response. This ID can be used for future associated requests.
+        + isDirector: `false` (boolean) - This is the country code of customer support phone number.
+        + isApplicant: `true` (boolean) - This is the Customer support phone number.
+        + isControlProng: `false` (boolean) - This indicates whether this person is the Control Prong.
+        + title: `MR` (string) - This indicates profession or marital status. Possile values are: MR, MRS, MS, Jr, Dr.
+        + firstName: `466441111` (string) - This is the first name of the business owner.
+        + middleName: `ph-1111` (string) - This is the middle name of the business owner.
+        + lastName: `81` (string) - This is the last name of the business owner.
+        + previousLastName: `Doe` (string) - This is the previous last name of the business owner. **Note:** This is used for European business owners only.
+        + email: `acscv@email.com` (string) - This is the email address of the business owner.
+        Include Date of Birth
+        + nationality: `466441111` (enum) - This is the nationality code of the business owner. **Note:** This is used for European business owners only.<br/> See [Nationality Codes](#nationalitycodes).
+        + type: `466441111` (enum) - Possible values are: 
+            + Members
+                + OWNER
+                + DIRECTOR
+                + TRUSTEE
+                + PARTNER
+                + SENIOR_MANAGER
+                + CONTROL_PRONG
+        + ssn: `123456789` (string) - This is the Social Security Number of the person.
+        + ssnLastFour: `6789` (string) - This is the last 4 digits of SSN sent in response.   
+        + sin: `466441111` (string) - This is the Social Insurance Number of the person.
+        + sinLastFour: `1111` (string) - This is the last 4 digits of SIN sent in response.
+        + positionInCompany: `CEO` (string) - This is the position of the person in the company. 
+        + percentageShareholding: `30` (string) - This is the percentage of ownership by the business owner.
+
 
 ## SEPA Bank Account
 + `sepaBankAccount` (object) : Details of the SEPA Bank Account.
