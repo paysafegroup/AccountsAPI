@@ -3,11 +3,9 @@ HOST: https://api.test.paysafe.com/merchant/
 
 # Account Management
 
-The Paysafe Accounts API allows our Platform Partners to create their own white-labeled merchant onboarding experience, via a set of REST-based calls. 
+The Paysafe Accounts API allows our Platform Partners to create their own white-labeled merchant onboarding experience, via a single API call. 
 
-The new APIs simplify the entire merchant onboarding process – evaluates your merchants, performs underwriting checks as needed, and minimizes your overhead costs. 
-
-Once a merchant application is received, Paysafe will quickly enable the merchant to accept payments using the selected payment method.
+The new API simplifies the entire merchant onboarding process and performs underwriting checks as needed. Once a merchant application is received, Paysafe will quickly enable the merchant to accept payments using the selected payment method.
 
 # Prerequisites
 
@@ -50,9 +48,10 @@ It is important to make sure that your systems are working correctly before goin
 
 With the Accounts API, you can:
 
+* Verify the lengths and formats for all attributes you send.
 * Verify support for all the operation types that you require.
 * Review all common errors as well as errors that may occur for each operation.
-* Verify the lengths and formats for all attributes you send.
+
 
 For access to Test accounts and credentials, contact your account manager or reach out to <integrations@paysafe.com>. 
 
@@ -76,8 +75,11 @@ Once you are satisfied with your integration to the Test environment, you must r
 ### Go Live Checklist
 1. You must have a production account and an Onboarding Config ID for your production account.
 2. You must have the API Keys for the production environment.
-3. You must have Webhooks configured for all the events.
-4. You must use the Production URL for your API calls.
+3. You must use the Production URL for your API calls.
+4. You must have [Webhooks](#webhooks) configured for all the events. **Note:** Configuring Webhooks is optional though.
+
+**Note:** For items 1, 2, & 3, reach out to your account manager or <integrations@paysafe.com> for any issues.
+
 
 ### Production URL
 To process live requests with Paysafe, use the following Production URL:
@@ -120,7 +122,7 @@ Webhooks can be triggered for the following events:
 
 **Event Type**: MOBE_APPLICATION_RECEIVED <br/>
 **Application Status**: Received <br/>
-**Description**: Submitted application has passed all the data validation tests and is picked up for processing. <br/>
+**Description**: The application has passed all the data validation tests and is submitted for processing. <br/>
 **Sample Payload**
 ```
   {
@@ -329,7 +331,7 @@ Webhooks can be triggered for the following events:
 |Viet Nam Dong                              |VND  |
 
 <a name="provincecodes" title="Province Codes"></a>
-## Province Codes
+## Canada Province Codes
 
 |Province               |Code   |
 |---                    |---    |
@@ -348,7 +350,7 @@ Webhooks can be triggered for the following events:
 |Yukon                  |YT     |
 
 <a name="statecodes" title="State Codes"></a>
-## State Codes
+## US State Codes
 
 |State                  |Code   |
 |---                    |---    |
@@ -744,7 +746,7 @@ Similarly, a bank account created at the location level is attached to all the a
 |street         |string<br/>`length<=50`        |This is the first line of the street address.|
 |street2        |string<br/>`length<=50`        |This is the second line of the street address, if required (for example: apartment number).|
 |city           |string<br/>`length<=40`        |This is the city where the address is located.|
-|state          |string<br/>`length<=40`        |This is the state/province/region of the business owner's address. Provide state if within U.S./Canada. For Canada see [Country Codes](#countrycodes). For U.S. see [State Codes](#statecodes). Provide region if outside of U.S./Canada.|
+|state          |string<br/>`length<=40`        |This is the state/province/region of the business owner's address. Provide state if within U.S./Canada. For Canada see [Province Codes](#provincecodes). For U.S. see [State Codes](#statecodes). Provide region if outside of U.S./Canada.|
 |country        |string<br/>`length=2`          |This is the country of the business owner's address. See [Supported Country Codes](#supportedcountrycodes).|
 |zip            |string<br/>`length<=10`        |This is the zip code or postal code of the business owner's address. This cannot contain special characters.|
 
@@ -1903,17 +1905,14 @@ This call returns a status of READY if the API is available.
 
 ## Create Application [/merchant/v1/applications]
 
-Create Application allows you to create a new Application request for merchant onboarding. It also allows you to add a new location or account to an application.
+Create Application allows you to create a new Application request for merchant onboarding. Click **Create an Application** tab below to see an example of how to create a new application for a merchant:
 <br>
 
-### Create an Application [POST]
+### Create an Application for Initial Merchant Account [POST]
 <a name="merchantapplicationrequest" title="Create an application"></a>
-
-Click **Create an Application** above to see the three examples of how to create a new Application for a merchant:
-
 * This is an INITIAL Merchant Account creation request.
-* This is how you add a new LOCATION to an already existing merchant account. To add a new LOCATION to a merchant account, *type* should be *ADDITIONAL_LOCATION*.
-* This is how you add a new ACCOUNT to an already existing merchant account. To add a new ACCOUNT to a merchant account, *type* should be *ADDITIONAL_ACCOUNT*.
+
+For more information on other common objects used, refer to the section [Complex JSON Objects](#accountobject). To know how to submit a merchant application, refer to the section [Submit Merchant Application](submitapplication)
 
  > **Note:** If you set *submit=true*, then you will not be able to update the application further. <br>
  > **Note:** If you want to submit the Initial application at one go, set *submit=true* in the request. <br>
@@ -2618,6 +2617,28 @@ Click **Create an Application** above to see the three examples of how to create
 
 
 
+
+### Create an Application for a New Location [POST]
+<a name="merchantlocationrequest" title="Create an new location"></a>
+
+Click **Create an Application for a New Location** above to see an example of how to create an application for a new location:
+
+* This is how you add a new LOCATION to an already existing merchant account. To add a new LOCATION to a merchant account, the parameter *type* should be *ADDITIONAL_LOCATION*.
+
+For more information on other common objects used, refer to the section [Complex JSON Objects](#accountobject). To know how to submit a merchant application, refer to the section [Submit Merchant Application](submitapplication)
+
+
++ Attributes 
+    + Include ConslidatedApplicationObject
+
++ Request Create Application for a New LOCATION (application/json)
+
+    + Headers
+
+            Authorization: "Basic YOUR-BASE64-ENCODED-API-KEY"
+            Simulator: "EXTERNAL"
+
+
 + Request Add a new LOCATION to a merchant account creation request (application/json)
 
     + Headers
@@ -3139,6 +3160,26 @@ Click **Create an Application** above to see the three examples of how to create
             }
 
 
+### Create an Application for a New Account [POST]
+<a name="merchantaccountrequest" title="Create an new account"></a>
+
+Click **Create an Application for a New Account** above to see an example of how to create an application for a new account:
+
+* This is how you add a new ACCOUNT to an already existing merchant account. To add a new ACCOUNT, the parameter *type* should be *ADDITIONAL_ACCOUNT*.
+
+For more information on other common objects used, refer to the section [Complex JSON Objects](#accountobject). To know how to submit a merchant application, refer to the section [Submit Merchant Application](submitapplication)
+
++ Attributes 
+    + Include ConslidatedApplicationObject
+
++ Request Create Application for a New ACCOUNT (application/json)
+
+    + Headers
+
+            Authorization: "Basic YOUR-BASE64-ENCODED-API-KEY"
+            Simulator: "EXTERNAL"
+
+
 + Request Add a new ACCOUNT to a merchant account creation request (application/json)
 
     + Headers
@@ -3146,6 +3187,7 @@ Click **Create an Application** above to see the three examples of how to create
             Authorization: "Basic YOUR-BASE64-ENCODED-API-KEY"
             Simulator: "EXTERNAL"
             
+
     + Body
 
             {
@@ -3374,15 +3416,13 @@ Click **Create an Application** above to see the three examples of how to create
             }
             }
 
-## Look Up Application [/merchant/v1/applications/{appId}]
+## Get Merchant Application [/merchant/v1/applications/{appId}]
 
-Look Up Application allows you to retrieve an Application request.
+Get Merchant Application allows you to retrieve an Application request. Click the **Search for a Merchant** tab below to search for a merchant application. 
 <br>
 
-### Look Up a Merchant [GET]
+### Search for a Merchant [GET]
 <a name="getmerchantapplication" title="Look Up a Merchant Application"></a>
-
-This is how you look up a merchant application.
 
 + Parameters
 
@@ -3696,7 +3736,7 @@ Update Application allows you to modify an Application request for merchant onbo
 
 This is how you update a merchant application with a PUT request.
 
-**Note:** You must provide all the elements of the merchant application that you want to update. Elements not included will be removed from the resulting merchant application.
+**Note:** When updating your application, you must provide information related to all the fields in your merchant application even if only a few fields are changing. This is because Paysafe will update all the fields as part of the PUT request.  
 
 + Parameters
 
@@ -4275,12 +4315,12 @@ This is how you update a merchant application with a PUT request.
 
 ## Get Terms and Conditions [/merchant/v1/applications/{appId}/termsandconditions]
 
-"Get Terms and Conditions" downloads a PDF version of the Terms and Conditions.
+Get Terms and Conditions returns a PDF version of the terms and conditions. To obtain the terms and conditions in a PDF file, click the tab below, "Get Terms and Conditions":
 <br>
 ### Get Terms and Conditions [GET]
 <a name="gettermsandconditions" title="Get Terms and Conditions"></a>
 
-This is how you get the Terms and Conditions in a PDF file.
+.
 
 + Parameters
 
@@ -4299,13 +4339,13 @@ This is how you get the Terms and Conditions in a PDF file.
 
 ## Submit Application [/merchant/v1]
 
-Submit Application allows you to submit an Application request for merchant onboarding for further processing.
+Submit Application allows you to submit an Application request for merchant onboarding for further processing. To know how to submit a merchant application request, click the tab below, "Submit Merchant Application":
 <br>
 
 ### Submit a Merchant Application [PATCH /merchant/v1/applications/{appId}]
 <a name="submitapplication" title="Submit Merchant Appication"></a>
 
-This is how you submit a merchant application request.
+
 
 **Note:** When the merchant application is successfully submitted, you cannot make any further changes in the application.
 
