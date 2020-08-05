@@ -167,11 +167,12 @@ Webhooks can be triggered for the following events:
   "eventType": "MOBE_APPLICATION_COMPLETED",
   "eventData": {
     "status": "APPROVED",
-    "subStatus": "AUTO_DECISION"
+    "subStatus": "AUTO_DECISION" or "MANUAL_DECISION"
   },
   "addendum": {}
 }
 ```
+**Note:** AUTO_DECISION is when the application gets automatically processed by the system. You can manually edit later on even if it gets auto approved.   
 
 <br/>
 
@@ -185,12 +186,14 @@ Webhooks can be triggered for the following events:
   "merchantRefNum": "1582866940938",
   "eventType": "MOBE_APPLICATION_COMPLETED",
   "eventData": {
-    "status": "DECLINE",
-    "subStatus": "MANUAL_DECISION"
+    "status": "DECLINED",
+    "subStatus": "MANUAL_DECISION" or "AUTO_DECISION"
   },
   "addendum": {}
 }
 ```
+**Note:** AUTO_DECISION is when the application gets automatically declined by the system. You can manually edit later on even if it gets auto declined.   
+
 <br/>
 
 **Event Type**: MOBE_APPLICATION_COMPLETED <br/>
