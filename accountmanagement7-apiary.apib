@@ -680,7 +680,7 @@ Webhooks can be triggered for the following events:
 |Element                        |Type                       |Description                        |
 |---                            |---                        |---       |
 |id                             |string<br/>`length<=36`    |This is the unique ID returned in the response. This ID can be used for future associated requests.|
-|paymentType                    |enum                       |This is the payment type associated with this request. Possible values are: <ul><li>CARD</li><li>DD</li></ul>|
+|paymentType                    |enum                       |This is the payment type associated with this request. Possible values are: <ul><li>CARD</li><li>DD</li></ul><br>**Note:** All enums are case-sensitive.| 
 |currency                       |string<br/>`length<=3`     |Supported currency for the account. Supported currency for the account. You can use only Paysafe configured currencies. See [Supported Currency Codes](#supportedcurrencycodes).|
 |settlementCurrency             |string<br/>`length<=3`     |This is the currency selected by the merchant for payout. You can use only Paysafe configured currencies. See [Supported Currency Codes](#supportedcurrencycodes).|
 |statementDescriptor            |object                     |Details of [Statement Descriptor](#statementdescriptorobject)|
@@ -768,15 +768,15 @@ Similarly, a bank account created at the location level is attached to all the a
 |Element                        |Type                           |Description                        |
 |---                            |---                            |---       |
 |id                             |string<br/>`length<=36`        |This is the unique ID returned in the response after some delay. It can be used later to look up or update a merchant.| 
-|name                           |string                         |This is the suitable name given to the application.|
+|name                           |string<br/>`length<=255`       |This is the suitable name given to the application.|
 |merchantRefNum                 |string<br/>`length<=255`       |The merchant's unique identifier for this request.|
 |onboardingConfigId             |string<br/>`length=6`          |Merchant onboarding configuration ID that is configured in Paysafe. For more details, refer to section [Prerequisites](#prereq)|
 |locale                         |string<br/>`length=2`          |Preferred [language/locale](#locale) for this application. Default is "en".|
 |[applicationType](merchantapplicationrequest)                |enum                           |Describes the current status of the application. Default is INITIAL_APPLICATION. Possile values are:<ul><li>INITIAL_APPLICATION</li><li>ADD_LOCATION</li><li>ADD_ACCOUNT</li></ul>|
-|[acceptTermsAndConditions](#submitapplication)       |boolean                        |True- This indicates that the merchant has accepted the terms and conditions. <br> False - Indicates that the merchant has not accepted the terms and conditions.|
+|[acceptTermsAndConditions](#submitapplication)       |boolean                        |true- This indicates that the merchant has accepted the terms and conditions. <br> false - Indicates that the merchant has not accepted the terms and conditions.|
 |businessLegalEntity            |object                         |Array of [Business legal entity](#businessLegalEntityobject).|
-|addendum                       |map                            |Additional key-values. You can add your own additional fields that are not relevant for underwriting.|
-|submit                         |boolean                        |True - This indicates that the application is submitted and ready for further processing. <br> False - This indicates that the application is still in progress and not ready for further processing. <br> **Note**: If you set **submit=true**, then you will not be able to further update the application.|
+|addendum                       |map                            |Additional key-values. You can add your own additional fields (up to 10) that are not relevant for underwriting.|
+|submit                         |boolean                        |true - This indicates that the application is submitted and ready for further processing. <br> false - This indicates that the application is still in progress and not ready for further processing. <br> **Note**: If you set **submit=true**, then you will not be able to further update the application.|
 
 
 
@@ -841,7 +841,7 @@ Similarly, a bank account created at the location level is attached to all the a
 |legalName                      |string<br/>`length<=240`   |Registered legal name.|
 |registrationNumber             |string<br/>`length<=255`   |Company's registration number.|
 |taxIdentificationNumber        |string<br/>`length<=255`   |Company's Tax Identification Number.|
-|description                    |string                     |Company's business description.|
+|description                    |string<br/>`length<=240`   |Company's business description.|
 |address                        |object                     |Registered legal [address](#address)|
 |users                          |array                      |An array of [users](#userobject)|
 |achBankAccount                 |object                     |Details of [ACH Bank Account](#achbankaccountobject)|
@@ -852,7 +852,7 @@ Similarly, a bank account created at the location level is attached to all the a
 |principals                     |array                      |Array of [Principals](#principalobject)|
 |businessDetails                |array                      |Array of [Business Details](#businessdetailsobject).|
 
-**Note:** Principals is an array of objects (not a single principal object) and holds a few of the boolean properties for more than one principal. Therefore, a boolean property as 'True' or 'False' cannot be specified directly. 
+**Note:** Principals is an array of objects (not a single principal object) and holds a few of the boolean properties for more than one principal. Therefore, a boolean property as 'true' or 'false' cannot be specified directly. 
 
 ```apib
 {
@@ -977,8 +977,8 @@ Similarly, a bank account created at the location level is attached to all the a
     "principals": [
       {
         "title": "Mr",
-        "firstName": "Susumumu",
-        "lastName": "Hosoinon",
+        "firstName": "Sophia",
+        "lastName": "Loren",
         "middleName": null,
         "previousLastName": null,
         "dateOfBirth": {
@@ -1093,7 +1093,7 @@ Similarly, a bank account created at the location level is attached to all the a
 |isDirector     |boolean                        |This indicates whether this person is the director of the business entity.|
 |isApplicant    |boolean                        |This indicates whether this person is the applicant of the merchant account.|
 |isControlProng |boolean                        |This indicates whether this person is the Control Prong. |
-|title          |string                         |This indicates the profession or marital status. Possible values are: MR, MRS, MS, Jr, Dr.|
+|title          |string<br/>`length<=3`         |This indicates the profession or marital status. Possible values are: MR, MRS, MS, Jr, Dr.|
 |firstName      |string<br/>`length<=50`        |This is the first name of the business owner.|
 |middleName     |string<br/>`length<=50`        |This is the middle name of the business owner.|
 |lastName      |string<br/>`length<=50`         |This is the last name of the business owner.|
@@ -1103,9 +1103,9 @@ Similarly, a bank account created at the location level is attached to all the a
 |nationality    |enum                           |This is the nationality code of the business owner.<br/>  **Note:** This is used for European business owners only.<br/> See [Nationality Codes](#nationalitycodes).|
 |type           |enum                           |Possible values are: <ul><li>OWNER</li><li>DIRECTOR</li><li>TRUSTEE</li><li>PARTNER</li><li>SENIOR_MANAGER</li><li>CONTROL_PRONG</li></ul>|
 |ssn            |string<br/>`length<=9`         |This is the Social Security Number of the person. |
-|sinLastFour    |string<br/>`length<=9`         |This is the last 4-digits of SSN sent in response.|
+|ssnLastFour    |string<br/>`length=4`         |This is the last 4-digits of SSN sent in response.|
 |sin            |string<br/>`length<=9`         |This is the Social Insurance Number of the person. |
-|sinLastFour    |string<br/>`length<=9`         |This is the last 4-digits of SIN sent in response.|
+|sinLastFour    |string<br/>`length=4`         |This is the last 4-digits of SIN sent in response.|
 |positionInCompany|string<br/>`length<=50`        |This is the position of the person in the company. |
 |percentageShareholding    |number<br/>`max=100`   |This is the percentage of ownership by the business owner.|
 
@@ -1157,6 +1157,7 @@ Similarly, a bank account created at the location level is attached to all the a
   "number": "466441111"
 }
 ```
+**Note:** The length of phone number is 10 for the US region; for EU region it should be less than or equal to 12. 
 
 <a name="processingoptionobject" title="Processing Option Object"></a>
 ## processingOption
@@ -1164,8 +1165,8 @@ Similarly, a bank account created at the location level is attached to all the a
 |---                            |---                        |---       |
 |id                             |string<br/>`length<=36`    |This is the unique ID returned in the response after some delay. This ID can be used for future associated requests.|
 |cardType                       |string<br/>`length=2`      |This is the type of card used. Possible values are:<br/><ul><li>AM &ndash; American Express</li><li>DI &ndash; Discover</li><li>JC &ndash; JCB</li><li>MC &ndash; Mastercard</li><li>MD &ndash; Maestro</li><li>SO &ndash; Solo</li><li>VI &ndash; Visa</li><li>VD &ndash; Visa Debit</li><li>VE &ndash; Visa Electron</li></ul>|
-|mid                            |string<br/>`length 1 to 24`|MID to be used for specific card types.|
-|tids                           |array                      |This is an array of string. TIDS to be used for specific card types.|
+|mid                            |string<br/>`length 1 to 24`|MID to be used for specific card types. This is an optional field|
+|tids                           |array                      |This is an array of string. TIDS to be used for specific card types. This is an optional field|
 
 ```apib
 {
@@ -1206,7 +1207,7 @@ Similarly, a bank account created at the location level is attached to all the a
 ## statementDescriptor
 |Element                        |Type                       |Description                        |
 |---                            |---                        |---       |
-|descriptor                     |string<br/>`length=240`    |This is the descriptor of the DBA that appears on the card statement.|
+|descriptor                     |string<br/>`length<=240`    |This is the descriptor of the DBA that appears on the card statement.|
 |phone                          |string<br/>`length=10`     |This is the phone number of the account. This cannot contain special characters.|
 
 ```apib
@@ -1232,10 +1233,11 @@ Similarly, a user created at the location level will have access to all accounts
 
 ```apib
 {
-  "id": "user-112", 
+  "id": "user-112",
+  "email": "bleemail_27216@gmail.com",
+  "fullName": "bleusername_27216",
   "loginName":"sam_smith",
   "password":"Pwd1234",
-  "email":"samsmith@email.com"
   }
 ```
 
@@ -4344,8 +4346,8 @@ Submit Application allows you to submit an Application request for merchant onbo
 + Request Merchant Account Activation (application/json)
 
      + Attributes
-        + acceptTermsAndConditions: `true` (boolean) - True- This indicates that the merchant has accepted the terms and conditions. False - Indicates that the merchant has not accepted the terms and conditions.
-        + submit: `true` (boolean) - True - This indicates that the application is prepared to be submitted and ready for further processing. False - This indicates that the application is still in progress and not ready for further processing.
+        + acceptTermsAndConditions: `true` (boolean) - true- This indicates that the merchant has accepted the terms and conditions. false - Indicates that the merchant has not accepted the terms and conditions.
+        + submit: `true` (boolean) - true - This indicates that the application is prepared to be submitted and ready for further processing. false - This indicates that the application is still in progress and not ready for further processing.
             _If you set submit=true, then you will not be able to further update the application._
 
     + Headers
@@ -4752,11 +4754,11 @@ Submit Application allows you to submit an Application request for merchant onbo
         + INITIAL_APPLICATION - This denotes a fresh new application
         + ADD_LOCATION - Add a new location to an existing application
         + ADD_ACCOUNT - Add a new account to an existing application
-+ acceptTermsAndConditions: `true` (boolean, optional) - True- This indicates that the merchant has accepted the terms and conditions. False - Indicates that the merchant has not accepted the terms and conditions.
++ acceptTermsAndConditions: `true` (boolean, optional) - True- This indicates that the merchant has accepted the terms and conditions. false - Indicates that the merchant has not accepted the terms and conditions.
 + Include Business Legal Entity
 + addendum: `` (string, optional) - Additional key-values.
     _length=10_
-+ submit: `true` (boolean) - True - This indicates that the application is submitted and ready for further processing. False - This indicates that the application is still in progress and not ready for further processing.
++ submit: `true` (boolean) - True - This indicates that the application is submitted and ready for further processing. false - This indicates that the application is still in progress and not ready for further processing.
 
 ## Contacts
 + `contacts` (object) - Array of Contacts.
