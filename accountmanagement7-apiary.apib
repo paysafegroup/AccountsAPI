@@ -812,7 +812,7 @@ Similarly, a bank account created at the location level is attached to all the a
 |---                  |---            |---       |
 |id                             |string<br/>`length<=36`    |This is the ID returned in the response after some delay. It can be used later to look up or update a merchant.| 
 |tradeName                      |string<br/>`length<=240`   |DBA name of the business. |
-|tradeAddress                   |object                     |Registered trade [address](#address)|
+|tradeAddress                   |object                     |Registered trade [address](#addressesobject)|
 |category                       |enum                       |This is the category code of the business. See [Merchant Category Codes](#merchantcategorycodes). |
 |mcc                            |string <br/>`length=4`     |This is the merchant category code. This is required if the category is not mentioned.|
 |website                        |string<br/>`length<=255`   |This is the business website of the merchant.|
@@ -842,7 +842,7 @@ Similarly, a bank account created at the location level is attached to all the a
 |registrationNumber             |string<br/>`length<=255`   |Company's registration number.|
 |taxIdentificationNumber        |string<br/>`length<=255`   |Company's Tax Identification Number.|
 |description                    |string<br/>`length<=240`   |Company's business description.|
-|address                        |object                     |Registered legal [address](#address)|
+|address                        |object                     |Registered legal [address](#addressesobject)|
 |users                          |array                      |An array of [users](#userobject)|
 |achBankAccount                 |object                     |Details of [ACH Bank Account](#achbankaccountobject)|
 |bacsBankAccount                |object                     |Details of [BACS Bank Account](#bacsbankaccountobject)|
@@ -851,8 +851,6 @@ Similarly, a bank account created at the location level is attached to all the a
 |wireBankAccount                |object                     |Details of [Wire Bank Account](#wirebankaccountobject)|
 |principals                     |array                      |Array of [Principals](#principalobject)|
 |businessDetails                |array                      |Array of [Business Details](#businessdetailsobject).|
-
-**Note:** Principals is an array of objects (not a single principal object) and holds a few of the boolean properties for more than one principal. Therefore, a boolean property as 'true' or 'false' cannot be specified directly. 
 
 ```apib
 {
@@ -962,14 +960,14 @@ Similarly, a bank account created at the location level is attached to all the a
           {
             "type": "SALES",
             "title": "Mr",
-            "firstName": "Good",
-            "lastName": "Human",
-            "middleName": "Ok",
+            "firstName": "John",
+            "lastName": "Does",
+            "middleName": "Richard",
             "phoneNumber": {
               "countryCode": "+1",
               "number": "9090909090"
             },
-            "email": "goodhuman@goodoffice.us"
+            "email": "johndoe@goodoffice.us"
           }
         ]
       }
@@ -1091,13 +1089,14 @@ Similarly, a bank account created at the location level is attached to all the a
 |---                            |---            |---       |
 |id             |string<br/>`length<=36`        |This is the ID returned in the response. It can be used later to look up or update a merchant.| 
 |isDirector     |boolean                        |This indicates whether this person is the director of the business entity.|
-|isApplicant    |boolean                        |This indicates whether this person is the applicant of the merchant account.|
-|isControlProng |boolean                        |This indicates whether this person is the Control Prong. |
+|isApplicant    |boolean                        |This indicates whether this business owner is the applicant for the the merchant account. <br> **Note:** If you are adding multiple business owners for the merchant account, you can only designate one as the applicant. All partners are strongly advised to make it mandatory for their merchants to identify one of the business owners as the applicant. It will become a mandatory element in the near future.|
+|isControlProng |boolean                        |This indicates whether the business owner is the Control Prong. Only one business owner can be indicated as a Control Prong. Control Prong is an individual with significant responsibility for managing the legal entity customer (e.g., a CEO, CFO, COO, Managing Member, General Partner, President, Vice-President, or Treasurer). <br>**Note:** This is used for US owners only. For all other regions, this value will be ignored and will not be returned in the response. All US partners are strongly advised to make it mandatory for their merchants to identify one of the business owners as the Control Prong. It will become a mandatory element in the near future.|
 |title          |string<br/>`length<=3`         |This indicates the profession or marital status. Possible values are: MR, MRS, MS, Jr, Dr.|
 |firstName      |string<br/>`length<=50`        |This is the first name of the business owner.|
 |middleName     |string<br/>`length<=50`        |This is the middle name of the business owner.|
 |lastName      |string<br/>`length<=50`         |This is the last name of the business owner.|
 |previousLastName      |string<br/>`length<=50` |This is the previous last name of the business owner.<br/> **Note:** This is used for European business owners only.|
+|Address            |object                     |Registered [address](#addressesobject). **Note:** This must be your residential address/apartment number. |
 |email          |string<br/>`length<=255`       |This is the email address of the business owner.|
 |dateOfBirth    |object                         |Details of the [Date of birth](#dateobject)|
 |nationality    |enum                           |This is the nationality code of the business owner.<br/>  **Note:** This is used for European business owners only.<br/> See [Nationality Codes](#nationalitycodes).|
@@ -1113,8 +1112,8 @@ Similarly, a bank account created at the location level is attached to all the a
 {
    {
         "title": "Mr",
-        "firstName": "Susumumu",
-        "lastName": "Hosoinon",
+        "firstName": "Sophia",
+        "lastName": "Loren",
         "middleName": null,
         "previousLastName": null,
         "dateOfBirth": {
@@ -1313,11 +1312,7 @@ Similarly, a bank account created at the location level is attached to all the a
 |404                |5269           |No Business Legal Entity exists| No details about the Business Legal Entity are provided.|
 |404                |5269           |LoginName is not available | The selected loginName is already taken.|
 |429                |1200           |API call rate exceeded|The user has sent too many requests in a given amount of time.|
-|500                |1000           |An internal error occurred.|An internal error occurred.|
-|500                |1003           |An internal error occurred.|An internal error occurred.|
-|500                |1003           |An internal error occurred.|An internal error occurred.|
-|500                |1007           |An internal error occurred.|An internal error occurred.|
-|500                |1008           |An internal error occurred.|An internal error occurred.|
+|500                |1000 - 1008    |An internal error occurred.|An internal error occurred.|
 |502                |1001           |An error occurred with the external processing gateway.|An error occurred with the external processing gateway.|
 
 # Appendices
@@ -1913,6 +1908,8 @@ This call returns a status of READY if the API is available.
 
 Create Application allows you to create a new Application request for merchant onboarding. Click **Create an Application** tab below to see an example of how to create a new application for a merchant:
 <br>
+
+**Note:** Once you create an application, you must call the [Get Terms and Conditions](#gettermsandconditions) API before submitting the application. 
 
 ### Create an Application for Initial Merchant Account [POST]
 <a name="merchantapplicationrequest" title="Create an application"></a>
@@ -3720,6 +3717,7 @@ Get Merchant Application allows you to retrieve an Application request. Click th
 
 Update Application allows you to modify an Application request for merchant onboarding.
 <br>
+**Note:** Once you update an application, you must call the [Get Terms and Conditions](#gettermsandconditions) API before submitting the application. 
 
 ### Update a Merchant Application  [PUT /merchant/v1/applications/{appId}]
 <a name="updatemerchantaccount" title="Update a Merchant Account"></a>
@@ -4305,7 +4303,7 @@ This is how you update a merchant application with a PUT request.
 
 ## Get Terms and Conditions [/merchant/v1/applications/{appId}/termsandconditions]
 
-Get Terms and Conditions returns a PDF version of the terms and conditions. To obtain the terms and conditions in a PDF file, click the tab below, "Get Terms and Conditions":
+Get Terms and Conditions returns the Paysafe's terms and conditions that the merchants must accept in order to begin processing their transactions. To obtain the terms and conditions, click the tab below, "Get Terms and Conditions":
 <br>
 ### Get Terms and Conditions [GET]
 <a name="gettermsandconditions" title="Get Terms and Conditions"></a>
@@ -4324,7 +4322,7 @@ Get Terms and Conditions returns a PDF version of the terms and conditions. To o
 
 + Response 200 (application/json)
 
-        Returns Terms and Conditions in a PDF File.
+        Returns Paysafe's Terms and Conditions.
 
 
 ## Submit Application [/merchant/v1]
@@ -4727,8 +4725,6 @@ Submit Application allows you to submit an Application request for merchant onbo
             _Read Only_
         + tradeName: `Good Office Services USA` (string, required) - DBA name of the business.
         + `tradeAddress` (object) - Registered Trade address.
-            + Properties
-                + Include Address
         + category: `offline` (enum) - This is the category code of the business. See [Merchant Category Codes](#merchantcategorycodes).
         + mcc: `4678` (string) - This is the merchant category code. This is required if the category is not mentioned.
         + website: `https://goodoffice.us` (string) - This is the business website of the merchant.
@@ -4806,18 +4802,18 @@ Submit Application allows you to submit an Application request for merchant onbo
 + `principals` (object) : Array of Principals.
     + Properties
         + id: `ph-1111` (string) - This is the unique ID returned in the response after some delay. This ID can be used for future associated requests.
-        + isDirector: `false` (boolean) - This is the country code of customer support phone number.
-        + isApplicant: `true` (boolean) - This is the Customer support phone number.
+        + isDirector: `false` (boolean) - This indicates whether this person is the director of the business entity.
+        + isApplicant: `true` (boolean) - This indicates whether this person is the applicant of the merchant account.
         + isControlProng: `false` (boolean) - This indicates whether this person is the Control Prong.
         + title: `MR` (string) - This indicates profession or marital status. Possile values are: MR, MRS, MS, Jr, Dr.
-        + firstName: `466441111` (string) - This is the first name of the business owner.
-        + middleName: `ph-1111` (string) - This is the middle name of the business owner.
-        + lastName: `81` (string) - This is the last name of the business owner.
+        + firstName: `John` (string) - This is the first name of the business owner.
+        + middleName: `Richard` (string) - This is the middle name of the business owner.
+        + lastName: `Doe` (string) - This is the last name of the business owner.
         + previousLastName: `Doe` (string) - This is the previous last name of the business owner. **Note:** This is used for European business owners only.
         + email: `acscv@email.com` (string) - This is the email address of the business owner.
         + Include Date of Birth
-        + nationality: `466441111` (enum) - This is the nationality code of the business owner. **Note:** This is used for European business owners only.<br/> See [Nationality Codes](#nationalitycodes).
-        + type: `466441111` (enum) - Possible values are: 
+        + nationality: `GB` (enum) - This is the nationality code of the business owner. **Note:** This is used for European business owners only.<br/> See [Nationality Codes](#nationalitycodes).
+        + type: `Owner` (enum) - Possible values are: 
             + Members
                 + OWNER
                 + DIRECTOR
@@ -4827,8 +4823,8 @@ Submit Application allows you to submit an Application request for merchant onbo
                 + CONTROL_PRONG
         + ssn: `123456789` (string) - This is the Social Security Number of the person.
         + ssnLastFour: `6789` (string) - This is the last 4 digits of SSN sent in response.   
-        + sin: `466441111` (string) - This is the Social Insurance Number of the person.
-        + sinLastFour: `1111` (string) - This is the last 4 digits of SIN sent in response.
+        + sin: `123456789` (string) - This is the Social Insurance Number of the person.
+        + sinLastFour: `6789` (string) - This is the last 4 digits of SIN sent in response.
         + positionInCompany: `CEO` (string) - This is the position of the person in the company. 
         + percentageShareholding: `30` (string) - This is the percentage of ownership by the business owner.
 
