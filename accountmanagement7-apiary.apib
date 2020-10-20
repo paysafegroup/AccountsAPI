@@ -1,9 +1,9 @@
 FORMAT: 1A
 HOST: https://api.test.paysafe.com/merchant/
 
-# Account Management
+# Account Management API Reference
 
-The Paysafe Accounts API allows our Platform Partners to create their own white-labeled merchant onboarding experience, via a single API call. 
+The Paysafe Account Management API allows Paysafe's Platform Partners to create their own white-labeled merchant onboarding experience, via a single API call. 
 
 The new API simplifies the entire merchant onboarding process and performs underwriting checks as needed. Once a merchant application is received, Paysafe will quickly enable the merchant to accept payments using the selected payment method(s).
 
@@ -40,14 +40,14 @@ For additional details, refer to [Authentication](https://developer.paysafe.com/
 
 # Getting Started
 
-Click [here](https://developer.paysafe.com/en/rest-apis/platforms/account-management/typical-api-calls/) for details of some common scenarios for on-boarding merchants with the Accounts API.
+Click [here](https://developer.paysafe.com/en/rest-apis/platforms/account-management/typical-api-calls/) for details of some common scenarios for on-boarding merchants with the Account Management API.
 
 # Testing Instructions
 
 Test accounts enable you to process API transactions that mirror the functionality of the Production environment. 
 It is important to make sure that your systems are working correctly before going into a Live environment. 
 
-With the Accounts API, you can:
+With the Account Management API, you can:
 
 * Verify the lengths and formats for all attributes you send.
 * Verify support for all the operation types that you require.
@@ -65,11 +65,11 @@ For example:
 
 `https://api.test.paysafe.com/merchant/v1/applications`
 
-Click [here](https://developer.paysafe.com/en/rest-apis/platforms/account-management/test-and-go-live/) for details of using the Test environment.
+Click [here](https://developer.paysafe.com/en/rest-apis/platforms/account-management/test-and-go-live/) for details on using the Test environment.
 
 # Going Live
  
-Once you are satisfied with your integration to the Test environment, you must repeat the configuration changes made to your Test account on your Production account.
+Once you are satisfied with your integration to the Test environment, you must repeat the configuration changes made to your Test account in your Production account.
 
 > **Note:** You cannot use your Test credentials to process transaction requests in the Production environment.
 
@@ -77,7 +77,7 @@ Once you are satisfied with your integration to the Test environment, you must r
 1. You must have a production account and an Onboarding Config ID for your production account.
 2. You must have the API Keys for the production environment.
 3. You must use the Production URL for your API calls.
-4. You must have [Webhooks](#webhooks) configured for all the events. **Note:** Configuring Webhooks is optional though.
+4. You must have [Webhooks](#webhooks) configured for all the events. **Note:** Configuring Webhooks is optional.
 
 **Note:** For items 1, 2, & 3, reach out to your account manager or <integrations@paysafe.com> for any issues.
 
@@ -141,7 +141,7 @@ Webhooks can be triggered for the following events:
 
 **Event Type**: MOBE_APPLICATION_IN_PROGRESS <br/>
 **Application Status**: In-Review <br/>
-**Description**: Invoked once the case has been raised successfully for the specific application.  List of sub-status: <ul><li>Vendor Checks In-Progress</li><li>Waiting for CU Manual check</li><li>Processing for CU Manual check</li><li>Waiting for Ops Setup Manual check</li><li>Processing for Ops Setup Manual check</li><li>Waiting for Ops QA Manual check</li><li>Processing for Ops QA Manual check</li><li>Waiting for Sales Manual check</li><li>Processing for Sales Manual check</li><li>Referred for Merchant Docs</li><li>Returned to Partner</li></ul><br/>
+**Description**: Invoked once the case has been raised successfully for the specific application.  List of sub-statuses: <ul><li>Vendor Checks In-Progress</li><li>Waiting for CU Manual check</li><li>Processing for CU Manual check</li><li>Waiting for Ops Setup Manual check</li><li>Processing for Ops Setup Manual check</li><li>Waiting for Ops QA Manual check</li><li>Processing for Ops QA Manual check</li><li>Waiting for Sales Manual check</li><li>Processing for Sales Manual check</li><li>Referred for Merchant Docs</li><li>Returned to Partner</li></ul><br/>
 **Sample Payload**
 ```
   {
@@ -159,7 +159,7 @@ Webhooks can be triggered for the following events:
 
 **Event Type**: MOBE_APPLICATION_COMPLETED <br/>
 **Application Status**: Approved <br/>
-**Description**: Invoked when the approval workflow is completed for all accounts within the application. List of sub-status: <ul><li>Auto_Decision - Application was automatically processed by the system.</li><li>Manual_Decision - Application was reviewed and approved by Paysafe</li></ul><br/>
+**Description**: Invoked when the approval workflow is completed for all accounts within the application. List of sub-statuses: <ul><li>Auto_Decision - Application was automatically processed by the system.</li><li>Manual_Decision - Application was reviewed and approved by Paysafe</li></ul><br/>
 **Sample Payload**
 ```
   {
@@ -178,7 +178,7 @@ Webhooks can be triggered for the following events:
 
 **Event Type**: MOBE_APPLICATION_COMPLETED <br/>
 **Application Status**: Declined <br/>
-**Description**: Invoked when the approval workflow is completed for all accounts within the application. List of sub-status: <ul><li>Auto_Decision - Application was automatically processed by the system.</li><li>Manual_Decision - Application was reviewed and rejected by Paysafe</li></ul><br/>
+**Description**: Invoked when the approval workflow is completed for all accounts within the application. List of sub-statuses: <ul><li>Auto_Decision - Application was automatically processed by the system.</li><li>Manual_Decision - Application was reviewed and rejected by Paysafe</li></ul><br/>
 **Sample Payload**
 ```
  {
@@ -197,7 +197,7 @@ Webhooks can be triggered for the following events:
 
 **Event Type**: MOBE_APPLICATION_COMPLETED <br/>
 **Application Status**: Withdraw <br/>
-**Description**: When Credit Underwriter takes withdraw action based on the merchant's request. <br/>
+**Description**: When a Credit Underwriter takes withdraw action based on the merchant's request. <br/>
 **Sample Payload**
 ```
  {
@@ -228,7 +228,7 @@ Webhooks can be triggered for the following events:
 
 ## Some Notes on Webhooks
 
-+ When the status of one of your application request changes, Paysafe immediately sends a callback to your webhook's endpoint URL to inform you of the status change. 
++ When the status of one of your application requests change, Paysafe immediately sends a callback to your webhook's endpoint URL to inform you of the status change. 
 + Paysafe expects an HTTP status of 200 OK or 202 ACCEPTED from your endpoint as an acknowledgement. In case any other HTTP status code is received, Paysafe assumes you have not received the webhook, and attempts to resend it.
 + If Paysafe does not get an acknowledgment (200 or 202), it makes a maximum of two additional attempts (total three attempts) to send a callback to that URL.
 + As Paysafe does not have a notification method to alert you when callbacks are not reaching your endpoint URL, you should ensure continued availability of your endpoint.
@@ -681,12 +681,12 @@ Webhooks can be triggered for the following events:
 |---                            |---                        |---       |
 |id                             |string<br/>`length<=36`    |This is the unique ID returned in the response. This ID can be used for future associated requests.|
 |paymentType                    |enum                       |This is the payment type associated with this request. Possible values are: <ul><li>CARD</li><li>DD</li></ul><br>**Note:** All enums are case-sensitive.| 
-|currency                       |string<br/>`length<=3`     |Supported currency for the account. Supported currency for the account. You can use only Paysafe configured currencies. See [Supported Currency Codes](#supportedcurrencycodes).|
+|currency                       |string<br/>`length<=3`     |Supported currency for the account. You can use only Paysafe configured currencies. See [Supported Currency Codes](#supportedcurrencycodes).|
 |settlementCurrency             |string<br/>`length<=3`     |This is the currency selected by the merchant for payout. You can use only Paysafe configured currencies. See [Supported Currency Codes](#supportedcurrencycodes).|
 |statementDescriptor            |object                     |Details of [Statement Descriptor](#statementdescriptorobject)|
 |terminalType                   |enum                       |Mode of transaction. Possible values are:<ul><li>MOTO: Telephonic authentication or IVRS support</li><li>ECOM: e-commerce transaction</li></ul>|
 |cardTypes                      |enum                       |This is the type of card used. Possible values are:<br/><ul><li>AM &ndash; American Express</li><li>DI &ndash; Discover</li><li>JC &ndash; JCB</li><li>MC &ndash; Mastercard</li><li>MD &ndash; Maestro</li><li>SO &ndash; Solo</li><li>VI &ndash; Visa</li><li>VD &ndash; Visa Debit</li><li>VE &ndash; Visa Electron</li></ul>|
-|processingOptions              |array                      |An array of [Processing Option](#processingoptionsobject)|
+|processingOptions              |array                      |An array of [Processing Options](#processingoptionsobject)|
 |achBankAccount                 |object                     |Details of [ACH Bank Account](#achbankaccountobject)|
 |bacsBankAccount                |object                     |Details of [BACS Bank Account](#bacsbankaccountobject)|
 |eftBankAccount                 |object                     |Details of [EFT Bank Account](#eftbankaccountobject)|
@@ -727,7 +727,7 @@ Webhooks can be triggered for the following events:
 |accountNumber                  |string<br/>`length=1-20`   |This is the merchant's bank account number.|
 |routingNumber                  |string<br/>`length=9`      |This is the 9-digit routing number of the merchant's bank account.|
 
-> **NOTE**: Access to bank accounts is assigned at different levels. You can control access to the bank accounts at various levels using hierarchy. If you create a bank account at the Business legal entity level, the bank account is attached to all the accounts under the BLE.
+> **NOTE**: Access to bank accounts is assigned at different levels using hierarchy. If you create a bank account at the Business legal entity level, the bank account is attached to all the accounts under the BLE.
 Similarly, a bank account created at the location level is attached to all the accounts under that location. And If a bank account is created at the account level, it is attached to only that account.
 
 ```apib
@@ -792,7 +792,7 @@ Similarly, a bank account created at the location level is attached to all the a
 |beneficiaryBankCountry         |string<br/>`length=2`      |This is the [country](#bacscountries) of the beneficiary bank's address.|
 |sortCode                       |string<br/>`length=6`      |This is the 6-digit sort code of the merchant's bank account.|
 
-> **NOTE**: Access to bank accounts is assigned at different levels. You can control access to the bank accounts at various levels using hierarchy. If you create a bank account at the Business legal entity level, the bank account is attached to all the accounts under the BLE.
+> **NOTE**: Access to bank accounts is assigned at different levels using hierarchy. If you create a bank account at the Business legal entity level, the bank account is attached to all the accounts under the BLE.
 Similarly, a bank account created at the location level is attached to all the accounts under that location. And If a bank account is created at the account level, it is attached to only that account.
 
 ```apib
@@ -1069,7 +1069,7 @@ Similarly, a bank account created at the location level is attached to all the a
 |institutionId                  |string<br/>`length=3`      |This is the 3-digit institution ID of the merchant's bank branch.|
 |paymentToken                   |string<br/>`length<=50`    |This is a token generated by Paysafe that represents the bank account. |
 
-> **NOTE**: Access to bank accounts is assigned at different levels. You can control access to the bank accounts at various levels using hierarchy. If you create a bank account at the Business legal entity level, the bank account is attached to all the accounts under the BLE.
+> **NOTE**: Access to bank accounts is assigned at different levels using hierarchy. If you create a bank account at the Business legal entity level, the bank account is attached to all the accounts under the BLE.
 Similarly, a bank account created at the location level is attached to all the accounts under that location. And If a bank account is created at the account level, it is attached to only that account.
 
 ```apib
@@ -1156,7 +1156,7 @@ Similarly, a bank account created at the location level is attached to all the a
   "number": "466441111"
 }
 ```
-**Note:** The length of phone number is 10 for the US region; for EU region it should be less than or equal to 12. 
+**Note:** The length of a phone number is 10 for the US region; for the EU region it should be less than or equal to 12. 
 
 <a name="processingoptionobject" title="Processing Option Object"></a>
 ## processingOption
@@ -1189,7 +1189,7 @@ Similarly, a bank account created at the location level is attached to all the a
 |lastDigits                     |string<br/>`length=4`      |This is the last 4-digits of account number sent in response.|
 |beneficiaryBankCountry         |string<br/>`length=2`      |This is the [country](#sepacountries) of the beneficiary bank's address.|
 
-> **NOTE**: Access to bank accounts is assigned at different levels. You can control access to the bank accounts at various levels using hierarchy. If you create a bank account at the Business legal entity level, the bank account is attached to all the accounts under the BLE.
+> **NOTE**: Access to bank accounts is assigned at different levels using hierarchy. If you create a bank account at the Business legal entity level, the bank account is attached to all the accounts under the BLE.
 Similarly, a bank account created at the location level is attached to all the accounts under that location. And If a bank account is created at the account level, it is attached to only that account.
 
 ```apib
@@ -1227,7 +1227,7 @@ Similarly, a bank account created at the location level is attached to all the a
 |loginName  |string<br/>`length=2-31`   |This is the user name that will be configured to access the merchant account in the Merchant Back Office.|
 |password   |string<br/>`length<=17`    |This is the password that the user will use to access the merchant account in the Merchant Back Office.|
 
-> **NOTE**: Users are individuals that need access at different levels.  You control user access at various levels using hierarchy. If you create a user at the Business legal entity level, the user will have access to all the accounts and locations created for the BLE. 
+> **NOTE**: Users are individuals that need access at different levels.  You control user access using hierarchy. If you create a user at the Business legal entity level, the user will have access to all the accounts and locations created for the BLE. 
 Similarly, a user created at the location level will have access to all accounts under it. And If users are created at account level, they will have access to only that account. 
 
 ```apib
@@ -1265,7 +1265,7 @@ Similarly, a user created at the location level will have access to all accounts
 |beneficiaryBankRegion  |string<br/>`length<=40` |This is the region of the beneficiary's bank. |
 |beneficiaryBankPostCode    |string<br/>`length<=10`   |This is the postcode of the beneficiary's bank.|
 
-> **NOTE**: Access to bank accounts is assigned at different levels. You can control access to the bank accounts at various levels using hierarchy. If you create a bank account at the Business legal entity level, the bank account is attached to all the accounts under the BLE.
+> **NOTE**: Access to bank accounts is assigned at different levels using hierarchy. If you create a bank account at the Business legal entity level, the bank account is attached to all the accounts under the BLE.
 Similarly, a bank account created at the location level is attached to all the accounts under that location. And If a bank account is created at the account level, it is attached to only that account.
 
 ```apib
@@ -1906,7 +1906,7 @@ This call returns a status of READY if the API is available.
 
 ## Create Application [/merchant/v1/applications]
 
-Create Application allows you to create a new Application request for merchant onboarding. Click **Create an Application** tab below to see an example of how to create a new application for a merchant:
+Create Application allows you to create a new Application request for merchant onboarding. Click the **Create an Application** tab below to see an example of how to create a new application for a merchant:
 <br>
 
 **Note:** Once you create an application, you must call the [Get Terms and Conditions](#gettermsandconditions) API before submitting the application. 
