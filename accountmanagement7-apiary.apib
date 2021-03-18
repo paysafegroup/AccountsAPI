@@ -4751,6 +4751,7 @@ Submit Application allows you to submit an Application request for merchant onbo
         + ADD_LOCATION - Add a new location to an existing application
         + ADD_ACCOUNT - Add a new account to an existing application
 + acceptTermsAndConditions: `true` (boolean, optional) - True- This indicates that the merchant has accepted the terms and conditions. false - Indicates that the merchant has not accepted the terms and conditions.
++ termsVersion: `1.0` (array, required) - This indicates the version of the terms and conditions PDF file. To get the version, call the gettermsandconditions API and identify the X-TERMS-VERSION from the header responses. Along with the terms and conditions version, other parameters like ccAddendum, ddEftAddendum, and region will be present in the response. 
 + Include Business Legal Entity
 + addendum: `` (string, optional) - Additional key-values.
     _length=10_
