@@ -4719,15 +4719,15 @@ Submit Application allows you to submit an Application request for merchant onbo
         + Include Business Details
 
 ## Terms Version Object 
-+ `termsVersion` (object) - Object that has accepted terms version. This object contains the version of the terms and conditions PDF file. To get the version, call the gettermsandconditions API and identify the X-TERMS-VERSION from the header responses. Along with the terms and conditions version, other parameters like ccAddendum, ddAchAddendum, and region need to be passed as the application request.
++ `termsVersion` (array) - Object that has accepted terms version. This object contains the version of the terms and conditions PDF file. To get the version, call the gettermsandconditions API and identify the X-TERMS-VERSION from the header responses. Along with the terms and conditions version, other parameters like ccAddendum, ddAchAddendum, and region need to be passed as the application request. **Note** The exact header response from gettermsandconditions API must be submitted as the request body for submitting the application. 
     + Properties
-        + termsAndConditions: `1.0` (string) - this is the terms and conditions version number. 
-        + ccAddendum: `` (string) 
-        + ddAchAddendum: `` (string)
-        + ddBacsAddendum: `` (string)
-        + ddSepaAddendum: `` (string)
-        + ddEftAddendum: `` (string) 
-        + region: `` (string) 
+        + termsAndConditions: `10.0` (string) - this is the terms and conditions version number. 
+        + ccAddendum: `` (string) - this is the ccAddendum version number. 
+        + ddAchAddendum: `` (string) - this is the ddAchAddendum version number. 
+        + ddBacsAddendum: `` (string) - this is the ddBacsAddendum version number. 
+        + ddSepaAddendum: `` (string) - this is the ddSepaAddendum version number. 
+        + ddEftAddendum: `` (string) - this is the ddEftAddendum version number. 
+        + region: `` (string) - this is the region code. 
 
 ## Business Details
 + `businessDetails` (object):  Array of Business Details.
