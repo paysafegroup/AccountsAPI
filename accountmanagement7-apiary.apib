@@ -4719,7 +4719,7 @@ Submit Application allows you to submit an Application request for merchant onbo
         + Include Business Details
 
 ## Terms Version Object 
-+ `termsVersion` (array) - This array contains the version of the terms and conditions PDF file. To get the version, call the gettermsandconditions API and identify the X-TERMS-VERSION from the header responses. 
++ `termsVersion` (object) - This array contains the version of the terms and conditions PDF file. To get the version, call the gettermsandconditions API and identify the X-TERMS-VERSION from the header responses. For submitting the application, the header response from gettermsandconditions API must be submitted exactly as the request body. 
     + Properties
         + termsAndConditions: `10.0` (string) - this is the terms and conditions version number. 
         + ccAddendum: `` (string) - this is the ccAddendum version number. 
