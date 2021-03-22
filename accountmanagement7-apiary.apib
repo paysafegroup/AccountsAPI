@@ -4330,7 +4330,7 @@ Get Terms and Conditions returns the Paysafe's terms and conditions that the mer
 Submit Application allows you to submit an Application request for merchant onboarding for further processing. To know how to submit a merchant application request, click the tab below, "Submit Merchant Application":
 <br>
 
-### Submit a Merchant Application [PATCH /merchant/v1/applications/{appId}]
+### Submit a Merchant Application [PATCH /v1/applications/{appId}]
 <a name="submitapplication" title="Submit Merchant Appication"></a>
 
 
@@ -4347,7 +4347,7 @@ Submit Application allows you to submit an Application request for merchant onbo
         + acceptTermsAndConditions: `true` (boolean) - true- This indicates that the merchant has accepted the terms and conditions. false - Indicates that the merchant has not accepted the terms and conditions.
         + submit: `true` (boolean) - true - This indicates that the application is prepared to be submitted and ready for further processing. false - This indicates that the application is still in progress and not ready for further processing.
             _If you set submit=true, then you will not be able to further update the application._
-        + Include Terms Version Object 
+        + Include Terms Version
     + Headers
     
             Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
@@ -4718,8 +4718,8 @@ Submit Application allows you to submit an Application request for merchant onbo
         + Include Principals
         + Include Business Details
 
-## Terms Version Object 
-+ `termsVersion` (object) - This array contains the version of the terms and conditions PDF file. To get the version, call the gettermsandconditions API and identify the X-TERMS-VERSION from the header responses. For submitting the application, the header response from gettermsandconditions API must be submitted exactly as the request body. 
+## Terms Version  
++ `termsVersion` (object) - Get the value of termsVersion by calling the gettermsandconditions API and see the X-TERMS-VERSION in response headers. Before you submit the application, call the gettermsandconditions API and populate termsVersion field. 
     + Properties
         + termsAndConditions: `10.0` (string) - this is the terms and conditions version number. 
         + ccAddendum: `` (string) - this is the ccAddendum version number. 
@@ -4762,7 +4762,7 @@ Submit Application allows you to submit an Application request for merchant onbo
         + ADD_LOCATION - Add a new location to an existing application
         + ADD_ACCOUNT - Add a new account to an existing application
 + acceptTermsAndConditions: `true` (boolean, optional) - True- This indicates that the merchant has accepted the terms and conditions. false - Indicates that the merchant has not accepted the terms and conditions.
-+ Include Terms Version Object
++ Include Terms Version
 + Include Business Legal Entity
 + addendum: `` (string, optional) - Additional key-values.
     _length=10_
