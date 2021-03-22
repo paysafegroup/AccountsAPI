@@ -3402,7 +3402,7 @@ For more information on other common objects used, refer to the section [Complex
             }
             }
 
-## Get Merchant Application [/merchant/v1/applications/{appId}]
+## Get Merchant Application [/v1/applications/{appId}]
 
 Get Merchant Application allows you to retrieve an Application request. Click the **Search for a Merchant** tab below to search for a merchant application. 
 <br>
@@ -3713,13 +3713,13 @@ Get Merchant Application allows you to retrieve an Application request. Click th
             }
             }
 
-## Update Application [/merchant/v1/]
+## Update Application [/v1/]
 
 Update Application allows you to modify an Application request for merchant onboarding.
 <br>
 **Note:** Once you update an application, you must call the [Get Terms and Conditions](#gettermsandconditions) API before submitting the application. 
 
-### Update a Merchant Application  [PUT /merchant/v1/applications/{appId}]
+### Update a Merchant Application  [PUT /v1/applications/{appId}]
 <a name="updatemerchantaccount" title="Update a Merchant Account"></a>
 
 This is how you update a merchant application with a PUT request.
@@ -4301,7 +4301,7 @@ This is how you update a merchant application with a PUT request.
                 }
             }
 
-## Get Terms and Conditions [/merchant/v1/applications/{appId}/termsandconditions]
+## Get Terms and Conditions [/v1/applications/{appId}/termsandconditions]
 
 Get Terms and Conditions returns the Paysafe's terms and conditions that the merchants must accept in order to begin processing their transactions. To obtain the terms and conditions, click the tab below, "Get Terms and Conditions":
 <br>
@@ -4325,7 +4325,7 @@ Get Terms and Conditions returns the Paysafe's terms and conditions that the mer
         Returns Paysafe's Terms and Conditions.
 
 
-## Submit Application [/merchant/v1]
+## Submit Application [/v1]
 
 Submit Application allows you to submit an Application request for merchant onboarding for further processing. To know how to submit a merchant application request, click the tab below, "Submit Merchant Application":
 <br>
@@ -4347,7 +4347,7 @@ Submit Application allows you to submit an Application request for merchant onbo
         + acceptTermsAndConditions: `true` (boolean) - true- This indicates that the merchant has accepted the terms and conditions. false - Indicates that the merchant has not accepted the terms and conditions.
         + submit: `true` (boolean) - true - This indicates that the application is prepared to be submitted and ready for further processing. false - This indicates that the application is still in progress and not ready for further processing.
             _If you set submit=true, then you will not be able to further update the application._
-
+        + Include Terms Version Object 
     + Headers
     
             Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
