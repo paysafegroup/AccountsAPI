@@ -1,7 +1,7 @@
 FORMAT: 1A
 HOST: https://api.test.paysafe.com/merchant/
 
-# Account Management API Reference
+# Account Management API Reference   
 
 The Paysafe Account Management API allows Paysafe's Platform Partners to create their own white-labeled merchant onboarding experience, via a single API call. 
 
@@ -10,7 +10,7 @@ The new API simplifies the entire merchant onboarding process and performs under
 # Prerequisites
 <a name="prereq" title="Prerequisites"></a>
 
-Below are the prerequisite steps for merchant onboarding:
+Below are the prerequisite steps for merchant onboarding:  
 
 1. The partner must contact the account manager to set up the account.
 2. Once the account is set up, the partner will get the Onboarding Config ID from the Paysafe integrations team. 
@@ -3407,26 +3407,38 @@ For more information on other common objects used, refer to the section [Complex
 ### Create a Sub-account [POST]
 <a name="subaccountrequest" title="Create a Subaccount"></a>
 
-For more information on other common objects used, refer to the section [Complex JSON Objects](#accountobject). To know how to submit a merchant application, refer to the section [Submit Merchant Application](submitapplication)
+To create a subaccount we need to create a parent account first. 
 
+* Create a parent account using the [initial application request](#Create an Application for a New Account).
+
+* Once you make a request, you will get an application ID in the response body. 
+
+* Using that application ID, use the [Get Application API](#Get Merchant Application). 
+
+* From the response, copy ID under business legal entity. 
+
+* From the response, copy ID under business details. 
+
+* From the response, under Business Details > accounts > id, copy the **ID**.  
+
+* Copy all the above IDs and paste the businesslegalentity ID, businessdetails ID, and accounts ID in the request body to create new subaccounts. 
 
 + Attributes 
-    + id:`100001556` (string, required) - This is the unique ID returned in the response after some delay. It can be used later to look up or update a merchant.
-    + merchantRefNum: `merchantRefNum8` (string, required) - The merchant's unique identifier for this request.
-    + onboardingConfigId: `224112` (string, required) - Merchant onboarding configuration ID that is configured in Paysafe.
-    + locale: `en` (string, optional) - Preferred [language/locale](#locale) for this application. Default is "en".
     + applicationType: `INITIAL_APPLICATION` (enum, optional) - Describes the current status of the application. Default is INITIAL_APPLICATION. 
          + Members
                + INITIAL_APPLICATION - This denotes a fresh new application
                + ADD_LOCATION - Add a new location to an existing application
                + ADD_ACCOUNT - Add a new account to an existing application
                + ADD_SUB_ACCOUNT - Add a new sub-account to an existing application
-               + EDIT_SUB_ACCOUNT - Edit an existing sub-account 
-    + businessLegalEntity: `` (enum, optional) - this is the business legal entity. 
-    + Include Business Legal Entity SA  
+               + EDIT_SUB_ACCOUNT - Edit an existing sub-account
+    + merchantRefNum: `merchantRefNum8` (string, required) - The merchant's unique identifier for this request.
+    + onboardingConfigId: `224112` (string, required) - Merchant onboarding configuration ID that is configured in Paysafe.
+    + Include Business Legal Entity SA
+    + locale: `en` (string, optional) - Preferred [language/locale](#locale) for this application. Default is "en".
     + submit: `true` (boolean) - True - This indicates that the application is submitted and ready for further processing. false - This indicates that the application is still in progress and not ready for further processing.
-
-+ Request Create INITIAL Merchant Account (application/json)
+    
+    
++ Request Create a Sub-account (application/json)
 
     + Headers
 
@@ -3522,6 +3534,126 @@ For more information on other common objects used, refer to the section [Complex
                     ]
                 }
             }
+
+### Edit a Sub-account [POST]
+<a name="editsubaccountrequest" title="Edit a Subaccount"></a>
+
+Use this API To edit a sub-account. 
+
+For more information on other common objects used, refer to the section [Complex JSON Objects](#accountobject). To know how to submit a merchant application, refer to the section [Submit Merchant Application](submitapplication)
+
++ Attributes 
+    + id:`100001556` (string, required) - This is the unique ID returned in the response after some delay. It can be used later to look up or update a merchant.
+    + merchantRefNum: `merchantRefNum8` (string, required) - The merchant's unique identifier for this request.
+    + onboardingConfigId: `224112` (string, required) - Merchant onboarding configuration ID that is configured in Paysafe.
+    + locale: `en` (string, optional) - Preferred [language/locale](#locale) for this application. Default is "en".
+    + applicationType: `INITIAL_APPLICATION` (enum, optional) - Describes the current status of the application. Default is INITIAL_APPLICATION. 
+         + Members
+               + INITIAL_APPLICATION - This denotes a fresh new application
+               + ADD_LOCATION - Add a new location to an existing application
+               + ADD_ACCOUNT - Add a new account to an existing application
+               + ADD_SUB_ACCOUNT - Add a new sub-account to an existing application
+               + EDIT_SUB_ACCOUNT - Edit an existing sub-account 
+    + Include Business Legal Entity ESA  
+    + submit: `true` (boolean) - True - This indicates that the application is submitted and ready for further processing. false - This indicates that the application is still in progress and not ready for further processing.
+
++ Request Edit a Sub-account (application/json)
+
+    + Headers
+
+            Authorization: "Basic YOUR-BASE64-ENCODED-API-KEY"
+            Simulator: "EXTERNAL"
+    
+    + Body
+
+            {
+                "type": "ADD_SUB_ACCOUNT",
+                "merchantRefNum": "",
+                "onboardingConfigId": "",
+                "locale": "en",
+                "submit": true,
+                "businessLegalEntity": {
+                "id": "60f02757-e21b-4933-8434-5b03f2e5f2f9",
+                "businessDetails": [
+                    {
+                        "id": "eec8378f-5fd8-4985-bcea-56391c10eabc",
+                        "accounts": 
+                        [
+                            {
+                                "id": "1015424340",
+                                "subAccounts": 
+                                [
+                                {
+                                    "name": "OD CC ACC 1",
+                                    "achBankAccount": 
+                                    {
+                                       "accountNumber": "2082648888",
+                                       "routingNumber": "847294445"
+                                    }
+                                },
+                                {
+                                    "name": "ST CC ACC 2",
+                                    "achBankAccount": 
+                                    {
+                                        "accountNumber": "2082648888",
+                                        "routingNumber": "847294445"
+                                    }
+                                }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+            }
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "id": "100200530",
+                "type": "ADD_SUB_ACCOUNT",
+                "merchantRefNum": "624476",
+                "onboardingConfigId": "106886",
+                "locale": "en",
+                "acceptTermsAndConditions": false,
+                "submit": true,
+                "status": "RECEIVED",
+                "businessLegalEntity": 
+                {
+                       "id": "e0a6213d-fff5-480d-bdbe-1cb276471f48",
+                    "businessDetails": 
+                    [
+                        {
+                            "id": "df9d3934-caf6-41ba-8f55-54dcfeb76ac2",
+                            "accounts": [
+                          {
+                                "id": "1003557330",
+                                "subAccounts": 
+                                [
+                                    {
+                                        "name": "settlement ACC 1",
+                                        "achBankAccount": 
+                                        {
+                                            "routingNumber": "847292221"
+                                        }
+                                    },
+                                    {
+                                        "name": "overdraft ACC 2",
+                                        "achBankAccount": 
+                                        {
+                                        "routingNumber": "847292225"
+                                        }
+                                    }
+                                ]
+                          }
+                            ]
+                        }
+                    ]
+                }
+            }
+
 
 ## Get Merchant Application [/v1/applications/{appId}]
 
@@ -4421,6 +4553,47 @@ This is how you update a merchant application with a PUT request.
                     ]
                 }
             }
+            
+### Update a Sub-account [PATCH /v1/subaccounts/{subAccountId}]
+<a name="updatesubaccountrequest" title="Update a Subaccount"></a>
+
+Use this API to update the sub-account. 
+
+For more information on other common objects used, refer to the section [Complex JSON Objects](#accountobject). To know how to submit a merchant application, refer to the section [Submit Merchant Application](submitapplication)
+
+
++ Attributes 
+    + status: `DISABLED` (enum, optional) - Describes the current status of the application. This attribute takes only DISABLED as the status. 
+    + statusReason: `TERMINATED` (string, required) - The merchant's unique identifier for this request. This attribute takes only TERMINATED as the status reason. 
+    + statusComment: `Business shutdown` (string, required) - Merchant onboarding configuration ID that is configured in Paysafe. 
+    + name: `OD ACC` (string, optional) - Preferred [language/locale](#locale) for this application. Default is "en".
+    
++ Request Update Sub-account (application/json)
+
+    + Headers
+
+            Authorization: "Basic YOUR-BASE64-ENCODED-API-KEY"
+            Simulator: "EXTERNAL"
+    
+    + Body
+
+            {
+                "status": "DISABLED",
+                "statusReason": "TERMINATED",
+                "statusComment": "Business shutdown",
+                "name": "OD CHANGE"
+            }
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                 "id": "1003557380",
+                 "name": "OD CHANGE",
+                "achId": "875f9c9a-bd08-40f6-8bae-6808234a548e",
+                "status": "DISABLED"
+            }
 
 ## Get Terms and Conditions [/v1/applications/{appId}/termsandconditions]
 
@@ -4874,21 +5047,21 @@ Submit Application allows you to submit an Application request for merchant onbo
 ## Business Legal Entity SA
 + `businessLegalEntity` (object) - Registered legal entity details.
     + Properties
-        + id: `` (string) - This is the ID returned in the initial application response. 
+        + id: `` (string) - This ID is returned in the response of the account creation API. This ID can be used to create a sub-account. 
             _Read Only_
         + Include Business Details SA  
         
 ## Business Details SA 
 + `businessDetails` (object):  Array of Business Details.
     + Properties
-        +  id: `bd-1111` (string) - This is the ID returned in the initial applicationresponse. 
+        +  id: `bd-1111` (string) - This ID is returned in the response of the account creation API. This ID can be used to create a sub-account.  
             _Read Only_
         + Include Accounts SA
 
 ## Accounts SA
 + `accounts` (object) : An array of accounts.
     + Properties
-        + id: `100101010` (string) - This is the unique ID returned in the initial application response. 
+        + id: `100101010` (string) - This ID is returned in the response of the account creation API. This ID can be used to create a sub-account.  
         + Include subAccounts SA 
 
 ## subAccounts SA
@@ -4898,10 +5071,44 @@ Submit Application allows you to submit an Application request for merchant onbo
         + Include achBankAccount SA
                 
 ## achBankAccount SA
-+ `achBankAccountSA` (object) : An array of achBankAccount.
++ `achBankAccount` (object) : An array of achBankAccount.
     + Properties
         + routingNumber: `` (string) - this the routing number of the achBankAccount.
+        + accountNumber: `` (string) - this is the account number of the bank account. 
                 
+## Business Legal Entity ESA
++ `businessLegalEntity` (object) - Registered legal entity details.
+    + Properties
+        + id: `` (string) - This ID is returned in the response of the account creation API. This ID can be used to create a sub-account.  
+            _Read Only_
+        + Include Business Details ESA  
+        
+## Business Details ESA 
++ `businessDetails` (object):  Array of Business Details.
+    + Properties
+        +  id: `bd-1111` (string) - This ID is returned in the response of the account creation API. This ID can be used to create a sub-account.  
+            _Read Only_
+        + Include Accounts ESA
+
+## Accounts ESA
++ `accounts` (object) : An array of accounts.
+    + Properties
+        + id: `100101010` (string) - This ID is returned in the response of the account creation API. This ID can be used to create a sub-account.  
+        + Include subAccounts ESA 
+
+## subAccounts ESA
++ `subAccounts` (object) : An array of subAccounts.
+    + Properties
+        + name: `` (string) - This is the name of the subaccount.
+        + id: `` (string) - This ID is returned in the response of the account creation API. This ID can be used to create a sub-account. 
+        + Include achBankAccount ESA
+                
+## achBankAccount ESA
++ `achBankAccount` (object) : An array of achBankAccount.
+    + Properties
+        + routingNumber: `` (string) - this the routing number of the achBankAccount.
+        + accountNumber: `` (string) - this is the account number of the bank account. 
+
 
 ## ConslidatedApplicationObject
 + id:`100001556` (string, required) - This is the unique ID returned in the response after some delay. It can be used later to look up or update a merchant.
