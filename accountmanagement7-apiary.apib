@@ -1292,6 +1292,8 @@ Similarly, a bank account created at the location level is attached to all the a
 ```
 
 
+
+
 # Error Summary
 
 | HTTP Status Code  | Error Code    | Error Message |Description |
@@ -3402,6 +3404,125 @@ For more information on other common objects used, refer to the section [Complex
             }
             }
 
+### Create a Sub-account [POST]
+<a name="subaccountrequest" title="Create a Subaccount"></a>
+
+For more information on other common objects used, refer to the section [Complex JSON Objects](#accountobject). To know how to submit a merchant application, refer to the section [Submit Merchant Application](submitapplication)
+
+
++ Attributes 
+    + id:`100001556` (string, required) - This is the unique ID returned in the response after some delay. It can be used later to look up or update a merchant.
+    + merchantRefNum: `merchantRefNum8` (string, required) - The merchant's unique identifier for this request.
+    + onboardingConfigId: `224112` (string, required) - Merchant onboarding configuration ID that is configured in Paysafe.
+    + locale: `en` (string, optional) - Preferred [language/locale](#locale) for this application. Default is "en".
+    + applicationType: `INITIAL_APPLICATION` (enum, optional) - Describes the current status of the application. Default is INITIAL_APPLICATION. 
+         + Members
+               + INITIAL_APPLICATION - This denotes a fresh new application
+               + ADD_LOCATION - Add a new location to an existing application
+               + ADD_ACCOUNT - Add a new account to an existing application
+               + ADD_SUB_ACCOUNT - Add a new sub-account to an existing application
+               + EDIT_SUB_ACCOUNT - Edit an existing sub-account 
+    + businessLegalEntity: `` (enum, optional) - this is the business legal entity. 
+    + Include Business Legal Entity SA  
+    + submit: `true` (boolean) - True - This indicates that the application is submitted and ready for further processing. false - This indicates that the application is still in progress and not ready for further processing.
+
++ Request Create INITIAL Merchant Account (application/json)
+
+    + Headers
+
+            Authorization: "Basic YOUR-BASE64-ENCODED-API-KEY"
+            Simulator: "EXTERNAL"
+    
+    + Body
+
+            {
+                "type": "ADD_SUB_ACCOUNT",
+                "merchantRefNum": "",
+                "onboardingConfigId": "",
+                "locale": "en",
+                "submit": true,
+                "businessLegalEntity": {
+                "id": "60f02757-e21b-4933-8434-5b03f2e5f2f9",
+                "businessDetails": [
+                    {
+                        "id": "eec8378f-5fd8-4985-bcea-56391c10eabc",
+                        "accounts": 
+                        [
+                            {
+                                "id": "1015424340",
+                                "subAccounts": 
+                                [
+                                {
+                                    "name": "OD CC ACC 1",
+                                    "achBankAccount": 
+                                    {
+                                       "accountNumber": "2082648888",
+                                       "routingNumber": "847294445"
+                                    }
+                                },
+                                {
+                                    "name": "ST CC ACC 2",
+                                    "achBankAccount": 
+                                    {
+                                        "accountNumber": "2082648888",
+                                        "routingNumber": "847294445"
+                                    }
+                                }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+            }
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "id": "100200530",
+                "type": "ADD_SUB_ACCOUNT",
+                "merchantRefNum": "624476",
+                "onboardingConfigId": "106886",
+                "locale": "en",
+                "acceptTermsAndConditions": false,
+                "submit": true,
+                "status": "RECEIVED",
+                "businessLegalEntity": 
+                {
+                       "id": "e0a6213d-fff5-480d-bdbe-1cb276471f48",
+                    "businessDetails": 
+                    [
+                        {
+                            "id": "df9d3934-caf6-41ba-8f55-54dcfeb76ac2",
+                            "accounts": [
+                          {
+                                "id": "1003557330",
+                                "subAccounts": 
+                                [
+                                    {
+                                        "name": "settlement ACC 1",
+                                        "achBankAccount": 
+                                        {
+                                            "routingNumber": "847292221"
+                                        }
+                                    },
+                                    {
+                                        "name": "overdraft ACC 2",
+                                        "achBankAccount": 
+                                        {
+                                        "routingNumber": "847292225"
+                                        }
+                                    }
+                                ]
+                          }
+                            ]
+                        }
+                    ]
+                }
+            }
+
 ## Get Merchant Application [/v1/applications/{appId}]
 
 Get Merchant Application allows you to retrieve an Application request. Click the **Search for a Merchant** tab below to search for a merchant application. 
@@ -4750,6 +4871,38 @@ Submit Application allows you to submit an Application request for merchant onbo
         + Include Accounts
         + Include Contacts
 
+## Business Legal Entity SA
++ `businessLegalEntity` (object) - Registered legal entity details.
+    + Properties
+        + id: `` (string) - This is the ID returned in the initial application response. 
+            _Read Only_
+        + Include Business Details SA  
+        
+## Business Details SA 
++ `businessDetails` (object):  Array of Business Details.
+    + Properties
+        +  id: `bd-1111` (string) - This is the ID returned in the initial applicationresponse. 
+            _Read Only_
+        + Include Accounts SA
+
+## Accounts SA
++ `accounts` (object) : An array of accounts.
+    + Properties
+        + id: `100101010` (string) - This is the unique ID returned in the initial application response. 
+        + Include subAccounts SA 
+
+## subAccounts SA
++ `subAccounts` (object) : An array of subAccounts.
+    + Properties
+        + name: `` (string) - This is the name of the subaccount.
+        + Include achBankAccount SA
+                
+## achBankAccount SA
++ `achBankAccountSA` (object) : An array of achBankAccount.
+    + Properties
+        + routingNumber: `` (string) - this the routing number of the achBankAccount.
+                
+
 ## ConslidatedApplicationObject
 + id:`100001556` (string, required) - This is the unique ID returned in the response after some delay. It can be used later to look up or update a merchant.
 + name:`XYZ` (string, optional) - This is the suitable name given to the application.
@@ -4761,6 +4914,8 @@ Submit Application allows you to submit an Application request for merchant onbo
         + INITIAL_APPLICATION - This denotes a fresh new application
         + ADD_LOCATION - Add a new location to an existing application
         + ADD_ACCOUNT - Add a new account to an existing application
+        + ADD_SUB_ACCOUNT - Add a new sub-account to an existing application
+        + EDIT_SUB_ACCOUNT - Edit an existing sub-account 
 + acceptTermsAndConditions: `true` (boolean, optional) - True- This indicates that the merchant has accepted the terms and conditions. false - Indicates that the merchant has not accepted the terms and conditions.
 + Include Terms Version
 + Include Business Legal Entity
