@@ -116,6 +116,19 @@ Example Header:
 ```
 Signature: UMaQ4h635wUc4hp60Z5ASBC/5UtqKybAldOkLv6ngc0=
 ```
+## Webhook Payload
+
+The following table explains the Webhook Payload in detail:
+
+|SI.No   |Application Status   |Application Sub Status                                      |Event Type                     |Descripition                                                                                                |
+|---     |---                  |---                                                         |---                            |---                                                                                                         |
+|1       |RECEIVED             |                                                            |MOBE_APPLICATION_RECEIVED      |Invoked when submitted application has passed all the data validation and has been picked up for processing.|
+|2       |IN_REVIEW            |                                                            |MOBE_APPLICATION_IN_PROGRESS   |Invoked when application goes into underwriting review.                                                    |
+|3       |APPROVED             |<ul><li>AUTO_DECISION</li><li>MANUAL_DECISION</li></ul>     |MOBE_APPLICATION_COMPLETED     |Invoked when the Application is Approved.|
+|4       |DECLINED             |<ul><li>AUTO_DECISION</li><li>MANUAL_DECISION</li></ul>     |MOBE_APPLICATION_COMPLETED     |Invoked when the Application is Declined.|
+|5       |WITHDRAWN            |MAMNUAL_DECISION                                            |MOBE_APPLICATION_COMPLETED     |Invoked when the Application is Withdrawn.|
+|6       |ERROR                |                                                            |MOBE_APPLICATION_ERROR         |Any error in the application process other than normal flow.|
+ 
 
 ## Webhook Events
 
