@@ -889,6 +889,7 @@ Similarly, a bank account created at the location level is attached to all the a
 
 | HTTP Status Code  | Error Code    | Error Message |Description |
 |-------------------|---------------|-------------  |------------|
+|400                |5023           |Request body not parsable | Error is returned when the JSON submitted is not well formatted.Note: If you get this error please parse the JSON with a formatter to find the error or, in case, there is not any format error you check that Boolean fields are passed with values "true" or "false" only.|
 |400                |5068           |No updates are allowed on submitted Applications| No updates are allowed on submitted applications.|
 |400                |5068           |Combination of processing currency, settlement currency, productType  and terminalType is not configured for onboarding config id:<onboardingConfigId>|Combination of processing currency, settlement currency, productType and terminalType is not configured for onboarding config id:<onboardingConfigId>.|
 |400                |5068           |<bankAccountType>BankAccount should be given|Requird bank account details are not provided.|
