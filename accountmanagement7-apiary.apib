@@ -192,14 +192,29 @@ Webhooks can be triggered for the following events:
 **Sample Payload**
 ```
   {
-  "applicationId": "100000016",
-  "merchantRefNum": "1582866940938",
+  "id": "e628fbdf-9f8f-400e-a69c-c00ca06f8622",
+  "applicationId": "100002087",
+  "merchantRefNum": "683685377",
   "eventType": "MOBE_APPLICATION_COMPLETED",
   "eventData": {
     "status": "APPROVED",
-    "subStatus": "AUTO_DECISION" or "MANUAL_DECISION"
-  },
-  "addendum": {}
+    "subStatus": "AUTO_DECISION" or "MANUAL_DECISION",
+    "accountDetails": [
+      {
+        "tradeName": "Good Guy INC US",
+        "accounts": [
+          {
+            "id": "1002417510",
+            "name": "CARD USD Account",
+            "paymentType": "CARD",
+            "currency": "USD",
+            "settlementCurrency": "USD",
+            "terminalType": "ECOM"
+          }
+        ]
+      }
+    ]
+  }
 }
 ```
 
@@ -1503,7 +1518,7 @@ Create Application allows you to create a new Application request for merchant o
 
 **Note:** Once you create an application, you must call the [Get Terms and Conditions](#gettermsandconditions) API before submitting the application. 
 
-### Create an Application for Initial Merchant Account [POST]
+### Create an Application for Initial Merchant Account [POST /v1/applications]
 <a name="merchantapplicationrequest" title="Create an application"></a>
 * This is an INITIAL Merchant Account creation request.
 
@@ -1526,342 +1541,134 @@ For more information on other common objects used, refer to the section [Complex
     + Body
 
             {
-             {
-              "merchantRefNum": "27216",
-              "onboardingConfigId": "224112",
-              "acceptTermsAndConditions": true,
+              "merchantRefNum": "683685377",
+              "type": "INITIAL_APPLICATION",
+              "name": "Test applications api",
+              "locale": "en",
+              "onboardingConfigId": "101840",
+              "acceptTermsAndConditions": false,
               "submit": false,
-              "locale": "en_US",
               "businessLegalEntity": {
-                "legalName": "legal_name_27216",
-                "taxIdentificationNumber": "181812234",
-                "type": "LTD",
+                "type": "LLC",
+                "legalName": "Good Guy INC US",
+                "registrationNumber": null,
+                "description": "Legal entity description",
+                "taxIdentificationNumber": "987654321",
+                "users": [
+                  {
+                    "email": "merchantble683685377@gmail.com",
+                    "fullName": "merchantble683685377",
+                    "loginName": "merchantble683685377",
+                    "password": "Pwd1234!"
+                  }
+                ],
                 "principals": [
                   {
-                    "title": "Mr",
-                    "firstName": "Richard",
+                    "firstName": "Sophie",
+                    "lastName": "Test lastname ",
                     "middleName": null,
-                    "lastName": "Taylor",
+                    "ssn": "123123123",
                     "previousLastName": null,
                     "type": "OWNER",
-                    "nationality": "CA",
                     "dateOfBirth": {
                       "day": "28",
                       "month": "02",
                       "year": "1984"
                     },
-                    "ssn": null,
-                    "sin": "100010111",
                     "positionInCompany": "Chairman",
-                    "percentageShareholding": 20,
                     "address": {
-                      "street": "2600 Michelson Drive",
+                      "street": "test 2600 Michelson Drive",
                       "street2": "Suite 1600",
-                      "city": "Irvine",
-                      "state": "AB",
-                      "country": "CA",
-                      "zip": "M1R 0E9"
+                      "city": "California",
+                      "state": "CA",
+                      "country": "US",
+                      "zip": "90201"
                     },
-                    "isApplicant": false
-                  },
-                  {
-                    "title": "Mrs",
-                    "firstName": "Jack",
-                    "middleName": null,
-                    "lastName": "Daniel",
-                    "previousLastName": null,
+                    "isApplicant": true,
+                    "isControlProng": true,
                     "isDirector": true,
-                    "type": "DIRECTOR",
-                    "nationality": "US",
-                    "dateOfBirth": {
-                      "day": "12",
-                      "month": "12",
-                      "year": "1974"
-                    },
-                    "ssn": null,
-                    "sin": "100010112",
-                    "positionInCompany": "CEO",
-                    "percentageShareholding": 10,
-                    "address": {
-                      "street": "1221 Marine Drive",
-                      "street2": "House 34600",
-                      "city": "Irvine",
-                      "state": "AB",
-                      "country": "CA",
-                      "zip": "M1R 0E9"
-                    },
-                    "isApplicant": true
-                  },
-                  {
-                    "title": "Ms",
-                    "firstName": "Gerard",
-                    "middleName": "Steven",
-                    "lastName": "Butler",
-                    "previousLastName": "Pixar",
-                    "type": "DIRECTOR",
-                    "isDirector": true,
-                    "nationality": "CA",
-                    "dateOfBirth": {
-                      "day": "12",
-                      "month": "12",
-                      "year": "1984"
-                    },
-                    "ssn": null,
-                    "sin": "100078111",
-                    "positionInCompany": "CEO",
-                    "percentageShareholding": 30,
-                    "address": {
-                      "street": "1221 Marine Drive",
-                      "street2": "House 1600",
-                      "city": "Irvine",
-                      "state": "AB",
-                      "country": "CA",
-                      "zip": "M1R 0E9"
-                    },
-                    "isApplicant": false
+                    "percentageShareholding": 100
                   }
                 ],
-                "users": [
-                  {
-                    "email": "bleemail_27216@gmail.com",
-                    "fullName": "bleusername_27216",
-                    "loginName": "bleusername_27216",
-                    "password": "Pwd1234!"
-                  }
-                ],
-                "eftBankAccount": {
-                  "accountNumber": "5807560412853954",
-                  "transitNumber": "52487",
-                  "institutionId": "052"
+                "achBankAccount": {
+                  "accountNumber": "2082649738",
+                  "routingNumber": "524871232"
                 },
                 "address": {
                   "street": "2600 Michelson Drive",
                   "street2": "Suite 1600",
-                  "city": "Irvine",
-                  "state": "AB",
-                  "country": "CA",
-                  "zip": "E1C 1B9"
+                  "city": "California",
+                  "state": "CA",
+                  "country": "US",
+                  "zip": "90201"
                 },
                 "businessDetails": [
                   {
-                    "tradeName": "Macalerts Company",
-                    "mcc": "1234",
+                    "website": "https://www.merchantofpaysafeus.com",
+                    "tradeName": "Good Guy INC US",
+                    "category": "EDU",
+                    "email": "supportgoodofficeus@gmail.com",
                     "tradeAddress": {
-                      "street": "2345 john street",
-                      "street2": "Suites",
-                      "city": "Toronto",
-                      "state": "ON",
-                      "country": "CA",
-                      "zip": "M1R 0E9"
+                      "street": "2600 Michelson Drive",
+                      "street2": "Suite 1600",
+                      "city": "California",
+                      "state": "CA",
+                      "country": "US",
+                      "zip": "90201"
                     },
-                    "website": "www.testsite.com",
-                    "email": "test@paysafe.com",
-                    "category": "ACCT",
+                    "achBankAccount": {
+                      "accountNumber": "2082649738",
+                      "routingNumber": "524871232"
+                    },
+                    "users": [
+                      {
+                        "email": "merchantbd683685377@gmail.com",
+                        "fullName": "merchantbd683685377",
+                        "loginName": "merchantbd683685377",
+                        "password": "Pwd1234!"
+                      }
+                    ],
                     "phoneNumber": {
-                        "countryCode": "+1",
-                        "number": "9911991199"
-                    },
-                    "eftBankAccount": {
-                      "accountNumber": "5807560412853954",
-                      "transitNumber": "52487",
-                      "institutionId": "052"
+                      "countryCode": "+1",
+                      "number": "9090909091"
                     },
                     "contacts": [
                       {
-                        "type": "BUSINESS",
+                        "firstName": "Good",
+                        "lastName": "Human",
+                        "type": "SALES",
                         "title": "Mr",
-                        "firstName": "King",
                         "middleName": null,
-                        "lastName": "George",
                         "phoneNumber": {
                           "countryCode": "+1",
                           "number": "9090909090"
                         },
-                        "email": "test@paysafe.com"
+                        "email": "goodhuman@goodoffice.com"
                       }
                     ],
                     "accounts": [
                       {
-                        "paymentType": "CARD",
-                        "currency": "CAD",
-                        "terminalType": "ECOM",
-                        "cardTypes": [
-                          "VI"
-                        ],
-                        "statementDescriptor": {
-                          "descriptor": "descriptor",
-                          "phone": "8932223111"
-                        },
-                        "processingOptions": [
-                          {
-                            "cardType": null,
-                            "mid": "454545",
-                            "tids": [
-                              "234578",
-                              "678456"
-                            ]
-                          }
-                        ],
-                        "eftBankAccount": {
-                          "accountNumber": "5807560412853954",
-                          "transitNumber": "52487",
-                          "institutionId": "052"
-                        }
-                      },
-                      {
+                        "name": "CARD USD Account",
+                        "type": "MERCHANT",
                         "paymentType": "CARD",
                         "currency": "USD",
+                        "settlementCurrency": "USD",
                         "terminalType": "ECOM",
-                        "cardTypes": [
-                          "VI"
-                        ],
-                        "statementDescriptor": {
-                          "descriptor": "descriptor",
-                          "phone": "8786223111"
-                        },
-                        "processingOptions": [
-                          {
-                            "cardType": null,
-                            "mid": "454545",
-                            "tids": [
-                              "234578",
-                              "678456"
-                            ]
-                          }
-                        ],
-                        "eftBankAccount": {
-                          "accountNumber": "5806660412853954",
-                          "transitNumber": "52465",
-                          "institutionId": "052"
-                        }
-                      },
-                      {
-                        "paymentType": "CARD",
-                        "currency": "CAD",
-                        "terminalType": "ECOM",
-                        "cardTypes": [
-                          "VI"
-                        ],
-                        "statementDescriptor": {
-                          "descriptor": "descriptor",
-                          "phone": "8786223111"
-                        },
-                        "processingOptions": [
-                          {
-                            "cardType": null,
-                            "mid": "454545",
-                            "tids": [
-                              "234578",
-                              "678456"
-                            ]
-                          }
-                        ],
-                        "eftBankAccount": {
-                          "accountNumber": "5806890412853954",
-                          "transitNumber": "87665",
-                          "institutionId": "052"
-                        }
-                      }
-                    ]
-                  },
-                  {
-                    "tradeName": "Drama Company",
-                    "mcc": "1234",
-                    "tradeAddress": {
-                      "street": "2222 Drive",
-                      "street2": "Suite 1122",
-                      "city": "Irvine",
-                      "state": "BC",
-                      "country": "CA",
-                      "zip": "M1R 0E9"
-                    },
-                    "website": "www.testsites.com",
-                    "email": "test@paysafe.com",
-                    "category": "CHARITY",
-                    "phoneNumber": {
-                        "countryCode": "+1",
-                        "number": "9988776655"
-                    },
-                    "eftBankAccount": {
-                      "accountNumber": "5807560412853954",
-                      "transitNumber": "52487",
-                      "institutionId": "052"
-                    },
-                    "contacts": [
-                      {
-                        "type": "SALES",
-                        "title": "Ms",
-                        "firstName": "Mahesh",
-                        "middleName": null,
-                        "lastName": "Babu",
-                        "phoneNumber": {
-                          "countryCode": "+1",
-                          "number": "9090909090"
-                        },
-                        "email": "goodhuman@goodoffice.us"
-                      }
-                    ],
-                    "accounts": [
-                      {
-                        "paymentType": "CARD",
-                        "currency": "CAD",
-                        "terminalType": "ECOM",
-                        "cardTypes": [
-                          "VI"
-                        ],
                         "statementDescriptor": {
                           "descriptor": "descriptor",
                           "phone": "8932223111"
                         },
-                        "processingOptions": [
-                          {
-                            "cardType": null,
-                            "mid": "454545",
-                            "tids": [
-                              "234578",
-                              "678456"
-                            ]
-                          }
-                        ],
                         "users": [
                           {
-                            "email": "acctemail_2_27216@gmail.com",
-                            "fullName": "acctusername_2_27216",
-                            "loginName": "acctusername_2_27216",
+                            "email": "merchant683685377@gmail.com",
+                            "fullName": "merchant683685377",
+                            "loginName": "merchant683685377",
                             "password": "Pwd1234!"
                           }
                         ],
-                        "eftBankAccount": {
-                          "accountNumber": "5807560412853954",
-                          "transitNumber": "52487",
-                          "institutionId": "052"
-                        }
-                      },
-                      {
-                        "paymentType": "CARD",
-                        "currency": "USD",
-                        "terminalType": "ECOM",
-                        "cardTypes": [
-                          "VI"
-                        ],
-                        "statementDescriptor": {
-                          "descriptor": "descriptor",
-                          "phone": "8932223111"
-                        },
-                        "processingOptions": [
-                          {
-                            "cardType": null,
-                            "mid": "454545",
-                            "tids": [
-                              "234578",
-                              "678456"
-                            ]
-                          }
-                        ],
-                        "eftBankAccount": {
-                          "accountNumber": "5898760412853954",
-                          "transitNumber": "52897",
-                          "institutionId": "052"
+                        "achBankAccount": {
+                          "accountNumber": "2082649738",
+                          "routingNumber": "524871232"
                         }
                       }
                     ]
@@ -1869,224 +1676,77 @@ For more information on other common objects used, refer to the section [Complex
                 ]
               }
             }
-            }
 
 + Response 200 (application/json)
 
     + Body
 
             {
-                "id": "100001544",
+                "id": "100002087",
                 "type": "INITIAL_APPLICATION",
-                "merchantRefNum": "27216",
-                "onboardingConfigId": "224112",
-                "locale": "en_US",
-                "acceptTermsAndConditions": true,
+                "name": "Test applications api",
+                "merchantRefNum": "683685377",
+                "onboardingConfigId": "101840",
+                "locale": "en",
+                "acceptTermsAndConditions": false,
                 "submit": false,
                 "businessLegalEntity": {
-                    "type": "LTD",
-                    "legalName": "legal_name_27216",
-                    "taxIdentificationNumber": "181812234",
+                    "type": "LLC",
+                    "legalName": "Good Guy INC US",
+                    "taxIdentificationNumber": "987654321",
+                    "description": "Legal entity description",
                     "users": [
                         {
-                            "email": "bleemail_27216@gmail.com",
-                            "fullName": "bleusername_27216",
-                            "loginName": "bleusername_27216"
+                            "email": "merchantble683685377@gmail.com",
+                            "fullName": "merchantble683685377",
+                            "loginName": "merchantble683685377"
                         }
                     ],
-                    "eftBankAccount": {
-                        "lastDigits": "54",
-                        "transitNumber": "52487",
-                        "institutionId": "052"
+                    "achBankAccount": {
+                        "lastDigits": "38",
+                        "routingNumber": "524871232"
                     },
                     "address": {
                         "street": "2600 Michelson Drive",
                         "street2": "Suite 1600",
-                        "city": "Irvine",
-                        "state": "AB",
-                        "country": "CA",
-                        "zip": "E1C 1B9"
+                        "city": "California",
+                        "state": "CA",
+                        "country": "US",
+                        "zip": "90201"
                     },
                     "businessDetails": [
                         {
-                            "tradeName": "Macalerts Company",
+                            "tradeName": "Good Guy INC US",
                             "tradeAddress": {
-                                "street": "2345 john street",
-                                "street2": "Suites",
-                                "city": "Toronto",
-                                "state": "ON",
-                                "country": "CA",
-                                "zip": "M1R 0E9"
+                                "street": "2600 Michelson Drive",
+                                "street2": "Suite 1600",
+                                "city": "California",
+                                "state": "CA",
+                                "country": "US",
+                                "zip": "90201"
                             },
-                            "category": "ACCT",
-                            "mcc": "1234",
-                            "website": "www.testsite.com",
+                            "category": "EDU",
+                            "website": "https://www.merchantofpaysafeus.com",
                             "phoneNumber": {
                                 "countryCode": "+1",
-                                "number": "9911991199"
+                                "number": "9090909091"
                             },
-                            "email": "test@paysafe.com",
-                            "eftBankAccount": {
-                                "lastDigits": "54",
-                                "transitNumber": "52487",
-                                "institutionId": "052"
-                            },
-                            "accounts": [
+                            "email": "supportgoodofficeus@gmail.com",
+                            "users": [
                                 {
-                                    "paymentType": "CARD",
-                                    "currency": "CAD",
-                                    "settlementCurrency": "CAD",
-                                    "statementDescriptor": {
-                                        "descriptor": "descriptor",
-                                        "phone": "8932223111"
-                                    },
-                                    "terminalType": "ECOM",
-                                    "cardTypes": [
-                                        "VI"
-                                    ],
-                                    "processingOptions": [
-                                        {
-                                            "mid": "454545",
-                                            "tids": [
-                                                "234578",
-                                                "678456"
-                                            ]
-                                        }
-                                    ],
-                                    "eftBankAccount": {
-                                        "lastDigits": "54",
-                                        "transitNumber": "52487",
-                                        "institutionId": "052"
-                                    }
-                                },
-                                {
-                                    "paymentType": "CARD",
-                                    "currency": "USD",
-                                    "settlementCurrency": "USD",
-                                    "statementDescriptor": {
-                                        "descriptor": "descriptor",
-                                        "phone": "8786223111"
-                                    },
-                                    "terminalType": "ECOM",
-                                    "cardTypes": [
-                                        "VI"
-                                    ],
-                                    "processingOptions": [
-                                        {
-                                            "mid": "454545",
-                                            "tids": [
-                                                "234578",
-                                                "678456"
-                                            ]
-                                        }
-                                    ],
-                                    "eftBankAccount": {
-                                        "lastDigits": "54",
-                                        "transitNumber": "52465",
-                                        "institutionId": "052"
-                                    }
-                                },
-                                {
-                                    "paymentType": "CARD",
-                                    "currency": "CAD",
-                                    "settlementCurrency": "CAD",
-                                    "statementDescriptor": {
-                                        "descriptor": "descriptor",
-                                        "phone": "8786223111"
-                                    },
-                                    "terminalType": "ECOM",
-                                    "cardTypes": [
-                                        "VI"
-                                    ],
-                                    "processingOptions": [
-                                        {
-                                            "mid": "454545",
-                                            "tids": [
-                                                "234578",
-                                                "678456"
-                                            ]
-                                        }
-                                    ],
-                                    "eftBankAccount": {
-                                        "lastDigits": "54",
-                                        "transitNumber": "87665",
-                                        "institutionId": "052"
-                                    }
+                                    "email": "merchantbd683685377@gmail.com",
+                                    "fullName": "merchantbd683685377",
+                                    "loginName": "merchantbd683685377"
                                 }
                             ],
-                            "contacts": [
-                                {
-                                    "type": "BUSINESS",
-                                    "title": "Mr",
-                                    "firstName": "King",
-                                    "lastName": "George",
-                                    "phoneNumber": {
-                                        "countryCode": "+1",
-                                        "number": "9090909090"
-                                    },
-                                    "email": "test@paysafe.com"
-                                }
-                            ]
-                        },
-                        {
-                            "tradeName": "Drama Company",
-                            "tradeAddress": {
-                                "street": "2222 Drive",
-                                "street2": "Suite 1122",
-                                "city": "Irvine",
-                                "state": "BC",
-                                "country": "CA",
-                                "zip": "M1R 0E9"
-                            },
-                            "category": "CHARITY",
-                            "mcc": "1234",
-                            "website": "www.testsites.com",
-                            "phoneNumber": {
-                                "countryCode": "+1",
-                                "number": "9988776655"
-                            },
-                            "email": "test@paysafe.com",
-                            "eftBankAccount": {
-                                "lastDigits": "54",
-                                "transitNumber": "52487",
-                                "institutionId": "052"
+                            "achBankAccount": {
+                                "lastDigits": "38",
+                                "routingNumber": "524871232"
                             },
                             "accounts": [
                                 {
-                                    "paymentType": "CARD",
-                                    "currency": "CAD",
-                                    "settlementCurrency": "CAD",
-                                    "statementDescriptor": {
-                                        "descriptor": "descriptor",
-                                        "phone": "8932223111"
-                                    },
-                                    "terminalType": "ECOM",
-                                    "cardTypes": [
-                                        "VI"
-                                    ],
-                                    "processingOptions": [
-                                        {
-                                            "mid": "454545",
-                                            "tids": [
-                                                "234578",
-                                                "678456"
-                                            ]
-                                        }
-                                    ],
-                                    "users": [
-                                        {
-                                            "email": "acctemail_2_27216@gmail.com",
-                                            "fullName": "acctusername_2_27216",
-                                            "loginName": "acctusername_2_27216"
-                                        }
-                                    ],
-                                    "eftBankAccount": {
-                                        "lastDigits": "54",
-                                        "transitNumber": "52487",
-                                        "institutionId": "052"
-                                    }
-                                },
-                                {
+                                    "name": "CARD USD Account",
+                                    "type": "MERCHANT",
                                     "paymentType": "CARD",
                                     "currency": "USD",
                                     "settlementCurrency": "USD",
@@ -2095,115 +1755,57 @@ For more information on other common objects used, refer to the section [Complex
                                         "phone": "8932223111"
                                     },
                                     "terminalType": "ECOM",
-                                    "cardTypes": [
-                                        "VI"
-                                    ],
-                                    "processingOptions": [
+                                    "users": [
                                         {
-                                            "mid": "454545",
-                                            "tids": [
-                                                "234578",
-                                                "678456"
-                                            ]
+                                            "email": "merchant683685377@gmail.com",
+                                            "fullName": "merchant683685377",
+                                            "loginName": "merchant683685377"
                                         }
                                     ],
-                                    "eftBankAccount": {
-                                        "lastDigits": "54",
-                                        "transitNumber": "52897",
-                                        "institutionId": "052"
+                                    "achBankAccount": {
+                                        "lastDigits": "38",
+                                        "routingNumber": "524871232"
                                     }
                                 }
                             ],
                             "contacts": [
                                 {
                                     "type": "SALES",
-                                    "title": "Ms",
-                                    "firstName": "Mahesh",
-                                    "lastName": "Babu",
+                                    "title": "Mr",
+                                    "firstName": "Good",
+                                    "lastName": "Human",
                                     "phoneNumber": {
                                         "countryCode": "+1",
                                         "number": "9090909090"
                                     },
-                                    "email": "goodhuman@goodoffice.us"
+                                    "email": "goodhuman@goodoffice.com"
                                 }
                             ]
                         }
                     ],
                     "principals": [
                         {
-                            "isApplicant": false,
-                            "title": "Mr",
-                            "firstName": "Richard",
-                            "lastName": "Taylor",
+                            "isApplicant": true,
+                            "isDirector": true,
+                            "isControlProng": true,
+                            "firstName": "Sophie",
+                            "lastName": "Test lastname ",
                             "dateOfBirth": {
                                 "day": 28,
                                 "month": 2,
                                 "year": 1984
                             },
-                            "nationality": "CA",
-                            "sinLastFour": "0111",
+                            "ssnLastFour": "3123",
                             "positionInCompany": "Chairman",
                             "type": "OWNER",
-                            "percentageShareholding": 20,
+                            "percentageShareholding": 100,
                             "address": {
-                                "street": "2600 Michelson Drive",
+                                "street": "test 2600 Michelson Drive",
                                 "street2": "Suite 1600",
-                                "city": "Irvine",
-                                "state": "AB",
-                                "country": "CA",
-                                "zip": "M1R 0E9"
-                            }
-                        },
-                        {
-                            "isApplicant": true,
-                            "isDirector": true,
-                            "title": "Mrs",
-                            "firstName": "Jack",
-                            "lastName": "Daniel",
-                            "dateOfBirth": {
-                                "day": 12,
-                                "month": 12,
-                                "year": 1974
-                            },
-                            "nationality": "US",
-                            "sinLastFour": "0112",
-                            "positionInCompany": "CEO",
-                            "type": "DIRECTOR",
-                            "percentageShareholding": 10,
-                            "address": {
-                                "street": "1221 Marine Drive",
-                                "street2": "House 34600",
-                                "city": "Irvine",
-                                "state": "AB",
-                                "country": "CA",
-                                "zip": "M1R 0E9"
-                            }
-                        },
-                        {
-                            "isApplicant": false,
-                            "isDirector": true,
-                            "title": "Ms",
-                            "firstName": "Gerard",
-                            "lastName": "Butler",
-                            "middleName": "Steven",
-                            "previousLastName": "Pixar",
-                            "dateOfBirth": {
-                                "day": 12,
-                                "month": 12,
-                                "year": 1984
-                            },
-                            "nationality": "CA",
-                            "sinLastFour": "8111",
-                            "positionInCompany": "CEO",
-                            "type": "DIRECTOR",
-                            "percentageShareholding": 30,
-                            "address": {
-                                "street": "1221 Marine Drive",
-                                "street2": "House 1600",
-                                "city": "Irvine",
-                                "state": "AB",
-                                "country": "CA",
-                                "zip": "M1R 0E9"
+                                "city": "California",
+                                "state": "CA",
+                                "country": "US",
+                                "zip": "90201"
                             }
                         }
                     ]
@@ -2212,8 +1814,7 @@ For more information on other common objects used, refer to the section [Complex
 
 
 
-
-### Create an Application for a New Location [POST]
+### Create an Application for a New Location [POST /v1/applications]
 <a name="merchantlocationrequest" title="Create an new location"></a>
 
 Click **Create an Application for a New Location** above to see an example of how to create an application for a new location:
@@ -2236,518 +1837,271 @@ For more information on other common objects used, refer to the section [Complex
     + Body
 
             {
-             {
-              "merchantRefNum": "682609",
-              "onboardingConfigId": "224112",
-              "acceptTermsAndConditions": true,
-              "type":"ADDITIONAL_LOCATION",
-              "submit": true,
-              "locale": "en_US",
+              "merchantRefNum": "969897",
+              "type": "ADDITIONAL_LOCATION",
+              "name": "Test applications api",
+              "locale": "en",
+              "onboardingConfigId": "101840",
+              "acceptTermsAndConditions": false,
+              "submit": false,
               "businessLegalEntity": {
-                "id": "291d9646-4806-4957-bbd0-df65be1f627e",
+                "id": "94e630b4-9e7f-4a49-92cf-9096570d2085",
                 "businessDetails": [
                   {
-                    "tradeName": "Macalerts Company",
-                    "mcc": "1234",
+                    "website": "https://www.merchantofpaysafeus.com",
+                    "tradeName": "Business Details 1",
+                    "category": "EDU",
+                    "email": "supportgoodofficeus@gmail.com",
                     "tradeAddress": {
-                      "street": "2345 john street",
-                      "street2": "Suites",
-                      "city": "Toronto",
-                      "state": "ON",
-                      "country": "CA",
-                      "zip": "M1R 0E9"
+                      "street": "2600 Michelson Drive",
+                      "street2": "Suite 1600",
+                      "city": "California",
+                      "state": "CA",
+                      "country": "US",
+                      "zip": "90201"
                     },
                     "users": [
-                    {
-                        "email": "bdemail682609@gmail.com",
-                        "fullName": "bdusername682609",
-                        "loginName": "bdusername682609",
+                      {
+                        "email": "merchantbd969897@gmail.com",
+                        "fullName": "merchantbd969897",
+                        "loginName": "merchantbd969897",
                         "password": "Pwd1234!"
-                    }
-                    ],
-                    "website": "www.testsite.com",
-                    "email": "test@paysafe.com",
-                    "category": "ACCT",
-                    "phoneNumber": {
-                        "countryCode": "+1",
-                        "number": "9911991199"
-                    },
-                    "eftBankAccount": {
-                      "accountNumber": "5807560412853954",
-                      "transitNumber": "52487",
-                      "institutionId": "052"
-                    },
-                    "contacts": [
-                      {
-                        "type": "BUSINESS",
-                        "title": "Mr",
-                        "firstName": "King",
-                        "middleName": null,
-                        "lastName": "George",
-                        "phoneNumber": {
-                          "countryCode": "+1",
-                          "number": "9090909090"
-                        },
-                        "email": "test@paysafe.com"
                       }
-                    ],
-                    "accounts": [
-                      {
-                        "paymentType": "CARD",
-                        "currency": "CAD",
-                        "terminalType": "ECOM",
-                        "cardTypes": [
-                          "VI"
-                        ],
-                        "statementDescriptor": {
-                          "descriptor": "descriptor",
-                          "phone": "8932223111"
-                        },
-                        "processingOptions": [
-                          {
-                            "cardType": null,
-                            "mid": "454545",
-                            "tids": [
-                              "234578",
-                              "678456"
-                            ]
-                          }
-                        ],
-                        "eftBankAccount": {
-                          "accountNumber": "5807560412853954",
-                          "transitNumber": "52487",
-                          "institutionId": "052"
-                        }
-                      },
-                      {
-                        "paymentType": "CARD",
-                        "currency": "CAD",
-                        "terminalType": "ECOM",
-                        "cardTypes": [
-                          "VI"
-                        ],
-                        "statementDescriptor": {
-                          "descriptor": "descriptor",
-                          "phone": "8786223111"
-                        },
-                        "processingOptions": [
-                          {
-                            "cardType": null,
-                            "mid": "454545",
-                            "tids": [
-                              "234578",
-                              "678456"
-                            ]
-                          }
-                        ],
-                        "eftBankAccount": {
-                          "accountNumber": "5806660412853954",
-                          "transitNumber": "52465",
-                          "institutionId": "052"
-                        }
-                      },
-                      {
-                        "paymentType": "CARD",
-                        "currency": "CAD",
-                        "terminalType": "ECOM",
-                        "cardTypes": [
-                          "VI"
-                        ],
-                        "statementDescriptor": {
-                          "descriptor": "descriptor",
-                          "phone": "8786223111"
-                        },
-                        "processingOptions": [
-                          {
-                            "cardType": null,
-                            "mid": "454545",
-                            "tids": [
-                              "234578",
-                              "678456"
-                            ]
-                          }
-                        ],
-                        "eftBankAccount": {
-                          "accountNumber": "5806890412853954",
-                          "transitNumber": "87665",
-                          "institutionId": "052"
-                        }
-                      }
-                    ]
-                  },
+                ],
+                "phoneNumber": {
+                  "countryCode": "+1",
+                  "number": "9090909091"
+                },
+                "contacts": [
                   {
-                    "tradeName": "Drama Company",
-                    "mcc": "1234",
-                    "tradeAddress": {
-                      "street": "2222 Drive",
-                      "street2": "Suite 1122",
-                      "city": "Irvine",
-                      "state": "BC",
-                      "country": "CA",
-                      "zip": "M1R 0E9"
-                    },
-                    "users": [
-                    {
-                        "email": "bdemail_1_682609@gmail.com",
-                        "fullName": "bdusername_1_682609",
-                        "loginName": "bdusername_1_682609",
-                        "password": "Pwd1234!"
-                    }
-                    ],
-                    "website": "www.testsites.com",
-                    "email": "test@paysafe.com",
-                    "category": "CHARITY",
+                    "firstName": "Good",
+                    "lastName": "Human",
+                    "type": "SALES",
+                    "title": "Mr",
+                    "middleName": null,
                     "phoneNumber": {
-                        "countryCode": "+1",
-                        "number": "9988776655"
+                      "countryCode": "+1",
+                      "number": "9090909090"
                     },
-                    "eftBankAccount": {
-                      "accountNumber": "5807560412853954",
-                      "transitNumber": "52487",
-                      "institutionId": "052"
+                    "email": "goodhuman@goodoffice.com"
+                  }
+                ],
+                "accounts": [
+                  {
+                    "name": "CARD USD Account 1",
+                    "type": "MERCHANT",
+                    "paymentType": "CARD",
+                    "currency": "USD",
+                    "settlementCurrency": "USD",
+                    "terminalType": "ECOM",
+                    "statementDescriptor": {
+                      "descriptor": "descriptor",
+                      "phone": "8932223111"
                     },
-                    "contacts": [
-                      {
-                        "type": "SALES",
-                        "title": "Ms",
-                        "firstName": "Mahesh",
-                        "middleName": null,
-                        "lastName": "Babu",
-                        "phoneNumber": {
-                          "countryCode": "+1",
-                          "number": "9090909090"
-                        },
-                        "email": "goodhuman@goodoffice.us"
-                      }
-                    ],
-                    "accounts": [
-                      {
+                    "achBankAccount": {
+                      "accountNumber": "2082649739",
+                      "routingNumber": "524871231"
+                    }
+                  }
+                ]
+              },
+              {
+                "website": "https://www.merchantofpaysafeus.com",
+                "tradeName": "Business details 2",
+                "category": "EDU",
+                "email": "supportgoodofficeus@gmail.com",
+                "tradeAddress": {
+                  "street": "2600 Michelson Drive",
+                  "street2": "Suite 1600",
+                  "city": "California",
+                  "state": "CA",
+                  "country": "US",
+                  "zip": "90201"
+                },
+                "users": [
+                  {
+                    "email": "merchantbd2969897@gmail.com",
+                    "fullName": "merchantbd2969897",
+                    "loginName": "merchantbd2969897",
+                    "password": "Pwd1234!"
+                  }
+                ],
+                "phoneNumber": {
+                  "countryCode": "+1",
+                  "number": "9090909091"
+                },
+                "contacts": [
+                  {
+                    "firstName": "Good",
+                    "lastName": "Human",
+                    "type": "SALES",
+                    "title": "Mr",
+                    "middleName": null,
+                    "phoneNumber": {
+                      "countryCode": "+1",
+                      "number": "9090909090"
+                    },
+                    "email": "goodhuman@goodoffice.com"
+                  }
+                ],
+                "accounts": [
+                     {
+                        "name": "CARD USD Account 2",
+                        "type": "MERCHANT",
                         "paymentType": "CARD",
-                        "currency": "CAD",
+                        "currency": "USD",
+                        "settlementCurrency": "USD",
                         "terminalType": "ECOM",
-                        "cardTypes": [
-                          "VI"
-                        ],
                         "statementDescriptor": {
                           "descriptor": "descriptor",
                           "phone": "8932223111"
                         },
-                        "processingOptions": [
-                          {
-                            "cardType": null,
-                            "mid": "454545",
-                            "tids": [
-                              "234578",
-                              "678456"
-                            ]
-                          }
-                        ],
-                        "users": [
-                          {
-                            "email": "acctemail_2_682609@gmail.com",
-                            "fullName": "acctusername_2_682609",
-                            "loginName": "acctusername_2_682609",
-                            "password": "Pwd1234!"
-                          }
-                        ],
-                        "eftBankAccount": {
-                          "accountNumber": "5807560412853954",
-                          "transitNumber": "52487",
-                          "institutionId": "052"
-                        }
-                      },
-                      {
-                        "paymentType": "CARD",
-                        "currency": "CAD",
-                        "terminalType": "ECOM",
-                        "cardTypes": [
-                          "VI"
-                        ],
-                        "statementDescriptor": {
-                          "descriptor": "descriptor",
-                          "phone": "8932223111"
-                        },
-                        "processingOptions": [
-                          {
-                            "cardType": null,
-                            "mid": "454545",
-                            "tids": [
-                              "234578",
-                              "678456"
-                            ]
-                          }
-                        ],
-                        "eftBankAccount": {
-                          "accountNumber": "5898760412853954",
-                          "transitNumber": "52897",
-                          "institutionId": "052"
+                        "achBankAccount": {
+                          "accountNumber": "2082649738",
+                          "routingNumber": "524871232"
                         }
                       }
                     ]
                   }
                 ]
-              }
             }
-            }
+        }
+
 
 + Response 200 (application/json)
 
     + Body
 
             {
-             {
-                "id": "100001546",
+                "id": "100002089",
                 "type": "ADDITIONAL_LOCATION",
-                "merchantRefNum": "682609",
-                "onboardingConfigId": "224112",
-                "locale": "en_US",
-                "acceptTermsAndConditions": true,
-                "submit": true,
-                "status": "RECEIVED",
+                "name": "Test applications api",
+                "merchantRefNum": "969897",
+                "onboardingConfigId": "101840",
+                "locale": "en",
+                "acceptTermsAndConditions": false,
+                "submit": false,
                 "businessLegalEntity": {
-                    "id": "291d9646-4806-4957-bbd0-df65be1f627e",
+                    "id": "94e630b4-9e7f-4a49-92cf-9096570d2085",
                     "businessDetails": [
                         {
-                            "tradeName": "Macalerts Company",
+                            "tradeName": "Business Details 1",
                             "tradeAddress": {
-                                "street": "2345 john street",
-                                "street2": "Suites",
-                                "city": "Toronto",
-                                "state": "ON",
-                                "country": "CA",
-                                "zip": "M1R 0E9"
+                                "street": "2600 Michelson Drive",
+                                "street2": "Suite 1600",
+                                "city": "California",
+                                "state": "CA",
+                                "country": "US",
+                                "zip": "90201"
                             },
-                            "category": "ACCT",
-                            "mcc": "1234",
-                            "website": "www.testsite.com",
+                            "category": "EDU",
+                            "website": "https://www.merchantofpaysafeus.com",
                             "phoneNumber": {
                                 "countryCode": "+1",
-                                "number": "9911991199"
+                                "number": "9090909091"
                             },
-                            "email": "test@paysafe.com",
+                            "email": "supportgoodofficeus@gmail.com",
                             "users": [
                                 {
-                                    "email": "bdemail682609@gmail.com",
-                                    "fullName": "bdusername682609",
-                                    "loginName": "bdusername682609"
+                                    "email": "merchantbd969897@gmail.com",
+                                    "fullName": "merchantbd969897",
+                                    "loginName": "merchantbd969897"
                                 }
                             ],
-                            "eftBankAccount": {
-                                "lastDigits": "54",
-                                "transitNumber": "52487",
-                                "institutionId": "052"
-                            },
                             "accounts": [
                                 {
+                                    "name": "CARD USD Account 1",
+                                    "type": "MERCHANT",
                                     "paymentType": "CARD",
-                                    "currency": "CAD",
-                                    "settlementCurrency": "CAD",
+                                    "currency": "USD",
+                                    "settlementCurrency": "USD",
                                     "statementDescriptor": {
                                         "descriptor": "descriptor",
                                         "phone": "8932223111"
                                     },
                                     "terminalType": "ECOM",
-                                    "cardTypes": [
-                                        "VI"
-                                    ],
-                                    "processingOptions": [
-                                        {
-                                            "mid": "454545",
-                                            "tids": [
-                                                "234578",
-                                                "678456"
-                                            ]
-                                        }
-                                    ],
-                                    "eftBankAccount": {
-                                        "lastDigits": "54",
-                                        "transitNumber": "52487",
-                                        "institutionId": "052"
-                                    }
-                                },
-                                {
-                                    "paymentType": "CARD",
-                                    "currency": "CAD",
-                                    "settlementCurrency": "CAD",
-                                    "statementDescriptor": {
-                                        "descriptor": "descriptor",
-                                        "phone": "8786223111"
-                                    },
-                                    "terminalType": "ECOM",
-                                    "cardTypes": [
-                                        "VI"
-                                    ],
-                                    "processingOptions": [
-                                        {
-                                            "mid": "454545",
-                                            "tids": [
-                                                "234578",
-                                                "678456"
-                                            ]
-                                        }
-                                    ],
-                                    "eftBankAccount": {
-                                        "lastDigits": "54",
-                                        "transitNumber": "52465",
-                                        "institutionId": "052"
-                                    }
-                                },
-                                {
-                                    "paymentType": "CARD",
-                                    "currency": "CAD",
-                                    "settlementCurrency": "CAD",
-                                    "statementDescriptor": {
-                                        "descriptor": "descriptor",
-                                        "phone": "8786223111"
-                                    },
-                                    "terminalType": "ECOM",
-                                    "cardTypes": [
-                                        "VI"
-                                    ],
-                                    "processingOptions": [
-                                        {
-                                            "mid": "454545",
-                                            "tids": [
-                                                "234578",
-                                                "678456"
-                                            ]
-                                        }
-                                    ],
-                                    "eftBankAccount": {
-                                        "lastDigits": "54",
-                                        "transitNumber": "87665",
-                                        "institutionId": "052"
-                                    }
-                                }
-                            ],
-                            "contacts": [
-                                {
-                                    "type": "BUSINESS",
-                                    "title": "Mr",
-                                    "firstName": "King",
-                                    "lastName": "George",
-                                    "phoneNumber": {
-                                        "countryCode": "+1",
-                                        "number": "9090909090"
-                                    },
-                                    "email": "test@paysafe.com"
-                                }
-                            ]
-                        },
-                        {
-                            "tradeName": "Drama Company",
-                            "tradeAddress": {
-                                "street": "2222 Drive",
-                                "street2": "Suite 1122",
-                                "city": "Irvine",
-                                "state": "BC",
-                                "country": "CA",
-                                "zip": "M1R 0E9"
-                            },
-                            "category": "CHARITY",
-                            "mcc": "1234",
-                            "website": "www.testsites.com",
-                            "phoneNumber": {
-                                "countryCode": "+1",
-                                "number": "9988776655"
-                            },
-                            "email": "test@paysafe.com",
-                            "users": [
-                                {
-                                    "email": "bdemail_1_682609@gmail.com",
-                                    "fullName": "bdusername_1_682609",
-                                    "loginName": "bdusername_1_682609"
-                                }
-                            ],
-                            "eftBankAccount": {
-                                "lastDigits": "54",
-                                "transitNumber": "52487",
-                                "institutionId": "052"
-                            },
-                            "accounts": [
-                                {
-                                    "paymentType": "CARD",
-                                    "currency": "CAD",
-                                    "settlementCurrency": "CAD",
-                                    "statementDescriptor": {
-                                        "descriptor": "descriptor",
-                                        "phone": "8932223111"
-                                    },
-                                    "terminalType": "ECOM",
-                                    "cardTypes": [
-                                        "VI"
-                                    ],
-                                    "processingOptions": [
-                                        {
-                                            "mid": "454545",
-                                            "tids": [
-                                                "234578",
-                                                "678456"
-                                            ]
-                                        }
-                                    ],
-                                    "users": [
-                                        {
-                                            "email": "acctemail_2_682609@gmail.com",
-                                            "fullName": "acctusername_2_682609",
-                                            "loginName": "acctusername_2_682609"
-                                        }
-                                    ],
-                                    "eftBankAccount": {
-                                        "lastDigits": "54",
-                                        "transitNumber": "52487",
-                                        "institutionId": "052"
-                                    }
-                                },
-                                {
-                                    "paymentType": "CARD",
-                                    "currency": "CAD",
-                                    "settlementCurrency": "CAD",
-                                    "statementDescriptor": {
-                                        "descriptor": "descriptor",
-                                        "phone": "8932223111"
-                                    },
-                                    "terminalType": "ECOM",
-                                    "cardTypes": [
-                                        "VI"
-                                    ],
-                                    "processingOptions": [
-                                        {
-                                            "mid": "454545",
-                                            "tids": [
-                                                "234578",
-                                                "678456"
-                                            ]
-                                        }
-                                    ],
-                                    "eftBankAccount": {
-                                        "lastDigits": "54",
-                                        "transitNumber": "52897",
-                                        "institutionId": "052"
+                                    "achBankAccount": {
+                                        "lastDigits": "39",
+                                        "routingNumber": "524871231"
                                     }
                                 }
                             ],
                             "contacts": [
                                 {
                                     "type": "SALES",
-                                    "title": "Ms",
-                                    "firstName": "Mahesh",
-                                    "lastName": "Babu",
+                                    "title": "Mr",
+                                    "firstName": "Good",
+                                    "lastName": "Human",
                                     "phoneNumber": {
                                         "countryCode": "+1",
                                         "number": "9090909090"
                                     },
-                                    "email": "goodhuman@goodoffice.us"
+                                    "email": "goodhuman@goodoffice.com"
+                                }
+                            ]
+                        },
+                        {
+                            "tradeName": "Business details 2",
+                            "tradeAddress": {
+                                "street": "2600 Michelson Drive",
+                                "street2": "Suite 1600",
+                                "city": "California",
+                                "state": "CA",
+                                "country": "US",
+                                "zip": "90201"
+                            },
+                            "category": "EDU",
+                            "website": "https://www.merchantofpaysafeus.com",
+                            "phoneNumber": {
+                                "countryCode": "+1",
+                                "number": "9090909091"
+                            },
+                            "email": "supportgoodofficeus@gmail.com",
+                            "users": [
+                                {
+                                    "email": "merchantbd2969897@gmail.com",
+                                    "fullName": "merchantbd2969897",
+                                    "loginName": "merchantbd2969897"
+                                }
+                            ],
+                            "accounts": [
+                                {
+                                    "name": "CARD USD Account 2",
+                                    "type": "MERCHANT",
+                                    "paymentType": "CARD",
+                                    "currency": "USD",
+                                    "settlementCurrency": "USD",
+                                    "statementDescriptor": {
+                                        "descriptor": "descriptor",
+                                        "phone": "8932223111"
+                                    },
+                                    "terminalType": "ECOM",
+                                    "achBankAccount": {
+                                        "lastDigits": "38",
+                                        "routingNumber": "524871232"
+                                    }
+                                }
+                            ],
+                            "contacts": [
+                                {
+                                    "type": "SALES",
+                                    "title": "Mr",
+                                    "firstName": "Good",
+                                    "lastName": "Human",
+                                    "phoneNumber": {
+                                        "countryCode": "+1",
+                                        "number": "9090909090"
+                                    },
+                                    "email": "goodhuman@goodoffice.com"
                                 }
                             ]
                         }
                     ]
                 }
             }
-            }
 
 
-### Create an Application for a New Account [POST]
+### Create an Application for a New Account [POST /v1/applications]
 <a name="merchantaccountrequest" title="Create an new account"></a>
 
 Click **Create an Application for a New Account** above to see an example of how to create an application for a new account:
@@ -2769,232 +2123,110 @@ For more information on other common objects used, refer to the section [Complex
     + Body
 
             {
-              {
-              "merchantRefNum": "600489",
-              "onboardingConfigId": "224112",
-              "acceptTermsAndConditions": true,
-              "submit": true,
               "type": "ADDITIONAL_ACCOUNT",
-              "locale": "en_US",
+              "name": "Test applications api",
+              "locale": "en",
+              "merchantRefNum": "merchant626009981",
+              "onboardingConfigId": "101840",
+              "acceptTermsAndConditions": false,
+              "submit": false,
+              "termsVersion": [
+                {
+                  "region": "US",
+                  "ccAddendum": "10.0"
+                }
+              ],
               "businessLegalEntity": {
-                "id": "291d9646-4806-4957-bbd0-df65be1f627e",
+                "id": "94e630b4-9e7f-4a49-92cf-9096570d2085",
                 "businessDetails": [
                   {
-                    "id": "e9badbd5-fc4d-4c1b-8993-a63596d60c44",
-                    "users": [
-                    {
-                        "email": "bdemail600489@gmail.com",
-                        "fullName": "bdusername600489",
-                        "loginName": "bdusername600489",
-                        "password": "Pwd1234!"
-                    }
-                    ],
+                    "id": "0ef51b62-caf3-4c60-bedc-956ec0df3446",
                     "accounts": [
                       {
+                        "name": "CARD USD Account-Add Account1",
+                        "type": "MERCHANT",
                         "paymentType": "CARD",
-                        "currency": "CAD",
+                        "currency": "USD",
                         "terminalType": "ECOM",
-                        "cardTypes": [
-                          "VI"
-                        ],
                         "statementDescriptor": {
                           "descriptor": "descriptor",
                           "phone": "8932223111"
                         },
-                        "processingOptions": [
+                        "users": [
                           {
-                            "cardType": null,
-                            "mid": "454545",
-                            "tids": [
-                              "234578",
-                              "678456"
-                            ]
+                            "email": "merchantacc626009981@gmail.com",
+                            "fullName": "merchantacc626009981",
+                            "loginName": "merchantacc626009981",
+                            "password": "Pwd1234!"
                           }
                         ],
-                        "eftBankAccount": {
-                          "accountNumber": "5807560412853954",
-                          "transitNumber": "52487",
-                          "institutionId": "052"
-                        }
-                      },
-                      {
-                        "paymentType": "CARD",
-                        "currency": "CAD",
-                        "terminalType": "ECOM",
-                        "cardTypes": [
-                          "VI"
-                        ],
-                        "statementDescriptor": {
-                          "descriptor": "descriptor",
-                          "phone": "8786223111"
-                        },
-                        "processingOptions": [
-                          {
-                            "cardType": null,
-                            "mid": "454545",
-                            "tids": [
-                              "234578",
-                              "678456"
-                            ]
+                        "achBankAccount": {
+                          "accountNumber": "2082649739",
+                          "routingNumber": "524871231"
+                            }
                           }
-                        ],
-                        "eftBankAccount": {
-                          "accountNumber": "5806660412853954",
-                          "transitNumber": "52465",
-                          "institutionId": "052"
-                        }
-                      },
-                      {
-                        "paymentType": "CARD",
-                        "currency": "CAD",
-                        "terminalType": "ECOM",
-                        "cardTypes": [
-                          "VI"
-                        ],
-                        "statementDescriptor": {
-                          "descriptor": "descriptor",
-                          "phone": "8786223111"
-                        },
-                        "processingOptions": [
-                          {
-                            "cardType": null,
-                            "mid": "454545",
-                            "tids": [
-                              "234578",
-                              "678456"
-                            ]
-                          }
-                        ],
-                        "eftBankAccount": {
-                          "accountNumber": "5806890412853954",
-                          "transitNumber": "87665",
-                          "institutionId": "052"
-                        }
+                        ]
                       }
                     ]
-                  }
-                ]
-              }
+                }
             }
-            }
-
 
 + Response 200 (application/json)
 
     + Body
 
             {
-               {
-                "id": "100001549",
+                "id": "100002092",
                 "type": "ADDITIONAL_ACCOUNT",
-                "merchantRefNum": "600489",
-                "onboardingConfigId": "224112",
-                "locale": "en_US",
-                "acceptTermsAndConditions": true,
-                "submit": true,
-                "status": "RECEIVED",
+                "name": "Test applications api",
+                "merchantRefNum": "merchant626009981",
+                "onboardingConfigId": "101840",
+                "locale": "en",
+                "acceptTermsAndConditions": false,
+                "submit": false,
                 "businessLegalEntity": {
-                    "id": "291d9646-4806-4957-bbd0-df65be1f627e",
+                    "id": "94e630b4-9e7f-4a49-92cf-9096570d2085",
                     "businessDetails": [
                         {
-                            "id": "e9badbd5-fc4d-4c1b-8993-a63596d60c44",
-                            "users": [
-                                {
-                                    "email": "bdemail600489@gmail.com",
-                                    "fullName": "bdusername600489",
-                                    "loginName": "bdusername600489"
-                                }
-                            ],
+                            "id": "0ef51b62-caf3-4c60-bedc-956ec0df3446",
                             "accounts": [
                                 {
+                                    "name": "CARD USD Account-Add Account1",
+                                    "type": "MERCHANT",
                                     "paymentType": "CARD",
-                                    "currency": "CAD",
-                                    "settlementCurrency": "CAD",
+                                    "currency": "USD",
+                                    "settlementCurrency": "USD",
                                     "statementDescriptor": {
                                         "descriptor": "descriptor",
                                         "phone": "8932223111"
                                     },
                                     "terminalType": "ECOM",
-                                    "cardTypes": [
-                                        "VI"
-                                    ],
-                                    "processingOptions": [
+                                    "users": [
                                         {
-                                            "mid": "454545",
-                                            "tids": [
-                                                "234578",
-                                                "678456"
-                                            ]
+                                            "email": "merchantacc626009981@gmail.com",
+                                            "fullName": "merchantacc626009981",
+                                            "loginName": "merchantacc626009981"
                                         }
                                     ],
-                                    "eftBankAccount": {
-                                        "lastDigits": "54",
-                                        "transitNumber": "52487",
-                                        "institutionId": "052"
-                                    }
-                                },
-                                {
-                                    "paymentType": "CARD",
-                                    "currency": "CAD",
-                                    "settlementCurrency": "CAD",
-                                    "statementDescriptor": {
-                                        "descriptor": "descriptor",
-                                        "phone": "8786223111"
-                                    },
-                                    "terminalType": "ECOM",
-                                    "cardTypes": [
-                                        "VI"
-                                    ],
-                                    "processingOptions": [
-                                        {
-                                            "mid": "454545",
-                                            "tids": [
-                                                "234578",
-                                                "678456"
-                                            ]
-                                        }
-                                    ],
-                                    "eftBankAccount": {
-                                        "lastDigits": "54",
-                                        "transitNumber": "52465",
-                                        "institutionId": "052"
-                                    }
-                                },
-                                {
-                                    "paymentType": "CARD",
-                                    "currency": "CAD",
-                                    "settlementCurrency": "CAD",
-                                    "statementDescriptor": {
-                                        "descriptor": "descriptor",
-                                        "phone": "8786223111"
-                                    },
-                                    "terminalType": "ECOM",
-                                    "cardTypes": [
-                                        "VI"
-                                    ],
-                                    "processingOptions": [
-                                        {
-                                            "mid": "454545",
-                                            "tids": [
-                                                "234578",
-                                                "678456"
-                                            ]
-                                        }
-                                    ],
-                                    "eftBankAccount": {
-                                        "lastDigits": "54",
-                                        "transitNumber": "87665",
-                                        "institutionId": "052"
+                                    "achBankAccount": {
+                                        "lastDigits": "39",
+                                        "routingNumber": "524871231"
                                     }
                                 }
                             ]
                         }
                     ]
-                }
-            }
+                },
+                "termsVersion": [
+                    {
+                        "region": "US",
+                        "ccAddendum": "10.0"
+                    }
+                ]
             }
 
-### Create a Sub-account [POST]
+
+### Create a Sub-account [POST /v1/applications]
 <a name="subaccountrequest" title="Create a Subaccount"></a>
 
 To create a subaccount we need to create a parent account first. 
@@ -3037,95 +2269,87 @@ To create a subaccount we need to create a parent account first.
     
     + Body
 
-            {
-                "type": "ADD_SUB_ACCOUNT",
-                "merchantRefNum": "",
-                "onboardingConfigId": "",
-                "locale": "en",
-                "submit": true,
-                "businessLegalEntity": {
-                "id": "60f02757-e21b-4933-8434-5b03f2e5f2f9",
+        {
+              "type": "ADD_SUB_ACCOUNT",
+              "name": "Test applications api",
+              "merchantRefNum": "827330265",
+              "onboardingConfigId": "101840",
+              "locale": "en",
+              "submit": true,
+              "businessLegalEntity": {
+                "id": "94e630b4-9e7f-4a49-92cf-9096570d2085",
                 "businessDetails": [
-                    {
-                        "id": "eec8378f-5fd8-4985-bcea-56391c10eabc",
-                        "accounts": 
-                        [
-                            {
-                                "id": "1015424340",
-                                "subAccounts": 
-                                [
-                                {
-                                    "name": "OD CC ACC 1",
-                                    "achBankAccount": 
-                                    {
-                                       "accountNumber": "2082648888",
-                                       "routingNumber": "847294445"
-                                    }
-                                },
-                                {
-                                    "name": "ST CC ACC 2",
-                                    "achBankAccount": 
-                                    {
-                                        "accountNumber": "2082648888",
-                                        "routingNumber": "847294445"
-                                    }
-                                }
-                                ]
+                  {
+                    "id": "0ef51b62-caf3-4c60-bedc-956ec0df3446",
+                    "accounts": [
+                      {
+                        "id": "1002417510",
+                        "subAccounts": [
+                          {
+                            "name": "bdusername1707680907",
+                            "achBankAccount": {
+                              "accountNumber": "2082649789",
+                              "routingNumber": "524871232"
                             }
+                          },
+                          {
+                            "name": "bdusername2707680907",
+                            "achBankAccount": {
+                              "accountNumber": "2082649738",
+                              "routingNumber": "524871232"
+                            }
+                          }
                         ]
-                    }
+                      }
+                    ]
+                  }
                 ]
             }
-            }
+        }
 
 + Response 200 (application/json)
 
     + Body
 
             {
-                "id": "100200530",
+                "id": "100002095",
                 "type": "ADD_SUB_ACCOUNT",
-                "merchantRefNum": "624476",
-                "onboardingConfigId": "106886",
+                "merchantRefNum": "827330265",
+                "onboardingConfigId": "101840",
                 "locale": "en",
                 "acceptTermsAndConditions": false,
                 "submit": true,
                 "status": "RECEIVED",
-                "businessLegalEntity": 
-                {
-                       "id": "e0a6213d-fff5-480d-bdbe-1cb276471f48",
-                    "businessDetails": 
-                    [
+                "businessLegalEntity": {
+                    "id": "94e630b4-9e7f-4a49-92cf-9096570d2085",
+                    "businessDetails": [
                         {
-                            "id": "df9d3934-caf6-41ba-8f55-54dcfeb76ac2",
+                            "id": "0ef51b62-caf3-4c60-bedc-956ec0df3446",
                             "accounts": [
-                          {
-                                "id": "1003557330",
-                                "subAccounts": 
-                                [
-                                    {
-                                        "name": "settlement ACC 1",
-                                        "achBankAccount": 
+                                {
+                                    "id": "1002417510",
+                                    "subAccounts": [
                                         {
-                                            "routingNumber": "847292221"
-                                        }
-                                    },
-                                    {
-                                        "name": "overdraft ACC 2",
-                                        "achBankAccount": 
+                                            "name": "bdusername1707680907",
+                                            "achBankAccount": {
+                                                "routingNumber": "524871232"
+                                            }
+                                        },
                                         {
-                                        "routingNumber": "847292225"
+                                            "name": "bdusername2707680907",
+                                            "achBankAccount": {
+                                                "routingNumber": "524871232"
+                                            }
                                         }
-                                    }
-                                ]
-                          }
+                                    ]
+                                }
                             ]
                         }
                     ]
                 }
             }
 
-### Edit a Sub-account [POST]
+### Edit a Sub-account [POST v1/applications]
 <a name="editsubaccountrequest" title="Edit a Subaccount"></a>
 
 Use this API To edit a sub-account. 
@@ -3157,87 +2381,81 @@ For more information on other common objects used, refer to the section [Complex
     + Body
 
             {
-                "type": "ADD_SUB_ACCOUNT",
-                "merchantRefNum": "",
-                "onboardingConfigId": "",
-                "locale": "en",
-                "submit": true,
-                "businessLegalEntity": {
-                "id": "60f02757-e21b-4933-8434-5b03f2e5f2f9",
+              "type": "EDIT_SUB_ACCOUNT",
+              "merchantRefNum": "699098409",
+              "onboardingConfigId": "101840",
+              "locale": "en",
+              "submit": true,
+              "businessLegalEntity": {
                 "businessDetails": [
-                    {
-                        "id": "eec8378f-5fd8-4985-bcea-56391c10eabc",
-                        "accounts": 
-                        [
-                            {
-                                "id": "1015424340",
-                                "subAccounts": 
-                                [
-                                {
-                                    "name": "OD CC ACC 1",
-                                    "achBankAccount": 
-                                    {
-                                       "accountNumber": "2082648888",
-                                       "routingNumber": "847294445"
-                                    }
-                                },
-                                {
-                                    "name": "ST CC ACC 2",
-                                    "achBankAccount": 
-                                    {
-                                        "accountNumber": "2082648888",
-                                        "routingNumber": "847294445"
-                                    }
-                                }
-                                ]
+                  {
+                    "accounts": [
+                      {
+                        "id": "1002417510",
+                        "subAccounts": [
+                          {
+                            "id": "1002417850",
+                            "name": "bdusername1707680907",
+                            "achBankAccount": {
+                              "accountNumber": "20826497891",
+                              "routingNumber": "524871232"
                             }
+                          },
+                          {
+                            "id": "1002417860",
+                            "name": "bdusername1707680907",
+                            "achBankAccount": {
+                              "accountNumber": "20826497891",
+                              "routingNumber": "524871232"
+                            }
+                          }
                         ]
-                    }
+                      }
+                    ]
+                  }
                 ]
+                }
             }
-            }
+
 
 + Response 200 (application/json)
 
     + Body
 
             {
-                "id": "100200530",
-                "type": "ADD_SUB_ACCOUNT",
-                "merchantRefNum": "624476",
-                "onboardingConfigId": "106886",
+                "id": "100002096",
+                "type": "EDIT_SUB_ACCOUNT",
+                "merchantRefNum": "699098409",
+                "onboardingConfigId": "101840",
                 "locale": "en",
                 "acceptTermsAndConditions": false,
                 "submit": true,
                 "status": "RECEIVED",
-                "businessLegalEntity": 
-                {
-                       "id": "e0a6213d-fff5-480d-bdbe-1cb276471f48",
-                    "businessDetails": 
-                    [
+                "businessLegalEntity": {
+                    "id": "94e630b4-9e7f-4a49-92cf-9096570d2085",
+                    "businessDetails": [
                         {
-                            "id": "df9d3934-caf6-41ba-8f55-54dcfeb76ac2",
+                            "id": "0ef51b62-caf3-4c60-bedc-956ec0df3446",
                             "accounts": [
-                          {
-                                "id": "1003557330",
-                                "subAccounts": 
-                                [
-                                    {
-                                        "name": "settlement ACC 1",
-                                        "achBankAccount": 
+                                {
+                                    "id": "1002417510",
+                                    "subAccounts": [
                                         {
-                                            "routingNumber": "847292221"
-                                        }
-                                    },
-                                    {
-                                        "name": "overdraft ACC 2",
-                                        "achBankAccount": 
+                                            "id": "1002417850",
+                                            "name": "bdusername1707680907",
+                                            "achBankAccount": {
+                                                "routingNumber": "524871232"
+                                            }
+                                        },
                                         {
-                                        "routingNumber": "847292225"
+                                            "id": "1002417860",
+                                            "name": "bdusername1707680907",
+                                            "achBankAccount": {
+                                                "routingNumber": "524871232"
+                                            }
                                         }
-                                    }
-                                ]
-                          }
+                                    ]
+                                }
                             ]
                         }
                     ]
@@ -3250,7 +2468,7 @@ For more information on other common objects used, refer to the section [Complex
 Get Merchant Application allows you to retrieve an Application request. Click the **Search for a Merchant** tab below to search for a merchant application. 
 <br>
 
-### Search for a Merchant [GET]
+### Search for a Merchant [GET /v1/applications/100002087]
 <a name="getmerchantapplication" title="Look Up a Merchant Application"></a>
 
 + Parameters
@@ -3258,6 +2476,8 @@ Get Merchant Application allows you to retrieve an Application request. Click th
     + appId:`100001544` (string, required) - This is the Merchant Application ID returned in the response to the [merchant application creation request](#merchantapplicationrequest).
 
 + Request Get Merchant Application (application/json)
+
+            No request body needed
 
     + Headers
     
@@ -3270,157 +2490,58 @@ Get Merchant Application allows you to retrieve an Application request. Click th
 
     + Body
 
-            {
-               {
-                "id": "100001544",
+           {
+                "id": "100002087",
                 "type": "INITIAL_APPLICATION",
-                "merchantRefNum": "27216",
-                "onboardingConfigId": "224112",
-                "locale": "en_US",
+                "name": "Test applications api",
+                "merchantRefNum": "683685377",
+                "onboardingConfigId": "101840",
+                "locale": "en",
                 "acceptTermsAndConditions": true,
                 "submit": true,
-                "status": "RECEIVED",
+                "status": "APPROVED",
+                "statusReasonCode": "AUTO_DECISION",
                 "businessLegalEntity": {
-                    "id": "7b848a1e-2a4b-4fd1-9afd-ef0571a8406a",
-                    "type": "LTD",
-                    "legalName": "legal_name_74300",
-                    "taxIdentificationNumber": "181812234",
-                    "users": [
-                        {
-                            "id": "e6aec5f7-6281-4944-9b02-857db2e9bbe9",
-                            "email": "bleemail_74300@gmail.com",
-                            "fullName": "bleusername_74300",
-                            "loginName": "bleusername_74300"
-                        }
-                    ],
-                    "eftBankAccount": {
-                        "lastDigits": "54",
-                        "transitNumber": "52487",
-                        "institutionId": "052"
-                    },
+                    "id": "94e630b4-9e7f-4a49-92cf-9096570d2085",
+                    "type": "LLC",
+                    "legalName": "Good Guy INC US",
+                    "taxIdentificationNumber": "987654321",
+                    "description": "Legal entity description",
                     "address": {
                         "street": "2600 Michelson Drive",
                         "street2": "Suite 1600",
-                        "city": "Irvine",
-                        "state": "AB",
-                        "country": "CA",
-                        "zip": "E1C 1B9"
+                        "city": "California",
+                        "state": "CA",
+                        "country": "US",
+                        "zip": "90201"
                     },
                     "businessDetails": [
                         {
-                            "id": "7e330f05-ab67-44db-bf55-08a7082bf653",
-                            "tradeName": "Macalerts Company",
+                            "id": "0ef51b62-caf3-4c60-bedc-956ec0df3446",
+                            "tradeName": "Good Guy INC US",
                             "tradeAddress": {
-                                "street": "2345 john street",
-                                "street2": "Suites",
-                                "city": "Toronto",
-                                "state": "ON",
-                                "country": "CA",
-                                "zip": "M1R 0E9"
+                                "street": "2600 Michelson Drive",
+                                "street2": "Suite 1600",
+                                "city": "California",
+                                "state": "CA",
+                                "country": "US",
+                                "zip": "90201"
                             },
-                            "category": "ACCT",
-                            "mcc": "1234",
-                            "website": "www.testsite.com",
+                            "category": "EDU",
+                            "website": "https://www.merchantofpaysafeus.com",
                             "phoneNumber": {
                                 "countryCode": "+1",
-                                "number": "9911991199"
+                                "number": "9090909091"
                             },
-                            "email": "test@paysafe.com",
-                            "eftBankAccount": {
-                                "lastDigits": "54",
-                                "transitNumber": "52487",
-                                "institutionId": "052"
-                            },
+                            "email": "supportgoodofficeus@gmail.com",
                             "accounts": [
                                 {
-                                    "Id": "100001443"
-                                    "paymentType": "CARD",
-                                    "currency": "CAD",
-                                    "settlementCurrency": "CAD",
-                                    "statementDescriptor": {
-                                        "descriptor": "descriptor",
-                                        "phone": "8932223111"
-                                    },
-                                    "terminalType": "ECOM",
-                                    "eftBankAccount": {
-                                        "lastDigits": "54",
-                                        "transitNumber": "52487",
-                                        "institutionId": "052"
-                                    }
-                                },
-                                {
+                                    "id": "1002417510",
+                                    "name": "CARD USD Account",
+                                    "type": "MERCHANT",
                                     "paymentType": "CARD",
                                     "currency": "USD",
                                     "settlementCurrency": "USD",
-                                    "statementDescriptor": {
-                                        "descriptor": "descriptor",
-                                        "phone": "8786223111"
-                                    },
-                                    "terminalType": "ECOM",
-                                    "eftBankAccount": {
-                                        "lastDigits": "54",
-                                        "transitNumber": "52465",
-                                        "institutionId": "052"
-                                    }
-                                },
-                                {
-                                    "paymentType": "CARD",
-                                    "currency": "CAD",
-                                    "settlementCurrency": "CAD",
-                                    "statementDescriptor": {
-                                        "descriptor": "descriptor",
-                                        "phone": "8786223111"
-                                    },
-                                    "terminalType": "ECOM",
-                                    "eftBankAccount": {
-                                        "lastDigits": "54",
-                                        "transitNumber": "87665",
-                                        "institutionId": "052"
-                                    }
-                                }
-                            ],
-                            "contacts": [
-                                {
-                                    "type": "BUSINESS",
-                                    "title": "Mr",
-                                    "firstName": "King",
-                                    "lastName": "George",
-                                    "phoneNumber": {
-                                        "countryCode": "+1",
-                                        "number": "9090909090"
-                                    },
-                                    "email": "test@paysafe.com"
-                                }
-                            ]
-                        },
-                        {
-                            "tradeName": "Drama Company",
-                            "tradeAddress": {
-                                "street": "2222 Drive",
-                                "street2": "Suite 1122",
-                                "city": "Irvine",
-                                "state": "BC",
-                                "country": "CA",
-                                "zip": "M1R 0E9"
-                            },
-                            "category": "CHARITY",
-                            "mcc": "1234",
-                            "website": "www.testsites.com",
-                            "phoneNumber": {
-                                "countryCode": "+1",
-                                "number": "9988776655"
-                            },
-                            "email": "test@paysafe.com",
-                            "eftBankAccount": {
-                                "lastDigits": "54",
-                                "transitNumber": "52487",
-                                "institutionId": "052"
-                            },
-                            "accounts": [
-                                {
-                                    "paymentType": "CARD",
-                                    "currency": "CAD",
-                                    "settlementCurrency": "CAD",
                                     "statementDescriptor": {
                                         "descriptor": "descriptor",
                                         "phone": "8932223111"
@@ -3428,135 +2549,84 @@ Get Merchant Application allows you to retrieve an Application request. Click th
                                     "terminalType": "ECOM",
                                     "users": [
                                         {
-                                            "email": "acctemail_2_74300@gmail.com",
-                                            "fullName": "acctusername_2_74300",
-                                            "loginName": "acctusername_2_74300"
+                                            "id": "653ef392-e6f6-49d8-a6b3-593481146533",
+                                            "email": "merchant683685377@gmail.com",
+                                            "fullName": "merchant683685377",
+                                            "loginName": "merchant683685377"
+                                        },
+                                        {
+                                            "id": "98cf7373-ad98-4a82-8141-795179453614",
+                                            "email": "merchantble683685377@gmail.com",
+                                            "fullName": "merchantble683685377",
+                                            "loginName": "merchantble683685377"
+                                        },
+                                        {
+                                            "id": "ab300bdd-b011-4da2-9935-d78ca2096d20",
+                                            "email": "merchantbd683685377@gmail.com",
+                                            "fullName": "merchantbd683685377",
+                                            "loginName": "merchantbd683685377"
                                         }
                                     ],
-                                    "eftBankAccount": {
-                                        "lastDigits": "54",
-                                        "transitNumber": "52487",
-                                        "institutionId": "052"
-                                    }
-                                },
-                                {
-                                    "paymentType": "CARD",
-                                    "currency": "USD",
-                                    "settlementCurrency": "USD",
-                                    "statementDescriptor": {
-                                        "descriptor": "descriptor",
-                                        "phone": "8932223111"
-                                    },
-                                    "terminalType": "ECOM",
-                                    "eftBankAccount": {
-                                        "lastDigits": "54",
-                                        "transitNumber": "52897",
-                                        "institutionId": "052"
+                                    "achBankAccount": {
+                                        "id": "fc0ca303-58c0-4b47-a318-6294d5a98df9",
+                                        "lastDigits": "38",
+                                        "routingNumber": "524871232"
                                     }
                                 }
                             ],
                             "contacts": [
                                 {
+                                    "id": "87fc6d2e-d26b-4102-88e7-b2eee65239d1",
                                     "type": "SALES",
-                                    "title": "Ms",
-                                    "firstName": "Mahesh",
-                                    "lastName": "Babu",
+                                    "title": "Mr",
+                                    "firstName": "Good",
+                                    "lastName": "Human",
                                     "phoneNumber": {
                                         "countryCode": "+1",
                                         "number": "9090909090"
                                     },
-                                    "email": "goodhuman@goodoffice.us"
+                                    "email": "goodhuman@goodoffice.com"
                                 }
                             ]
                         }
                     ],
                     "principals": [
                         {
-                            "id": "97907f2f-f5bd-4c4b-b5db-7899876a8678",
-                            "isApplicant": false,
-                            "title": "Mr",
-                            "firstName": "Richard",
-                            "lastName": "Taylor",
-                            "middleName": "L",
+                            "id": "a51affd6-0774-4ece-8e1a-0bed96ecc949",
+                            "isApplicant": true,
+                            "isDirector": true,
+                            "isControlProng": true,
+                            "firstName": "Sophie",
+                            "lastName": "Test lastname ",
                             "dateOfBirth": {
                                 "day": 28,
                                 "month": 2,
                                 "year": 1984
                             },
-                            "nationality": "CA",
-                            "sinLastFour": "0111",
+                            "ssnLastFour": "3123",
                             "positionInCompany": "Chairman",
                             "type": "OWNER",
-                            "percentageShareholding": 20,
+                            "percentageShareholding": 100,
                             "address": {
-                                "street": "2600 Michelson Drive",
+                                "street": "test 2600 Michelson Drive",
                                 "street2": "Suite 1600",
-                                "city": "Irvine",
-                                "state": "AB",
-                                "country": "CA",
-                                "zip": "M1R 0E9"
-                            }
-                        },
-                        {
-                            "id": "a527089a-c18e-4d3e-a02b-7c75c792c917",
-                            "isApplicant": true,
-                            "isDirector": true,
-                            "title": "Mrs",
-                            "firstName": "Jack",
-                            "lastName": "Daniel",
-                            "dateOfBirth": {
-                                "day": 12,
-                                "month": 12,
-                                "year": 1974
-                            },
-                            "nationality": "US",
-                            "sinLastFour": "0112",
-                            "positionInCompany": "CEO",
-                            "type": "DIRECTOR",
-                            "percentageShareholding": 10,
-                            "address": {
-                                "street": "1221 Marine Drive",
-                                "street2": "House 34600",
-                                "city": "Irvine",
-                                "state": "AB",
-                                "country": "CA",
-                                "zip": "M1R 0E9"
-                            }
-                        },
-                        {
-                            "id": "4288b35e-6962-4ff1-a9e7-ca093779ee02",
-                            "isApplicant": false,
-                            "isDirector": true,
-                            "title": "Ms",
-                            "firstName": "Gerard",
-                            "lastName": "Butler",
-                            "middleName": "Steven",
-                            "previousLastName": "Pixar",
-                            "dateOfBirth": {
-                                "day": 12,
-                                "month": 12,
-                                "year": 1984
-                            },
-                            "nationality": "CA",
-                            "sinLastFour": "8111",
-                            "positionInCompany": "CEO",
-                            "type": "DIRECTOR",
-                            "percentageShareholding": 30,
-                            "address": {
-                                "street": "1221 Marine Drive",
-                                "street2": "House 1600",
-                                "city": "Irvine",
-                                "state": "AB",
-                                "country": "CA",
-                                "zip": "M1R 0E9"
+                                "city": "California",
+                                "state": "CA",
+                                "country": "US",
+                                "zip": "90201"
                             }
                         }
                     ]
-                }
-            }
+                },
+                "termsVersion": [
+                    {
+                        "region": "US",
+                        "termsAndConditions": "10.0"
+                    }
+                ]
             }
 
-## Update Application [/v1/]
+## Update Application [/v1/applications/100002088]
 
 Update Application allows you to modify an Application request for merchant onboarding.
 <br>
@@ -3585,246 +2655,118 @@ This is how you update a merchant application with a PUT request.
     + Body
     
             {
-             {
-              "merchantRefNum": "27216",
-              "onboardingConfigId": "224112",
-              "acceptTermsAndConditions": true,
-              "submit": true,
-              "locale": "en_US",
+              "merchantRefNum": "727032530",
+              "type": "INITIAL_APPLICATION",
+              "name": "update application",
+              "locale": "en",
+              "onboardingConfigId": "101840",
+              "acceptTermsAndConditions": false,
+              "submit": false,
               "businessLegalEntity": {
-                "legalName": "legal_name_74300",
-                "taxIdentificationNumber": "181812234",
-                "type": "LTD",
+                "type": "LLC",
+                "legalName": "Good Guy INC US",
+                "registrationNumber": null,
+                "description": "Legal entity description",
+                "taxIdentificationNumber": "987654321",
+                "users": [
+                  {
+                    "email": "merchantble727032530@gmail.com",
+                    "fullName": "merchantble727032530",
+                    "loginName": "merchantble727032530",
+                    "password": "Pwd1234!"
+                  }
+                ],
                 "principals": [
                   {
-                    "title": "Mr",
-                    "firstName": "Richard",
-                    "middleName": "L",
-                    "lastName": "Taylor",
+                    "firstName": "Sophie",
+                    "lastName": "Test lastname ",
+                    "middleName": null,
+                    "ssn": "123123123",
                     "previousLastName": null,
                     "type": "OWNER",
-                    "nationality": "CA",
                     "dateOfBirth": {
                       "day": "28",
                       "month": "02",
                       "year": "1984"
                     },
-                    "ssn": null,
-                    "sin": "100010111",
                     "positionInCompany": "Chairman",
-                    "percentageShareholding": 20,
                     "address": {
-                      "street": "2600 Michelson Drive",
+                      "street": "test 2600 Michelson Drive",
                       "street2": "Suite 1600",
-                      "city": "Irvine",
-                      "state": "AB",
-                      "country": "CA",
-                      "zip": "M1R 0E9"
+                      "city": "California",
+                      "state": "CA",
+                      "country": "US",
+                      "zip": "90201"
                     },
-                    "isApplicant": false
-                  },
-                  {
-                    "title": "Mrs",
-                    "firstName": "Jack",
-                    "middleName": null,
-                    "lastName": "Daniel",
-                    "previousLastName": null,
+                    "isApplicant": true,
+                    "isControlProng": true,
                     "isDirector": true,
-                    "type": "DIRECTOR",
-                    "nationality": "US",
-                    "dateOfBirth": {
-                      "day": "12",
-                      "month": "12",
-                      "year": "1974"
-                    },
-                    "ssn": null,
-                    "sin": "100010112",
-                    "positionInCompany": "CEO",
-                    "percentageShareholding": 10,
-                    "address": {
-                      "street": "1221 Marine Drive",
-                      "street2": "House 34600",
-                      "city": "Irvine",
-                      "state": "AB",
-                      "country": "CA",
-                      "zip": "M1R 0E9"
-                    },
-                    "isApplicant": true
-                  },
-                  {
-                    "title": "Ms",
-                    "firstName": "Gerard",
-                    "middleName": "Steven",
-                    "lastName": "Butler",
-                    "previousLastName": "Pixar",
-                    "type": "DIRECTOR",
-                    "isDirector": true,
-                    "nationality": "CA",
-                    "dateOfBirth": {
-                      "day": "12",
-                      "month": "12",
-                      "year": "1984"
-                    },
-                    "ssn": null,
-                    "sin": "100078111",
-                    "positionInCompany": "CEO",
-                    "percentageShareholding": 30,
-                    "address": {
-                      "street": "1221 Marine Drive",
-                      "street2": "House 1600",
-                      "city": "Irvine",
-                      "state": "AB",
-                      "country": "CA",
-                      "zip": "M1R 0E9"
-                    },
-                    "isApplicant": false
+                    "percentageShareholding": 100
                   }
                 ],
-                "users": [
-                  {
-                    "email": "bleemail_74300@gmail.com",
-                    "fullName": "bleusername_74300",
-                    "loginName": "bleusername_74300",
-                    "password": "Pwd1234!"
-                  }
-                ],
-                "eftBankAccount": {
-                  "accountNumber": "5807560412853954",
-                  "transitNumber": "52487",
-                  "institutionId": "052"
+                "achBankAccount": {
+                  "accountNumber": "2082649738",
+                  "routingNumber": "524871232"
                 },
                 "address": {
                   "street": "2600 Michelson Drive",
                   "street2": "Suite 1600",
-                  "city": "Irvine",
-                  "state": "AB",
-                  "country": "CA",
-                  "zip": "E1C 1B9"
+                  "city": "California",
+                  "state": "CA",
+                  "country": "US",
+                  "zip": "90201"
                 },
                 "businessDetails": [
                   {
-                    "tradeName": "Macalerts Company",
-                    "mcc": "1234",
+                    "website": "https://www.merchantofpaysafeus.com",
+                    "tradeName": "Good Guy INC US",
+                    "category": "EDU",
+                    "email": "supportgoodofficeus@gmail.com",
                     "tradeAddress": {
-                      "street": "2345 john street",
-                      "street2": "Suites",
-                      "city": "Toronto",
-                      "state": "ON",
-                      "country": "CA",
-                      "zip": "M1R 0E9"
+                      "street": "2600 Michelson Drive",
+                      "street2": "Suite 1600",
+                      "city": "California",
+                      "state": "CA",
+                      "country": "US",
+                      "zip": "90201"
                     },
-                    "website": "www.testsite.com",
-                    "email": "test@paysafe.com",
-                    "category": "ACCT",
+                    "achBankAccount": {
+                      "accountNumber": "2082649738",
+                      "routingNumber": "524871232"
+                    },
+                    "users": [
+                      {
+                        "email": "merchantbd727032530@gmail.com",
+                        "fullName": "merchantbd727032530",
+                        "loginName": "merchantbd727032530",
+                        "password": "Pwd1234!"
+                      }
+                    ],
                     "phoneNumber": {
-                        "countryCode": "+1",
-                        "number": "9911991199"
-                    },
-                    "eftBankAccount": {
-                      "accountNumber": "5807560412853954",
-                      "transitNumber": "52487",
-                      "institutionId": "052"
+                      "countryCode": "+1",
+                      "number": "9090909091"
                     },
                     "contacts": [
                       {
-                        "type": "BUSINESS",
+                        "firstName": "Good",
+                        "lastName": "Human",
+                        "type": "SALES",
                         "title": "Mr",
-                        "firstName": "King",
                         "middleName": null,
-                        "lastName": "George",
                         "phoneNumber": {
                           "countryCode": "+1",
                           "number": "9090909090"
                         },
-                        "email": "test@paysafe.com"
+                        "email": "goodhuman@goodoffice.com"
                       }
                     ],
                     "accounts": [
                       {
-                        "paymentType": "CARD",
-                        "currency": "CAD",
-                        "terminalType": "ECOM",
-                        "statementDescriptor": {
-                          "descriptor": "descriptor",
-                          "phone": "8932223111"
-                        },
-                        "eftBankAccount": {
-                          "accountNumber": "5807560412853954",
-                          "transitNumber": "52487",
-                          "institutionId": "052"
-                        }
-                      },
-                      {
+                        "name": "CARD USD Account",
+                        "type": "MERCHANT",
                         "paymentType": "CARD",
                         "currency": "USD",
-                        "terminalType": "ECOM",
-                        "statementDescriptor": {
-                          "descriptor": "descriptor",
-                          "phone": "8786223111"
-                        },
-                        "eftBankAccount": {
-                          "accountNumber": "5806660412853954",
-                          "transitNumber": "52465",
-                          "institutionId": "052"
-                        }
-                      },
-                      {
-                        "paymentType": "CARD",
-                        "currency": "CAD",
-                        "terminalType": "ECOM",
-                        "statementDescriptor": {
-                          "descriptor": "descriptor",
-                          "phone": "8786223111"
-                        },
-                        "eftBankAccount": {
-                          "accountNumber": "5806890412853954",
-                          "transitNumber": "87665",
-                          "institutionId": "052"
-                        }
-                      }
-                    ]
-                  },
-                  {
-                    "tradeName": "Drama Company",
-                    "mcc": "1234",
-                    "tradeAddress": {
-                      "street": "2222 Drive",
-                      "street2": "Suite 1122",
-                      "city": "Irvine",
-                      "state": "BC",
-                      "country": "CA",
-                      "zip": "M1R 0E9"
-                    },
-                    "website": "www.testsites.com",
-                    "email": "test@paysafe.com",
-                    "category": "CHARITY",
-                    "phoneNumber": {
-                        "countryCode": "+1",
-                        "number": "9988776655"
-                    },
-                    "eftBankAccount": {
-                      "accountNumber": "5807560412853954",
-                      "transitNumber": "52487",
-                      "institutionId": "052"
-                    },
-                    "contacts": [
-                      {
-                        "type": "SALES",
-                        "title": "Ms",
-                        "firstName": "Mahesh",
-                        "middleName": null,
-                        "lastName": "Babu",
-                        "phoneNumber": {
-                          "countryCode": "+1",
-                          "number": "9090909090"
-                        },
-                        "email": "goodhuman@goodoffice.us"
-                      }
-                    ],
-                    "accounts": [
-                      {
-                        "paymentType": "CARD",
-                        "currency": "CAD",
+                        "settlementCurrency": "USD",
                         "terminalType": "ECOM",
                         "statementDescriptor": {
                           "descriptor": "descriptor",
@@ -3832,187 +2774,94 @@ This is how you update a merchant application with a PUT request.
                         },
                         "users": [
                           {
-                            "email": "acctemail_2_74300@gmail.com",
-                            "fullName": "acctusername_2_74300",
-                            "loginName": "acctusername_2_74300",
+                            "email": "merchant727032530@gmail.com",
+                            "fullName": "merchant727032530",
+                            "loginName": "merchant727032530",
                             "password": "Pwd1234!"
                           }
                         ],
-                        "eftBankAccount": {
-                          "accountNumber": "5807560412853954",
-                          "transitNumber": "52487",
-                          "institutionId": "052"
-                        }
-                      },
-                      {
-                        "paymentType": "CARD",
-                        "currency": "USD",
-                        "terminalType": "ECOM",
-                        "statementDescriptor": {
-                          "descriptor": "descriptor",
-                          "phone": "8932223111"
-                        },
-                        "eftBankAccount": {
-                          "accountNumber": "5898760412853954",
-                          "transitNumber": "52897",
-                          "institutionId": "052"
+                        "achBankAccount": {
+                          "accountNumber": "2082649738",
+                          "routingNumber": "524871232"
                         }
                       }
                     ]
                   }
                 ]
               }
-            }            
             }
 
 + Response 200 (application/json)
 
             {
-                "id": "100001544",
+                "id": "100002088",
                 "type": "INITIAL_APPLICATION",
-                "merchantRefNum": "27216",
-                "onboardingConfigId": "224112",
-                "locale": "en_US",
-                "acceptTermsAndConditions": true,
-                "submit": true,
-                "status": "RECEIVED",
+                "name": "update application",
+                "merchantRefNum": "727032530",
+                "onboardingConfigId": "101840",
+                "locale": "en",
+                "acceptTermsAndConditions": false,
+                "submit": false,
                 "businessLegalEntity": {
-                    "type": "LTD",
-                    "legalName": "legal_name_74300",
-                    "taxIdentificationNumber": "181812234",
+                    "type": "LLC",
+                    "legalName": "Good Guy INC US",
+                    "taxIdentificationNumber": "987654321",
+                    "description": "Legal entity description",
                     "users": [
                         {
-                            "email": "bleemail_74300@gmail.com",
-                            "fullName": "bleusername_74300",
-                            "loginName": "bleusername_74300"
+                            "email": "merchantble727032530@gmail.com",
+                            "fullName": "merchantble727032530",
+                            "loginName": "merchantble727032530"
                         }
                     ],
-                    "eftBankAccount": {
-                        "lastDigits": "54",
-                        "transitNumber": "52487",
-                        "institutionId": "052"
+                    "achBankAccount": {
+                        "lastDigits": "38",
+                        "routingNumber": "524871232"
                     },
                     "address": {
                         "street": "2600 Michelson Drive",
                         "street2": "Suite 1600",
-                        "city": "Irvine",
-                        "state": "AB",
-                        "country": "CA",
-                        "zip": "E1C 1B9"
+                        "city": "California",
+                        "state": "CA",
+                        "country": "US",
+                        "zip": "90201"
                     },
                     "businessDetails": [
                         {
-                            "tradeName": "Macalerts Company",
+                            "tradeName": "Good Guy INC US",
                             "tradeAddress": {
-                                "street": "2345 john street",
-                                "street2": "Suites",
-                                "city": "Toronto",
-                                "state": "ON",
-                                "country": "CA",
-                                "zip": "M1R 0E9"
+                                "street": "2600 Michelson Drive",
+                                "street2": "Suite 1600",
+                                "city": "California",
+                                "state": "CA",
+                                "country": "US",
+                                "zip": "90201"
                             },
-                            "category": "ACCT",
-                            "mcc": "1234",
-                            "website": "www.testsite.com",
+                            "category": "EDU",
+                            "website": "https://www.merchantofpaysafeus.com",
                             "phoneNumber": {
                                 "countryCode": "+1",
-                                "number": "9911991199"
+                                "number": "9090909091"
                             },
-                            "email": "test@paysafe.com",
-                            "eftBankAccount": {
-                                "lastDigits": "54",
-                                "transitNumber": "52487",
-                                "institutionId": "052"
+                            "email": "supportgoodofficeus@gmail.com",
+                            "users": [
+                                {
+                                    "email": "merchantbd727032530@gmail.com",
+                                    "fullName": "merchantbd727032530",
+                                    "loginName": "merchantbd727032530"
+                                }
+                            ],
+                            "achBankAccount": {
+                                "lastDigits": "38",
+                                "routingNumber": "524871232"
                             },
                             "accounts": [
                                 {
-                                    "paymentType": "CARD",
-                                    "currency": "CAD",
-                                    "settlementCurrency": "CAD",
-                                    "statementDescriptor": {
-                                        "descriptor": "descriptor",
-                                        "phone": "8932223111"
-                                    },
-                                    "terminalType": "ECOM",
-                                    "eftBankAccount": {
-                                        "lastDigits": "54",
-                                        "transitNumber": "52487",
-                                        "institutionId": "052"
-                                    }
-                                },
-                                {
+                                    "name": "CARD USD Account",
+                                    "type": "MERCHANT",
                                     "paymentType": "CARD",
                                     "currency": "USD",
                                     "settlementCurrency": "USD",
-                                    "statementDescriptor": {
-                                        "descriptor": "descriptor",
-                                        "phone": "8786223111"
-                                    },
-                                    "terminalType": "ECOM",
-                                    "eftBankAccount": {
-                                        "lastDigits": "54",
-                                        "transitNumber": "52465",
-                                        "institutionId": "052"
-                                    }
-                                },
-                                {
-                                    "paymentType": "CARD",
-                                    "currency": "CAD",
-                                    "settlementCurrency": "CAD",
-                                    "statementDescriptor": {
-                                        "descriptor": "descriptor",
-                                        "phone": "8786223111"
-                                    },
-                                    "terminalType": "ECOM",
-                                    "eftBankAccount": {
-                                        "lastDigits": "54",
-                                        "transitNumber": "87665",
-                                        "institutionId": "052"
-                                    }
-                                }
-                            ],
-                            "contacts": [
-                                {
-                                    "type": "BUSINESS",
-                                    "title": "Mr",
-                                    "firstName": "King",
-                                    "lastName": "George",
-                                    "phoneNumber": {
-                                        "countryCode": "+1",
-                                        "number": "9090909090"
-                                    },
-                                    "email": "test@paysafe.com"
-                                }
-                            ]
-                        },
-                        {
-                            "tradeName": "Drama Company",
-                            "tradeAddress": {
-                                "street": "2222 Drive",
-                                "street2": "Suite 1122",
-                                "city": "Irvine",
-                                "state": "BC",
-                                "country": "CA",
-                                "zip": "M1R 0E9"
-                            },
-                            "category": "CHARITY",
-                            "mcc": "1234",
-                            "website": "www.testsites.com",
-                            "phoneNumber": {
-                                "countryCode": "+1",
-                                "number": "9988776655"
-                            },
-                            "email": "test@paysafe.com",
-                            "eftBankAccount": {
-                                "lastDigits": "54",
-                                "transitNumber": "52487",
-                                "institutionId": "052"
-                            },
-                            "accounts": [
-                                {
-                                    "paymentType": "CARD",
-                                    "currency": "CAD",
-                                    "settlementCurrency": "CAD",
                                     "statementDescriptor": {
                                         "descriptor": "descriptor",
                                         "phone": "8932223111"
@@ -4020,124 +2869,55 @@ This is how you update a merchant application with a PUT request.
                                     "terminalType": "ECOM",
                                     "users": [
                                         {
-                                            "email": "acctemail_2_74300@gmail.com",
-                                            "fullName": "acctusername_2_74300",
-                                            "loginName": "acctusername_2_74300"
+                                            "email": "merchant727032530@gmail.com",
+                                            "fullName": "merchant727032530",
+                                            "loginName": "merchant727032530"
                                         }
                                     ],
-                                    "eftBankAccount": {
-                                        "lastDigits": "54",
-                                        "transitNumber": "52487",
-                                        "institutionId": "052"
-                                    }
-                                },
-                                {
-                                    "paymentType": "CARD",
-                                    "currency": "USD",
-                                    "settlementCurrency": "USD",
-                                    "statementDescriptor": {
-                                        "descriptor": "descriptor",
-                                        "phone": "8932223111"
-                                    },
-                                    "terminalType": "ECOM",
-                                    "eftBankAccount": {
-                                        "lastDigits": "54",
-                                        "transitNumber": "52897",
-                                        "institutionId": "052"
+                                    "achBankAccount": {
+                                        "lastDigits": "38",
+                                        "routingNumber": "524871232"
                                     }
                                 }
                             ],
                             "contacts": [
                                 {
                                     "type": "SALES",
-                                    "title": "Ms",
-                                    "firstName": "Mahesh",
-                                    "lastName": "Babu",
+                                    "title": "Mr",
+                                    "firstName": "Good",
+                                    "lastName": "Human",
                                     "phoneNumber": {
                                         "countryCode": "+1",
                                         "number": "9090909090"
                                     },
-                                    "email": "goodhuman@goodoffice.us"
+                                    "email": "goodhuman@goodoffice.com"
                                 }
                             ]
                         }
                     ],
                     "principals": [
                         {
-                            "isApplicant": false,
-                            "title": "Mr",
-                            "firstName": "Richard",
-                            "lastName": "Taylor",
-                            "middleName": "L",
+                            "isApplicant": true,
+                            "isDirector": true,
+                            "isControlProng": true,
+                            "firstName": "Sophie",
+                            "lastName": "Test lastname ",
                             "dateOfBirth": {
                                 "day": 28,
                                 "month": 2,
                                 "year": 1984
                             },
-                            "nationality": "CA",
-                            "sinLastFour": "0111",
+                            "ssnLastFour": "3123",
                             "positionInCompany": "Chairman",
                             "type": "OWNER",
-                            "percentageShareholding": 20,
+                            "percentageShareholding": 100,
                             "address": {
-                                "street": "2600 Michelson Drive",
+                                "street": "test 2600 Michelson Drive",
                                 "street2": "Suite 1600",
-                                "city": "Irvine",
-                                "state": "AB",
-                                "country": "CA",
-                                "zip": "M1R 0E9"
-                            }
-                        },
-                        {
-                            "isApplicant": true,
-                            "isDirector": true,
-                            "title": "Mrs",
-                            "firstName": "Jack",
-                            "lastName": "Daniel",
-                            "dateOfBirth": {
-                                "day": 12,
-                                "month": 12,
-                                "year": 1974
-                            },
-                            "nationality": "US",
-                            "sinLastFour": "0112",
-                            "positionInCompany": "CEO",
-                            "type": "DIRECTOR",
-                            "percentageShareholding": 10,
-                            "address": {
-                                "street": "1221 Marine Drive",
-                                "street2": "House 34600",
-                                "city": "Irvine",
-                                "state": "AB",
-                                "country": "CA",
-                                "zip": "M1R 0E9"
-                            }
-                        },
-                        {
-                            "isApplicant": false,
-                            "isDirector": true,
-                            "title": "Ms",
-                            "firstName": "Gerard",
-                            "lastName": "Butler",
-                            "middleName": "Steven",
-                            "previousLastName": "Pixar",
-                            "dateOfBirth": {
-                                "day": 12,
-                                "month": 12,
-                                "year": 1984
-                            },
-                            "nationality": "CA",
-                            "sinLastFour": "8111",
-                            "positionInCompany": "CEO",
-                            "type": "DIRECTOR",
-                            "percentageShareholding": 30,
-                            "address": {
-                                "street": "1221 Marine Drive",
-                                "street2": "House 1600",
-                                "city": "Irvine",
-                                "state": "AB",
-                                "country": "CA",
-                                "zip": "M1R 0E9"
+                                "city": "California",
+                                "state": "CA",
+                                "country": "US",
+                                "zip": "90201"
                             }
                         }
                     ]
@@ -4189,35 +2969,34 @@ For more information on other common objects used, refer to the section [Complex
 
 Get Terms and Conditions returns the Paysafe's terms and conditions that the merchants must accept in order to begin processing their transactions. To obtain the terms and conditions, click the tab below, "Get Terms and Conditions":
 <br>
-### Get Terms and Conditions [GET]
+### Get Terms and Conditions [GET v1/applications/100002087/termsandconditions]
 <a name="gettermsandconditions" title="Get Terms and Conditions"></a>
 
 **Note**: The response header X-TERMS-VERSION should be copied to termsVersion while submitting an application. 
 
 + Parameters
 
-    + appId:`100001544` (string, required) - This is the Merchant Application ID returned in response to the [merchant application creation request](#merchantapplicationrequest).
+    + appId:`100002087` (string, required) - This is the Merchant Application ID returned in response to the [merchant application creation request](#merchantapplicationrequest).
 
 + Request Get Merchant Application (application/json)
 
     + Headers
     
             Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+            
 
 + Response 200 (application/json)
 
         Returns Paysafe's Terms and Conditions.
+        x-terms-version:[{"region":"US","ccAddendum":"10.0","ddAchAddendum":"10.0","googlePayAddendum":"10.0"}]
 
-
-## Submit Application [/v1]
+## Submit Application [/v1/applications/{appId}]
 
 Submit Application allows you to submit an Application request for merchant onboarding for further processing. To know how to submit a merchant application request, click the tab below, "Submit Merchant Application":
 <br>
 
-### Submit a Merchant Application [PATCH /v1/applications/{appId}]
+### Submit a Merchant Application [PATCH /v1/applications/100002087]
 <a name="submitapplication" title="Submit Merchant Appication"></a>
-
-
 
 **Note:** When the merchant application is successfully submitted, you cannot make any further changes in the application.
 
@@ -4238,263 +3017,157 @@ Submit Application allows you to submit an Application request for merchant onbo
 
     + Body
     
-            {
-              "acceptTermsAndConditions": true,
-              "submit": true
-            }
+        {
+            "submit": true,
+            "acceptTermsAndConditions": true,
+            "termsVersion": [
+                {
+                        "region": "US",
+                        "termsAndConditions": "10.0"
+                    }
+                ]
+        }
 
 + Response 200 (application/json)
 
     + Body
     
             {
-            "id": "100001556",
-            "type": "ADDITIONAL_LOCATION",
-            "merchantRefNum": "657382",
-            "onboardingConfigId": "224112",
-            "locale": "en_US",
-            "acceptTermsAndConditions": true,
-            "submit": true,
-            "status": "RECEIVED",
-            "businessLegalEntity": {
-                "id": "7b848a1e-2a4b-4fd1-9afd-ef0571a8406a",
-                "businessDetails": [
-                    {
-                        "tradeName": "Macalerts Company",
-                        "tradeAddress": {
-                            "street": "2345 john street",
-                            "street2": "Suites",
-                            "city": "Toronto",
-                            "state": "ON",
-                            "country": "CA",
-                            "zip": "M1R 0E9"
-                        },
-                        "category": "ACCT",
-                        "mcc": "1234",
-                        "website": "www.testsite.com",
-                        "phoneNumber": {
-                            "countryCode": "+1",
-                            "number": "9911991199"
-                        },
-                        "email": "test@paysafe.com",
-                        "users": [
-                            {
-                                "email": "bdemail657382@gmail.com",
-                                "fullName": "bdusername657382",
-                                "loginName": "bdusername657382"
-                            }
-                        ],
-                        "eftBankAccount": {
-                            "lastDigits": "54",
-                            "transitNumber": "52487",
-                            "institutionId": "052"
-                        },
-                        "accounts": [
-                            {
-                                "paymentType": "CARD",
-                                "currency": "CAD",
-                                "settlementCurrency": "CAD",
-                                "statementDescriptor": {
-                                    "descriptor": "descriptor",
-                                    "phone": "8932223111"
-                                },
-                                "terminalType": "ECOM",
-                                "cardTypes": [
-                                    "VI"
-                                ],
-                                "processingOptions": [
-                                    {
-                                        "mid": "454545",
-                                        "tids": [
-                                            "234578",
-                                            "678456"
-                                        ]
-                                    }
-                                ],
-                                "eftBankAccount": {
-                                    "lastDigits": "54",
-                                    "transitNumber": "52487",
-                                    "institutionId": "052"
-                                }
-                            },
-                            {
-                                "paymentType": "CARD",
-                                "currency": "CAD",
-                                "settlementCurrency": "CAD",
-                                "statementDescriptor": {
-                                    "descriptor": "descriptor",
-                                    "phone": "8786223111"
-                                },
-                                "terminalType": "ECOM",
-                                "cardTypes": [
-                                    "VI"
-                                ],
-                                "processingOptions": [
-                                    {
-                                        "mid": "454545",
-                                        "tids": [
-                                            "234578",
-                                            "678456"
-                                        ]
-                                    }
-                                ],
-                                "eftBankAccount": {
-                                    "lastDigits": "54",
-                                    "transitNumber": "52465",
-                                    "institutionId": "052"
-                                }
-                            },
-                            {
-                                "paymentType": "CARD",
-                                "currency": "CAD",
-                                "settlementCurrency": "CAD",
-                                "statementDescriptor": {
-                                    "descriptor": "descriptor",
-                                    "phone": "8786223111"
-                                },
-                                "terminalType": "ECOM",
-                                "cardTypes": [
-                                    "VI"
-                                ],
-                                "processingOptions": [
-                                    {
-                                        "mid": "454545",
-                                        "tids": [
-                                            "234578",
-                                            "678456"
-                                        ]
-                                    }
-                                ],
-                                "eftBankAccount": {
-                                    "lastDigits": "54",
-                                    "transitNumber": "87665",
-                                    "institutionId": "052"
-                                }
-                            }
-                        ],
-                        "contacts": [
-                            {
-                                "type": "BUSINESS",
-                                "title": "Mr",
-                                "firstName": "King",
-                                "lastName": "George",
-                                "phoneNumber": {
-                                    "countryCode": "+1",
-                                    "number": "9090909090"
-                                },
-                                "email": "test@paysafe.com"
-                            }
-                        ]
+                "id": "100002087",
+                "type": "INITIAL_APPLICATION",
+                "name": "Test applications api",
+                "merchantRefNum": "683685377",
+                "onboardingConfigId": "101840",
+                "locale": "en",
+                "acceptTermsAndConditions": true,
+                "submit": true,
+                "status": "RECEIVED",
+                "businessLegalEntity": {
+                    "type": "LLC",
+                    "legalName": "Good Guy INC US",
+                    "taxIdentificationNumber": "987654321",
+                    "description": "Legal entity description",
+                    "users": [
+                        {
+                            "email": "merchantble683685377@gmail.com",
+                            "fullName": "merchantble683685377",
+                            "loginName": "merchantble683685377"
+                        }
+                    ],
+                    "achBankAccount": {
+                        "lastDigits": "38",
+                        "routingNumber": "524871232"
                     },
-                    {
-                        "tradeName": "Drama Company",
-                        "tradeAddress": {
-                            "street": "2222 Drive",
-                            "street2": "Suite 1122",
-                            "city": "Irvine",
-                            "state": "BC",
-                            "country": "CA",
-                            "zip": "M1R 0E9"
-                        },
-                        "category": "CHARITY",
-                        "mcc": "1234",
-                        "website": "www.testsites.com",
-                        "phoneNumber": {
-                            "countryCode": "+1",
-                            "number": "9988776655"
-                        },
-                        "email": "test@paysafe.com",
-                        "users": [
-                            {
-                                "email": "bdemail_1_657382@gmail.com",
-                                "fullName": "bdusername_1_657382",
-                                "loginName": "bdusername_1_657382"
-                            }
-                        ],
-                        "eftBankAccount": {
-                            "lastDigits": "54",
-                            "transitNumber": "52487",
-                            "institutionId": "052"
-                        },
-                        "accounts": [
-                            {
-                                "paymentType": "CARD",
-                                "currency": "CAD",
-                                "settlementCurrency": "CAD",
-                                "statementDescriptor": {
-                                    "descriptor": "descriptor",
-                                    "phone": "8932223111"
-                                },
-                                "terminalType": "ECOM",
-                                "cardTypes": [
-                                    "VI"
-                                ],
-                                "processingOptions": [
-                                    {
-                                        "mid": "454545",
-                                        "tids": [
-                                            "234578",
-                                            "678456"
-                                        ]
-                                    }
-                                ],
-                                "users": [
-                                    {
-                                        "email": "acctemail_2_657382@gmail.com",
-                                        "fullName": "acctusername_2_657382",
-                                        "loginName": "acctusername_2_657382"
-                                    }
-                                ],
-                                "eftBankAccount": {
-                                    "lastDigits": "54",
-                                    "transitNumber": "52487",
-                                    "institutionId": "052"
-                                }
+                    "address": {
+                        "street": "2600 Michelson Drive",
+                        "street2": "Suite 1600",
+                        "city": "California",
+                        "state": "CA",
+                        "country": "US",
+                        "zip": "90201"
+                    },
+                    "businessDetails": [
+                        {
+                            "tradeName": "Good Guy INC US",
+                            "tradeAddress": {
+                                "street": "2600 Michelson Drive",
+                                "street2": "Suite 1600",
+                                "city": "California",
+                                "state": "CA",
+                                "country": "US",
+                                "zip": "90201"
                             },
-                            {
-                                "paymentType": "CARD",
-                                "currency": "CAD",
-                                "settlementCurrency": "CAD",
-                                "statementDescriptor": {
-                                    "descriptor": "descriptor",
-                                    "phone": "8932223111"
-                                },
-                                "terminalType": "ECOM",
-                                "cardTypes": [
-                                    "VI"
-                                ],
-                                "processingOptions": [
-                                    {
-                                        "mid": "454545",
-                                        "tids": [
-                                            "234578",
-                                            "678456"
-                                        ]
-                                    }
-                                ],
-                                "eftBankAccount": {
-                                    "lastDigits": "54",
-                                    "transitNumber": "52897",
-                                    "institutionId": "052"
+                            "category": "EDU",
+                            "website": "https://www.merchantofpaysafeus.com",
+                            "phoneNumber": {
+                                "countryCode": "+1",
+                                "number": "9090909091"
+                            },
+                            "email": "supportgoodofficeus@gmail.com",
+                            "users": [
+                                {
+                                    "email": "merchantbd683685377@gmail.com",
+                                    "fullName": "merchantbd683685377",
+                                    "loginName": "merchantbd683685377"
                                 }
+                            ],
+                            "achBankAccount": {
+                                "lastDigits": "38",
+                                "routingNumber": "524871232"
+                            },
+                            "accounts": [
+                                {
+                                    "name": "CARD USD Account",
+                                    "type": "MERCHANT",
+                                    "paymentType": "CARD",
+                                    "currency": "USD",
+                                    "settlementCurrency": "USD",
+                                    "statementDescriptor": {
+                                        "descriptor": "descriptor",
+                                        "phone": "8932223111"
+                                    },
+                                    "terminalType": "ECOM",
+                                    "users": [
+                                        {
+                                            "email": "merchant683685377@gmail.com",
+                                            "fullName": "merchant683685377",
+                                            "loginName": "merchant683685377"
+                                        }
+                                    ],
+                                    "achBankAccount": {
+                                        "lastDigits": "38",
+                                        "routingNumber": "524871232"
+                                    }
+                                }
+                            ],
+                            "contacts": [
+                                {
+                                    "type": "SALES",
+                                    "title": "Mr",
+                                    "firstName": "Good",
+                                    "lastName": "Human",
+                                    "phoneNumber": {
+                                        "countryCode": "+1",
+                                        "number": "9090909090"
+                                    },
+                                    "email": "goodhuman@goodoffice.com"
+                                }
+                            ]
+                        }
+                    ],
+                    "principals": [
+                        {
+                            "isApplicant": true,
+                            "isDirector": true,
+                            "isControlProng": true,
+                            "firstName": "Sophie",
+                            "lastName": "Test lastname ",
+                            "dateOfBirth": {
+                                "day": 28,
+                                "month": 2,
+                                "year": 1984
+                            },
+                            "ssnLastFour": "3123",
+                            "positionInCompany": "Chairman",
+                            "type": "OWNER",
+                            "percentageShareholding": 100,
+                            "address": {
+                                "street": "test 2600 Michelson Drive",
+                                "street2": "Suite 1600",
+                                "city": "California",
+                                "state": "CA",
+                                "country": "US",
+                                "zip": "90201"
                             }
-                        ],
-                        "contacts": [
-                            {
-                                "type": "SALES",
-                                "title": "Ms",
-                                "firstName": "Mahesh",
-                                "lastName": "Babu",
-                                "phoneNumber": {
-                                    "countryCode": "+1",
-                                    "number": "9090909090"
-                                },
-                                "email": "goodhuman@goodoffice.us"
-                            }
-                        ]
+                        }
+                    ]
+                },
+                "termsVersion": [
+                    {
+                        "region": "US",
+                        "termsAndConditions": "10.0"
                     }
                 ]
-            }
             }
 
  
