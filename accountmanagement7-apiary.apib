@@ -1493,19 +1493,6 @@ Similarly, a bank account created at the location level is attached to all the a
 </ul>
 
 
-## Verify That the Service Is Accessible [GET /monitor]
-<a name="verifyservice" title="Verify Service"></a>
-
-This call returns a status of READY if the API is available.
-
-+ Response 200 (application/json)
-
-  + Body
-    
-            {
-                "status" : "READY"
-            }
-
 ## Create Application [/v1/applications]
 
 Create Application allows you to create a new Application request for merchant onboarding. Click the **Create an Application** tab below to see an example of how to create a new application for a merchant:
@@ -2349,7 +2336,7 @@ To create a subaccount we need to create a parent account first.
 
 Use this API To edit a sub-account. 
 
-For more information on other common objects used, refer to the section [Complex JSON Objects](#accountobject). To know how to submit a merchant application, refer to the section [Submit Merchant Application](submitapplication)
+For more information on other common objects used, refer to the section [Complex JSON Objects](#accountobject).
 
 + Attributes 
     + id:`100001556` (string, required) - This is the unique ID returned in the response after some delay. It can be used later to look up or update a merchant.
@@ -2924,7 +2911,7 @@ This is how you update a merchant application with a PUT request.
 
 Use this API to update the sub-account. 
 
-For more information on other common objects used, refer to the section [Complex JSON Objects](#accountobject). To know how to submit a merchant application, refer to the section [Submit Merchant Application](submitapplication)
+For more information on other common objects used, refer to the section [Complex JSON Objects](#accountobject).
 
 
 + Attributes 
