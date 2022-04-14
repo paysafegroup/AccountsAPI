@@ -373,7 +373,7 @@ Similarly, a bank account created at the location level is attached to all the a
 |merchantRefNum                 |string<br/>`length<=255`       |The merchant's unique identifier for this request.|
 |onboardingConfigId             |string<br/>`length=6`          |Merchant onboarding configuration ID that is configured in Paysafe. For more details, refer to section [Prerequisites](#prereq)|
 |locale                         |string<br/>`length=2`          |Preferred [language/locale](#locale) for this application. Default is "en".|
-|[applicationType](merchantapplicationrequest)                |enum                           |Describes the current status of the application. Default is INITIAL_APPLICATION. Possile values are:<ul><li>INITIAL_APPLICATION</li><li>ADD_LOCATION</li><li>ADD_ACCOUNT</li></ul>|
+|[applicationType](merchantapplicationrequest)                |enum                           |Describes the current status of the application. Default is INITIAL_APPLICATION. Possile values are:<ul><li>INITIAL_APPLICATION</li><li>ADD_LOCATION</li><li>ADD_ACCOUNT</li><li>ADD_SUB_ACCOUNT</li><li>EDIT_SUB_ACCOUNT</li></ul>|
 |[acceptTermsAndConditions](#submitapplication)       |boolean                        |true- This indicates that the merchant has accepted the terms and conditions. <br> false - Indicates that the merchant has not accepted the terms and conditions.|
 |businessLegalEntity            |object                         |Array of [Business legal entity](#businessLegalEntityobject).|
 |addendum                       |map                            |Additional key-values. You can add your own additional fields (up to 10) that are not relevant for underwriting.|
