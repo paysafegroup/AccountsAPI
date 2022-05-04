@@ -3373,7 +3373,7 @@ Submit Application allows you to submit an Application request for merchant onbo
         + Include subAccounts SA 
 
 ## annualProcessingDistribution  
- + `annualProcessingDistribution` (object) - Provide the processing distribution in % across different regions. The percentage of all the regions should be equal to 100%. This field is only applicable for EU.
+ + `annualProcessingDistribution` (object) - Provide the processing distribution in percentage across different regions. The percentage of all the regions should be equal to 10. This field is only applicable for EU.
  **Note:** Decimal values in percentage are not allowed.
     + Properties
         + us: `0-100%` (string) - The percentage of us region should be equal to 100%. 
@@ -3447,10 +3447,10 @@ Submit Application allows you to submit an Application request for merchant onbo
     _length=10_
 + submit: `true` (boolean) - True - This indicates that the application is submitted and ready for further processing. false - This indicates that the application is still in progress and not ready for further processing.
 + businessInfoCurrency: AUD, CAD,  CHF, DKK, EUR,  GBP, HKD, JPY, NOK, NZD, SEK, USD, ZAR (enum, required) - 
-Provide appropriate currency to submit the additional business information. For example, provide EUR and GBP if you want to submit Average Transaction Amount and Annual Processing Amount parameters (refer to the API) in Euro or British Pound. This field is applicable for both EU and US.
+Provide appropriate currency to submit the additional business information. For example, provide EUR and GBP if you want to submit Average Transaction Amount and Annual Processing Amount parameters in Euro or British Pound. This field is applicable for both EU and US.
 _min=1, max=9_
 + averageTransactionAmount: (required, number) - 
-Provide the average transaction value, rounded up to the nearest number in the currency provided in the 'businessInfoCurrency' parameter.  For example, if your average amount of transaction is 15.34 EUR, then provide 16. Netbanx accepts averageTransactionAmount in minor units. We need to multiply by 100. Maximum length should be nine digits from SOB. This field is applicable for both EU and US.
+Provide the average transaction value, rounded up to the nearest number.  For example, if your average amount of transaction is 15.34 EUR, then provide 16. Netbanx accepts averageTransactionAmount in minor units. Multiply by 100. Maximum length should be nine digits from SOB. This field is applicable for both EU and US.
 _min=1, max=9_
 + annualProcessingAmount: (required, number) - 
 Provide the average predicted amount of business annually in the currency given in the 'businessInfoCurrency' parameter. For example, if your annual processing is one million USD, then provide 1000000. This field is applicable for both EU and US.
