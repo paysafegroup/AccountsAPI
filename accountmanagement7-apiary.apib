@@ -605,9 +605,47 @@ Similarly, a bank account created at the location level is attached to all the a
 }
 
 ```
-
-
 <a name= "contactobject" title="Contacts Object"></a>
+
+## Case Management Contract:
+<a name="CaseManagementContract:" title="CaseManagementContract"></a>
+## CaseManagementContract
+|Fields                                 |Type                       |Possible Values|
+|---                                    |---                        |---       |
+|businessInfoCurrency                   |enum                       |AUD, CAD, CHF, DKK, EUR,  GBP, HKD, JPY, NOK, NZD, SEK, USD, ZAR|
+|averageTransactionAmount               |number                     |a number value.|
+|annualProcessingAmount                 |number                     |a number value.|
+|averageRefundDays                      |integer                    |an Integer value.|
+|annualProcessingDistribution           |Complex object             |{ 
+"us" : Integer,
+"eu" : Integer,
+"latinAmerica" : Integer,
+"restOfWorld" : Integer
+}|
+
+```businessLegalEntity: {
+
+       businessInfoCurrency: String,
+
+       averageTransactionAmount: Number,
+
+       annualProcessingAmount: Number,
+
+       hasRefundPolicy: Boolean,
+
+       averageRefundDays: Integer,
+
+       annualProcessingDistribution: {
+
+            "us" : Integer,
+            "eu" : Integer,
+            "latinAmerica" : Integer,
+            "restOfWorld" : Integer
+
+       }
+}
+```
+
 ## Contact
 |Element    |Type                       |Description                        |
 |---        |---                        |---       |
@@ -1512,6 +1550,7 @@ For more information on other common objects used, refer to the section [Complex
 
 + Attributes 
     + Include ConslidatedApplicationObject
+    + Include annualProcessingDistribution
 
 + Request Create INITIAL Merchant Account (application/json)
 
@@ -1522,278 +1561,295 @@ For more information on other common objects used, refer to the section [Complex
     
     + Body
 
-            {
-              "merchantRefNum": "683685377",
-              "type": "INITIAL_APPLICATION",
-              "name": "Test applications api",
-              "locale": "en",
-              "onboardingConfigId": "101840",
-              "acceptTermsAndConditions": false,
-              "submit": false,
-              "businessLegalEntity": {
-                "type": "LLC",
-                "legalName": "Good Guy INC US",
-                "registrationNumber": null,
-                "description": "Legal entity description",
-                "taxIdentificationNumber": "987654321",
-                "users": [
-                  {
-                    "email": "merchantble683685377@gmail.com",
-                    "fullName": "merchantble683685377",
-                    "loginName": "merchantble683685377",
-                    "password": "Pwd1234!"
-                  }
-                ],
-                "principals": [
-                  {
-                    "firstName": "Sophie",
-                    "lastName": "Test lastname ",
-                    "middleName": null,
-                    "ssn": "123123123",
-                    "previousLastName": null,
-                    "type": "OWNER",
-                    "dateOfBirth": {
-                      "day": "28",
-                      "month": "02",
-                      "year": "1984"
-                    },
-                    "positionInCompany": "Chairman",
-                    "address": {
-                      "street": "test 2600 Michelson Drive",
-                      "street2": "Suite 1600",
-                      "city": "California",
-                      "state": "CA",
-                      "country": "US",
-                      "zip": "90201"
-                    },
-                    "isApplicant": true,
-                    "isControlProng": true,
-                    "isDirector": true,
-                    "percentageShareholding": 100
-                  }
-                ],
-                "achBankAccount": {
-                  "accountNumber": "2082649738",
-                  "routingNumber": "524871232"
-                },
-                "address": {
-                  "street": "2600 Michelson Drive",
-                  "street2": "Suite 1600",
-                  "city": "California",
-                  "state": "CA",
-                  "country": "US",
-                  "zip": "90201"
-                },
-                "businessDetails": [
-                  {
-                    "website": "https://www.merchantofpaysafeus.com",
-                    "tradeName": "Good Guy INC US",
-                    "category": "EDU",
-                    "email": "supportgoodofficeus@gmail.com",
-                    "tradeAddress": {
-                      "street": "2600 Michelson Drive",
-                      "street2": "Suite 1600",
-                      "city": "California",
-                      "state": "CA",
-                      "country": "US",
-                      "zip": "90201"
-                    },
-                    "achBankAccount": {
-                      "accountNumber": "2082649738",
-                      "routingNumber": "524871232"
-                    },
-                    "users": [
-                      {
-                        "email": "merchantbd683685377@gmail.com",
-                        "fullName": "merchantbd683685377",
-                        "loginName": "merchantbd683685377",
-                        "password": "Pwd1234!"
-                      }
-                    ],
-                    "phoneNumber": {
-                      "countryCode": "+1",
-                      "number": "9090909091"
-                    },
-                    "contacts": [
-                      {
-                        "firstName": "Good",
-                        "lastName": "Human",
-                        "type": "SALES",
-                        "title": "Mr",
-                        "middleName": null,
-                        "phoneNumber": {
-                          "countryCode": "+1",
-                          "number": "9090909090"
-                        },
-                        "email": "goodhuman@goodoffice.com"
-                      }
-                    ],
-                    "accounts": [
-                      {
-                        "name": "CARD USD Account",
-                        "type": "MERCHANT",
-                        "paymentType": "CARD",
-                        "currency": "USD",
-                        "settlementCurrency": "USD",
-                        "terminalType": "ECOM",
-                        "statementDescriptor": {
-                          "descriptor": "descriptor",
-                          "phone": "8932223111"
-                        },
-                        "users": [
-                          {
-                            "email": "merchant683685377@gmail.com",
-                            "fullName": "merchant683685377",
-                            "loginName": "merchant683685377",
-                            "password": "Pwd1234!"
-                          }
-                        ],
-                        "achBankAccount": {
-                          "accountNumber": "2082649738",
-                          "routingNumber": "524871232"
-                        }
-                      }
-                    ]
-                  }
-                ]
+           {
+  "merchantRefNum": "683685377",
+  "type": "INITIAL_APPLICATION",
+  "name": "Test applications api",
+  "locale": "en",
+  "onboardingConfigId": "101840",
+  "acceptTermsAndConditions": false,
+  "submit": false,
+  "businessLegalEntity": {
+    "type": "LLC",
+    "legalName": "Good Guy INC US",
+    "registrationNumber": null,
+    "description": "Legal entity description",
+    "taxIdentificationNumber": "987654321",
+    "businessInfoCurrency": "USD",
+    "averageTransactionAmount": 123456789,
+    "annualProcessingAmount": 1234567891234,
+    "averageRefundDays": 100,
+    "annualProcessingDistribution": {
+      "us": 10,
+      "eu": 80,
+      "latinAmerica": 5,
+      "restOfWorld": 5
+    },
+    "users": [
+      {
+        "email": "merchantble683685377@gmail.com",
+        "fullName": "merchantble683685377",
+        "loginName": "merchantble683685377",
+        "password": "Pwd1234!"
+      }
+    ],
+    "principals": [
+      {
+        "firstName": "Sophie",
+        "lastName": "Test lastname ",
+        "middleName": null,
+        "ssn": "123123123",
+        "previousLastName": null,
+        "type": "OWNER",
+        "dateOfBirth": {
+          "day": "28",
+          "month": "02",
+          "year": "1984"
+        },
+        "positionInCompany": "Chairman",
+        "address": {
+          "street": "test 2600 Michelson Drive",
+          "street2": "Suite 1600",
+          "city": "California",
+          "state": "CA",
+          "country": "US",
+          "zip": "90201"
+        },
+        "isApplicant": true,
+        "isControlProng": true,
+        "isDirector": true,
+        "percentageShareholding": 100
+      }
+    ],
+    "achBankAccount": {
+      "accountNumber": "2082649738",
+      "routingNumber": "524871232"
+    },
+    "address": {
+      "street": "2600 Michelson Drive",
+      "street2": "Suite 1600",
+      "city": "California",
+      "state": "CA",
+      "country": "US",
+      "zip": "90201"
+    },
+    "businessDetails": [
+      {
+        "website": "https://www.merchantofpaysafeus.com",
+        "tradeName": "Good Guy INC US",
+        "category": "EDU",
+        "email": "supportgoodofficeus@gmail.com",
+        "tradeAddress": {
+          "street": "2600 Michelson Drive",
+          "street2": "Suite 1600",
+          "city": "California",
+          "state": "CA",
+          "country": "US",
+          "zip": "90201"
+        },
+        "achBankAccount": {
+          "accountNumber": "2082649738",
+          "routingNumber": "524871232"
+        },
+        "users": [
+          {
+            "email": "merchantbd683685377@gmail.com",
+            "fullName": "merchantbd683685377",
+            "loginName": "merchantbd683685377",
+            "password": "Pwd1234!"
+          }
+        ],
+        "phoneNumber": {
+          "countryCode": "+1",
+          "number": "9090909091"
+        },
+        "contacts": [
+          {
+            "firstName": "Good",
+            "lastName": "Human",
+            "type": "SALES",
+            "title": "Mr",
+            "middleName": null,
+            "phoneNumber": {
+              "countryCode": "+1",
+              "number": "9090909090"
+            },
+            "email": "goodhuman@goodoffice.com"
+          }
+        ],
+        "accounts": [
+          {
+            "name": "CARD USD Account",
+            "type": "MERCHANT",
+            "paymentType": "CARD",
+            "currency": "USD",
+            "settlementCurrency": "USD",
+            "terminalType": "ECOM",
+            "statementDescriptor": {
+              "descriptor": "descriptor",
+              "phone": "8932223111"
+            },
+            "users": [
+              {
+                "email": "merchant683685377@gmail.com",
+                "fullName": "merchant683685377",
+                "loginName": "merchant683685377",
+                "password": "Pwd1234!"
               }
+            ],
+            "achBankAccount": {
+              "accountNumber": "2082649738",
+              "routingNumber": "524871232"
             }
-
+          }
+        ]
+      }
+    ]
+  }
+}
 + Response 200 (application/json)
 
     + Body
-
-            {
-                "id": "100002087",
-                "type": "INITIAL_APPLICATION",
-                "name": "Test applications api",
-                "merchantRefNum": "683685377",
-                "onboardingConfigId": "101840",
-                "locale": "en",
-                "acceptTermsAndConditions": false,
-                "submit": false,
-                "businessLegalEntity": {
-                    "type": "LLC",
-                    "legalName": "Good Guy INC US",
-                    "taxIdentificationNumber": "987654321",
-                    "description": "Legal entity description",
-                    "users": [
-                        {
-                            "email": "merchantble683685377@gmail.com",
-                            "fullName": "merchantble683685377",
-                            "loginName": "merchantble683685377"
-                        }
-                    ],
-                    "achBankAccount": {
-                        "lastDigits": "38",
-                        "routingNumber": "524871232"
-                    },
-                    "address": {
-                        "street": "2600 Michelson Drive",
-                        "street2": "Suite 1600",
-                        "city": "California",
-                        "state": "CA",
-                        "country": "US",
-                        "zip": "90201"
-                    },
-                    "businessDetails": [
-                        {
-                            "tradeName": "Good Guy INC US",
-                            "tradeAddress": {
-                                "street": "2600 Michelson Drive",
-                                "street2": "Suite 1600",
-                                "city": "California",
-                                "state": "CA",
-                                "country": "US",
-                                "zip": "90201"
-                            },
-                            "category": "EDU",
-                            "website": "https://www.merchantofpaysafeus.com",
-                            "phoneNumber": {
-                                "countryCode": "+1",
-                                "number": "9090909091"
-                            },
-                            "email": "supportgoodofficeus@gmail.com",
-                            "users": [
-                                {
-                                    "email": "merchantbd683685377@gmail.com",
-                                    "fullName": "merchantbd683685377",
-                                    "loginName": "merchantbd683685377"
-                                }
-                            ],
-                            "achBankAccount": {
-                                "lastDigits": "38",
-                                "routingNumber": "524871232"
-                            },
-                            "accounts": [
-                                {
-                                    "name": "CARD USD Account",
-                                    "type": "MERCHANT",
-                                    "paymentType": "CARD",
-                                    "currency": "USD",
-                                    "settlementCurrency": "USD",
-                                    "statementDescriptor": {
-                                        "descriptor": "descriptor",
-                                        "phone": "8932223111"
-                                    },
-                                    "terminalType": "ECOM",
-                                    "users": [
-                                        {
-                                            "email": "merchant683685377@gmail.com",
-                                            "fullName": "merchant683685377",
-                                            "loginName": "merchant683685377"
-                                        }
-                                    ],
-                                    "achBankAccount": {
-                                        "lastDigits": "38",
-                                        "routingNumber": "524871232"
-                                    }
-                                }
-                            ],
-                            "contacts": [
-                                {
-                                    "type": "SALES",
-                                    "title": "Mr",
-                                    "firstName": "Good",
-                                    "lastName": "Human",
-                                    "phoneNumber": {
-                                        "countryCode": "+1",
-                                        "number": "9090909090"
-                                    },
-                                    "email": "goodhuman@goodoffice.com"
-                                }
-                            ]
-                        }
-                    ],
-                    "principals": [
-                        {
-                            "isApplicant": true,
-                            "isDirector": true,
-                            "isControlProng": true,
-                            "firstName": "Sophie",
-                            "lastName": "Test lastname ",
-                            "dateOfBirth": {
-                                "day": 28,
-                                "month": 2,
-                                "year": 1984
-                            },
-                            "ssnLastFour": "3123",
-                            "positionInCompany": "Chairman",
-                            "type": "OWNER",
-                            "percentageShareholding": 100,
-                            "address": {
-                                "street": "test 2600 Michelson Drive",
-                                "street2": "Suite 1600",
-                                "city": "California",
-                                "state": "CA",
-                                "country": "US",
-                                "zip": "90201"
-                            }
-                        }
-                    ]
-                }
+ {
+  "id": "100002087",
+  "type": "INITIAL_APPLICATION",
+  "name": "Test applications api",
+  "merchantRefNum": "683685377",
+  "onboardingConfigId": "101840",
+  "locale": "en",
+  "acceptTermsAndConditions": false,
+  "submit": false,
+  "businessLegalEntity": {
+    "type": "LLC",
+    "legalName": "Good Guy INC US",
+    "taxIdentificationNumber": "987654321",
+    "businessInfoCurrency": "USD",
+    "averageTransactionAmount": 123456789,
+    "annualProcessingAmount": 1234567891234,
+    "averageRefundDays": 100,
+    "annualProcessingDistribution": {
+      "us": 10,
+      "eu": 80,
+      "latinAmerica": 5,
+      "restOfWorld": 5
+    },
+    "description": "Legal entity description",
+    "users": [
+      {
+        "email": "merchantble683685377@gmail.com",
+        "fullName": "merchantble683685377",
+        "loginName": "merchantble683685377"
+      }
+    ],
+    "achBankAccount": {
+      "lastDigits": "38",
+      "routingNumber": "524871232"
+    },
+    "address": {
+      "street": "2600 Michelson Drive",
+      "street2": "Suite 1600",
+      "city": "California",
+      "state": "CA",
+      "country": "US",
+      "zip": "90201"
+    },
+    "businessDetails": [
+      {
+        "tradeName": "Good Guy INC US",
+        "tradeAddress": {
+          "street": "2600 Michelson Drive",
+          "street2": "Suite 1600",
+          "city": "California",
+          "state": "CA",
+          "country": "US",
+          "zip": "90201"
+        },
+        "category": "EDU",
+        "website": "https://www.merchantofpaysafeus.com",
+        "phoneNumber": {
+          "countryCode": "+1",
+          "number": "9090909091"
+        },
+        "email": "supportgoodofficeus@gmail.com",
+        "users": [
+          {
+            "email": "merchantbd683685377@gmail.com",
+            "fullName": "merchantbd683685377",
+            "loginName": "merchantbd683685377"
+          }
+        ],
+        "achBankAccount": {
+          "lastDigits": "38",
+          "routingNumber": "524871232"
+        },
+        "accounts": [
+          {
+            "name": "CARD USD Account",
+            "type": "MERCHANT",
+            "paymentType": "CARD",
+            "currency": "USD",
+            "settlementCurrency": "USD",
+            "statementDescriptor": {
+              "descriptor": "descriptor",
+              "phone": "8932223111"
+            },
+            "terminalType": "ECOM",
+            "users": [
+              {
+                "email": "merchant683685377@gmail.com",
+                "fullName": "merchant683685377",
+                "loginName": "merchant683685377"
+              }
+            ],
+            "achBankAccount": {
+              "lastDigits": "38",
+              "routingNumber": "524871232"
             }
-
+          }
+        ],
+        "contacts": [
+          {
+            "type": "SALES",
+            "title": "Mr",
+            "firstName": "Good",
+            "lastName": "Human",
+            "phoneNumber": {
+              "countryCode": "+1",
+              "number": "9090909090"
+            },
+            "email": "goodhuman@goodoffice.com"
+          }
+        ]
+      }
+    ],
+    "principals": [
+      {
+        "isApplicant": true,
+        "isDirector": true,
+        "isControlProng": true,
+        "firstName": "Sophie",
+        "lastName": "Test lastname ",
+        "dateOfBirth": {
+          "day": 28,
+          "month": 2,
+          "year": 1984
+        },
+        "ssnLastFour": "3123",
+        "positionInCompany": "Chairman",
+        "type": "OWNER",
+        "percentageShareholding": 100,
+        "address": {
+          "street": "test 2600 Michelson Drive",
+          "street2": "Suite 1600",
+          "city": "California",
+          "state": "CA",
+          "country": "US",
+          "zip": "90201"
+        }
+      }
+    ]
+  }
+}
 
 
 ### Create an Application for a New Location [POST /v1/applications]
@@ -2463,150 +2519,161 @@ Get Merchant Application allows you to retrieve an Application request. Click th
 
     + Headers
     
-            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+            Authorization: Basic YOUR-BASE64-ENCODED-AP-KEY
 
 + Response 200 (application/json)
 
     + Attributes
         + Include ConslidatedApplicationObject
+        + Include annualProcessingDistribution
 
     + Body
-
-           {
-                "id": "100002087",
-                "type": "INITIAL_APPLICATION",
-                "name": "Test applications api",
-                "merchantRefNum": "683685377",
-                "onboardingConfigId": "101840",
-                "locale": "en",
-                "acceptTermsAndConditions": true,
-                "submit": true,
-                "status": "APPROVED",
-                "statusReasonCode": "AUTO_DECISION",
-                "businessLegalEntity": {
-                    "id": "94e630b4-9e7f-4a49-92cf-9096570d2085",
-                    "type": "LLC",
-                    "legalName": "Good Guy INC US",
-                    "taxIdentificationNumber": "987654321",
-                    "description": "Legal entity description",
-                    "address": {
-                        "street": "2600 Michelson Drive",
-                        "street2": "Suite 1600",
-                        "city": "California",
-                        "state": "CA",
-                        "country": "US",
-                        "zip": "90201"
-                    },
-                    "businessDetails": [
-                        {
-                            "id": "0ef51b62-caf3-4c60-bedc-956ec0df3446",
-                            "tradeName": "Good Guy INC US",
-                            "tradeAddress": {
-                                "street": "2600 Michelson Drive",
-                                "street2": "Suite 1600",
-                                "city": "California",
-                                "state": "CA",
-                                "country": "US",
-                                "zip": "90201"
-                            },
-                            "category": "EDU",
-                            "website": "https://www.merchantofpaysafeus.com",
-                            "phoneNumber": {
-                                "countryCode": "+1",
-                                "number": "9090909091"
-                            },
-                            "email": "supportgoodofficeus@gmail.com",
-                            "accounts": [
-                                {
-                                    "id": "1002417510",
-                                    "name": "CARD USD Account",
-                                    "type": "MERCHANT",
-                                    "paymentType": "CARD",
-                                    "currency": "USD",
-                                    "settlementCurrency": "USD",
-                                    "statementDescriptor": {
-                                        "descriptor": "descriptor",
-                                        "phone": "8932223111"
-                                    },
-                                    "terminalType": "ECOM",
-                                    "users": [
-                                        {
-                                            "id": "653ef392-e6f6-49d8-a6b3-593481146533",
-                                            "email": "merchant683685377@gmail.com",
-                                            "fullName": "merchant683685377",
-                                            "loginName": "merchant683685377"
-                                        },
-                                        {
-                                            "id": "98cf7373-ad98-4a82-8141-795179453614",
-                                            "email": "merchantble683685377@gmail.com",
-                                            "fullName": "merchantble683685377",
-                                            "loginName": "merchantble683685377"
-                                        },
-                                        {
-                                            "id": "ab300bdd-b011-4da2-9935-d78ca2096d20",
-                                            "email": "merchantbd683685377@gmail.com",
-                                            "fullName": "merchantbd683685377",
-                                            "loginName": "merchantbd683685377"
-                                        }
-                                    ],
-                                    "achBankAccount": {
-                                        "id": "fc0ca303-58c0-4b47-a318-6294d5a98df9",
-                                        "lastDigits": "38",
-                                        "routingNumber": "524871232"
-                                    }
-                                }
-                            ],
-                            "contacts": [
-                                {
-                                    "id": "87fc6d2e-d26b-4102-88e7-b2eee65239d1",
-                                    "type": "SALES",
-                                    "title": "Mr",
-                                    "firstName": "Good",
-                                    "lastName": "Human",
-                                    "phoneNumber": {
-                                        "countryCode": "+1",
-                                        "number": "9090909090"
-                                    },
-                                    "email": "goodhuman@goodoffice.com"
-                                }
-                            ]
-                        }
-                    ],
-                    "principals": [
-                        {
-                            "id": "a51affd6-0774-4ece-8e1a-0bed96ecc949",
-                            "isApplicant": true,
-                            "isDirector": true,
-                            "isControlProng": true,
-                            "firstName": "Sophie",
-                            "lastName": "Test lastname ",
-                            "dateOfBirth": {
-                                "day": 28,
-                                "month": 2,
-                                "year": 1984
-                            },
-                            "ssnLastFour": "3123",
-                            "positionInCompany": "Chairman",
-                            "type": "OWNER",
-                            "percentageShareholding": 100,
-                            "address": {
-                                "street": "test 2600 Michelson Drive",
-                                "street2": "Suite 1600",
-                                "city": "California",
-                                "state": "CA",
-                                "country": "US",
-                                "zip": "90201"
-                            }
-                        }
-                    ]
-                },
-                "termsVersion": [
-                    {
-                        "region": "US",
-                        "termsAndConditions": "10.0"
-                    }
-                ]
+{
+  "id": "100002087",
+  "type": "INITIAL_APPLICATION",
+  "name": "Test applications api",
+  "merchantRefNum": "683685377",
+  "onboardingConfigId": "101840",
+  "locale": "en",
+  "acceptTermsAndConditions": true,
+  "submit": true,
+  "status": "APPROVED",
+  "statusReasonCode": "AUTO_DECISION",
+  "businessLegalEntity": {
+    "id": "94e630b4-9e7f-4a49-92cf-9096570d2085",
+    "type": "LLC",
+    "legalName": "Good Guy INC US",
+    "taxIdentificationNumber": "987654321",
+    "businessInfoCurrency": "USD",
+    "averageTransactionAmount": 123456789,
+    "annualProcessingAmount": 1234567891234,
+    "averageRefundDays": 100,
+    "annualProcessingDistribution": {
+      "us": 10,
+      "eu": 80,
+      "latinAmerica": 5,
+      "restOfWorld": 5
+    },
+    "description": "Legal entity description",
+    "address": {
+      "street": "2600 Michelson Drive",
+      "street2": "Suite 1600",
+      "city": "California",
+      "state": "CA",
+      "country": "US",
+      "zip": "90201"
+    },
+    "businessDetails": [
+      {
+        "id": "0ef51b62-caf3-4c60-bedc-956ec0df3446",
+        "tradeName": "Good Guy INC US",
+        "tradeAddress": {
+          "street": "2600 Michelson Drive",
+          "street2": "Suite 1600",
+          "city": "California",
+          "state": "CA",
+          "country": "US",
+          "zip": "90201"
+        },
+        "category": "EDU",
+        "website": "https://www.merchantofpaysafeus.com",
+        "phoneNumber": {
+          "countryCode": "+1",
+          "number": "9090909091"
+        },
+        "email": "supportgoodofficeus@gmail.com",
+        "accounts": [
+          {
+            "id": "1002417510",
+            "name": "CARD USD Account",
+            "type": "MERCHANT",
+            "paymentType": "CARD",
+            "currency": "USD",
+            "settlementCurrency": "USD",
+            "statementDescriptor": {
+              "descriptor": "descriptor",
+              "phone": "8932223111"
+            },
+            "terminalType": "ECOM",
+            "users": [
+              {
+                "id": "653ef392-e6f6-49d8-a6b3-593481146533",
+                "email": "merchant683685377@gmail.com",
+                "fullName": "merchant683685377",
+                "loginName": "merchant683685377"
+              },
+              {
+                "id": "98cf7373-ad98-4a82-8141-795179453614",
+                "email": "merchantble683685377@gmail.com",
+                "fullName": "merchantble683685377",
+                "loginName": "merchantble683685377"
+              },
+              {
+                "id": "ab300bdd-b011-4da2-9935-d78ca2096d20",
+                "email": "merchantbd683685377@gmail.com",
+                "fullName": "merchantbd683685377",
+                "loginName": "merchantbd683685377"
+              }
+            ],
+            "achBankAccount": {
+              "id": "fc0ca303-58c0-4b47-a318-6294d5a98df9",
+              "lastDigits": "38",
+              "routingNumber": "524871232"
             }
+          }
+        ],
+        "contacts": [
+          {
+            "id": "87fc6d2e-d26b-4102-88e7-b2eee65239d1",
+            "type": "SALES",
+            "title": "Mr",
+            "firstName": "Good",
+            "lastName": "Human",
+            "phoneNumber": {
+              "countryCode": "+1",
+              "number": "9090909090"
+            },
+            "email": "goodhuman@goodoffice.com"
+          }
+        ]
+      }
+    ],
+    "principals": [
+     
+     {
+        "id": "a51affd6-0774-4ece-8e1a-0bed96ecc949",
+        "isApplicant": true,
+        "isDirector": true,
+        "isControlProng": true,
+        "firstName": "Sophie",
+        "lastName": "Test lastname ",
+        "dateOfBirth": {
+          "day": 28,
+          "month": 2,
+          "year": 1984
+        },
+        "ssnLastFour": "3123",
+        "positionInCompany": "Chairman",
+        "type": "OWNER",
+        "percentageShareholding": 100,
+        "address": {
+          "street": "test 2600 Michelson Drive",
+          "street2": "Suite 1600",
+          "city": "California",
+          "state": "CA",
+          "country": "US",
+          "zip": "90201"
+        }
+      }
+    ]
+  },
+  "termsVersion": [
+    {
+      "region": "US",
+      "termsAndConditions": "10.0"
+    }
+  ]
+}
 
 ## Update Application [/v1/applications/100002088]
 
@@ -3309,6 +3376,15 @@ Submit Application allows you to submit an Application request for merchant onbo
         + id: `100101010` (string) - This ID is returned in the response of the account creation API. This ID can be used to create a sub-account.  
         + Include subAccounts SA 
 
+## annualProcessingDistribution  
+ + `annualProcessingDistribution` (object) - The percentage of all the regions should be equal to 100%. This field is only applicable for EU.
+ **Note:** Decimal values in percentage are not allowed.
+    + Properties
+        + us: `0-100%` (string) - The percentage of us region should be equal to 100%. 
+        + eu: `0-100%` (string) - The percentage of eu region should be equal to 100%. 
+        + latinAmerica: `0-100%` (string) - The percentage of latinAmerica should be equal to 100%. 
+        + restOfWorld: `0-100%` (string) - The percentage of restofWorld should be equal to 100%. 
+
 ## subAccounts SA
 + `subAccounts` (object) : An array of subAccounts.
     + Properties
@@ -3374,6 +3450,19 @@ Submit Application allows you to submit an Application request for merchant onbo
 + addendum: `` (string, optional) - Additional key-values.
     _length=10_
 + submit: `true` (boolean) - True - This indicates that the application is submitted and ready for further processing. false - This indicates that the application is still in progress and not ready for further processing.
++ businessInfoCurrency: AUD, CAD,  CHF, DKK, EUR,  GBP, HKD, JPY, NOK, NZD, SEK, USD, ZAR (enum, required) - This field is applicable for both EU and US.
+_min=1, max=9_
+
++ averageTransactionAmount:  (required, number) - Netbanx accepts averageTransactionAmount in minor units. We need to multiply by 100. Maximum length should be nine digits from SOB. This field is applicable for both EU and US.
+    _min=1, max=9_
++ annualProcessingAmount: (required, number) - This field is applicable for both EU and US.
+_min=1, max=13_
++ averageRefundDays:  (required) - This field is applicable for both EU and US. 
+_min=0, max=100_ 
+ 
+**Note:** Decimal values are not allowed.
+
++ annualProcessingDistribution 
 
 ## Contacts
 + `contacts` (object) - Array of Contacts.
