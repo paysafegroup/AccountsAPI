@@ -3335,12 +3335,12 @@ Submit Application allows you to submit an Application request for merchant onbo
         + Include subAccounts SA 
 
 ## annualProcessingDistribution  
- + `annualProcessingDistribution` (object) - The percentage of all the regions should be equal to 100%. This field is only applicable for EU. **Note:** Decimal values in percentage are not allowed.
+ + `annualProcessingDistribution` (object) - The sum of the percentage of all the regions should be within 0-100. This field is only applicable for EU. **Note:** Decimal values in percentage are not allowed.
     + Properties
-        + us: `0-100%` (string) - The percentage of us region should be equal to 100%. 
-        + eu: `0-100%` (string) - The percentage of eu region should be equal to 100%. 
-        + latinAmerica: `0-100%` (string) - The percentage of latinAmerica should be equal to 100%. 
-        + restOfWorld: `0-100%` (string) - The percentage of restofWorld should be equal to 100%. 
+        + us: `0-100%` (string) - The percentage of us region should be within 0-100. 
+        + eu: `0-100%` (string) - The percentage of eu region should be within 0-100. 
+        + latinAmerica: `0-100%` (string) - The percentage of latinAmerica should be within 0-100. 
+        + restOfWorld: `0-100%` (string) - The percentage of restOfWorld should be within 0-100. 
 
 ## subAccounts SA
 + `subAccounts` (object) : An array of subAccounts.
@@ -3404,22 +3404,20 @@ Submit Application allows you to submit an Application request for merchant onbo
 + acceptTermsAndConditions: `true` (boolean, optional) - True- This indicates that the merchant has accepted the terms and conditions. false - Indicates that the merchant has not accepted the terms and conditions.
 + Include Terms Version
 + Include Business Legal Entity
-+ addendum: `` (string, optional) - Additional key-values.
++ addendum: `` (string, optional) - Additional key-values.annualProcessingDistribution 
     _length=10_
 + submit: `true` (boolean) - True - This indicates that the application is submitted and ready for further processing. false - This indicates that the application is still in progress and not ready for further processing.
 + businessInfoCurrency: AUD, CAD,  CHF, DKK, EUR,  GBP, HKD, JPY, NOK, NZD, SEK, USD, ZAR (enum, required) - 
 Provide appropriate currency to submit the additional business information. For example, provide EUR and GBP if you want to submit Average Transaction Amount and Annual Processing Amount parameters in Euro or British Pound. This field is applicable for both EU and US.
-_min=1, max=9_
 + averageTransactionAmount: (required, number) - 
-Provide the average transaction value, rounded up to the nearest number.  For example, if your average amount of transaction is 15.34 EUR, then provide 16. Netbanx accepts averageTransactionAmount in minor units. Multiply by 100. Maximum length should be nine digits from SOB. This field is applicable for both EU and US.
+Provide the average transaction value, rounded up to the nearest number.  For example, if your average amount of transaction is 15.34 EUR, then provide 16. This field is applicable for both EU and US.
 _min=1, max=9_
 + annualProcessingAmount: (required, number) - 
 Provide the average predicted amount of business annually in the currency given in the 'businessInfoCurrency' parameter. For example, if your annual processing is one million USD, then provide 1000000. This field is applicable for both EU and US.
 _min=1, max=13_
 + averageRefundDays:  (required) - 
 Provide the average refund days when your refund policy terms are applicable after the transaction.
-For example -  Provide 15 days if your average refund days is 15. This field is applicable for both EU and US. 
-_min=0, max=100_ 
+For example -  Provide 15 days if your average refund days is 15. This field is applicable for both EU and US. The averageRefundDays can take value from 0 to 100.
  
 **Note:** Decimal values are not allowed.
 
