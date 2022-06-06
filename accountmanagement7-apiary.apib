@@ -2992,11 +2992,15 @@ Get Terms and Conditions returns the Paysafe's terms and conditions that the mer
     
             Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
             
+            
 
 + Response 200 (application/json)
 
         Returns Paysafe's Terms and Conditions.
-        x-terms-version:[{"region":"US","ccAddendum":"10.0","ddAchAddendum":"10.0","googlePayAddendum":"10.0"}]
+        
+        x-internal-correlation-id: f4b560ed-8823-422f-b874-68cbe221bb4f
+        x-terms-version: [{"region":"US","ccAddendum":"10.0","googlePayAddendum":"10.0"}]
+        content-type: application/pdf
 
 ## Submit Application [/v1/applications/{appId}]
 
